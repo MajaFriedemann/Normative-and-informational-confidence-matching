@@ -1,0 +1,27 @@
+{
+  "window.zoomLevel": -1,
+  "editor.fontFamily": "'InterstateMono', 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "explorer.confirmDelete": true,
+  "explorer.confirmDragAndDrop": false,
+  "easysass.formats": [
+    {
+      "format": "expanded",
+      "extension": ".css"
+    }
+  ],
+  "jupyter.appendResults": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.CustomBrowser": "firefox",
+  "python.pythonPath": "C:\\Users\\lwei2\\AppData\\Local\\Programs\\Python\\Python36\\python.exe",
+  "workbench.colorTheme": "Material Syntax - Dark",
+  "workbench.statusBar.visible": true,
+  "workbench.activityBar.visible": true,
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.activeBackground": "#D3D3D3",
+    "statusBar.background": "#0fe685",
+  },
+}
