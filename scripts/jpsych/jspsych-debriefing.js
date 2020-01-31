@@ -49,7 +49,7 @@ jsPsych.plugins['jspsych-debriefing'] = (function () {
       'div',
       'titlepage document-intro',
       'debrief-intro',
-      '<div><h1> As the final step, please read and fill out this debriefing form. Thanks! </h1></div>'
+      '<div><h1> Thank you for taking part in this study run by the Attention and Cognitive Control (ACC) Lab at the Department of Experimental Psychology, University of Oxford. </h1></div>'
     );
     scrolldownIndicator(intro, 1, true);
     var ethicsForm = createGeneral(
@@ -100,7 +100,7 @@ jsPsych.plugins['jspsych-debriefing'] = (function () {
       'document-title',
       'debrief-title',
       '<h1>DEBRIEFING</h1>' +
-      '<h2>"' + trial.studyName + '"</h2>'
+      '<h2>' + trial.studyName + '</h2>'
     );
 
     var instructText = createGeneral(
@@ -132,20 +132,14 @@ jsPsych.plugins['jspsych-debriefing'] = (function () {
 
     //body
     instructText.innerHTML = 
-    '<p>In this study, we are interested in understanding how people learn, make decisions, and evaluate their performance, and how these processes might be different in people who are vulnerable to clinical disorders. Studying these behaviours can provide an understanding of the basic information processing mechanisms that underlie healthy cognition and, by extension, how they are impaired in clinical disorders.</p>'
-    +'<br>'
-    +'<h3 style="text-align: center">We would like to ask you how you are feeling at the moment. Please take a moment to let us know below:</h3>'
-    +'<textarea name="debriefing-question" id="debriefing-question"></textarea>'
-    +'<h3 style="text-align: center"><br><br><br>The following is intended for anyone who indicated on their questionnaires that they may be feeling rather worried or in a low mood.</h3><br>'
-    +'<p>Our moods can change from day to day. However, for some people, their mood may remain low for some time. If this applies to you and you are based in Oxford, we would like to point out several sources of advice or help which are free and readily available to you, and which may prove useful. Specifically, these include:</p>'
-    +'<br>'
-    +'<b>(1) Your General Practitioner</b><br><br>'
-    +'<b>(2) Your College nurse (where available)</b><br><br>'
-    +'<b>(3) Your University Counselling Service (where available). Students at the <a href="http://www.ox.ac.uk/students/welfare/counselling?wssl=1/" target="_blank">University of Oxford</a> and <a href="http://www.brookes.ac.uk/students/wellbeing/counselling/" target="_blank">Oxford Brookes University</a> should feel free to contact their respective University Counselling Services for more information.</b><br><br>'
-    +'<b>(4) NHS 111</b><br><br>'
-    +'<b>(5) Helplines, including The Samaritans (<a href="tel:116123">116 123</a>), the Mental Health Crisis Line (<a href="tel:01865251152">01865 251152</a>), and the Listening Service for Oxford University students (<a href="tel:01865270270">01865 270270</a>)</b><br>'
-    +'<br>'
-    +'<p>If you would like more information, or a confidential discussion with a senior member of the research team, please contact Professor Nicholas Yeung by <a href="mailto:nicholas.yeung@psy.ox.ac.uk?cc=linda.wei@psy.ox.ac.uk&subject='+trial.CUREC_ID+'">email</a> or <a href="tel:441865271389">phone</a>.</p>'
+    '<p>This study investigates how people judge the confidence they have in their own decisions, both in social settings (making decisions together with other people) and when making decisions alone. Exploring how different factors affect confidence judgements can help to shed light on the mechanisms that allow people to think about their own decisions and actions, and to learn from their mistakes. This may not only be relevant in improving these evaluative (“metacognitive”) skills in healthy individuals, but could extend to psychiatric disorders many of which are associated with abnormal confidence judgements. </p>'
+    +'<p>In order to control for confounding variables and better compare results across participants, the responses of other people that you saw throughout the task were artificially generated rather than coming from real past participants. People react differently when presented with machine generated advice rather than advice from real people. As we are interested in the latter case, the deception was necessary to draw conclusions for our research question regarding decision confidence in social settings (i.e. making decisions together with other people).</p>'
+    +'<p>If you have a concern about any aspect of this project, please speak to the relevant researcher (Maja Friedemann, maja.friedemann@psy.ox.ac.uk) or her supervisor (Prof. Nick Yeung, nicholas.yeung@psy.ox.ac.uk), who will do their best to answer your query. The researchers should acknowledge your concern within 10 working days and give you an indication of how they intend to deal with it. If you remain unhappy or wish to make a formal complaint, please contact the chair of the Research Ethics Committee at the University of Oxford:</p>'
+    +'<p><i>Chair<br>Medical Sciences Inter-Divisional Research Ethics Committee<br>Research Services, University of Oxford<br>Wellington Square, Oxford OX1 2JD, United Kingdom<br>Email: ethics@medsci.ox.ac.uk</i></p>'
+    +'<p>The chair will seek to resolve the matter in a reasonably expeditious manner.</p>'
+    +'<p>If you would like to discuss the research with someone beforehand or if you have questions afterwards, please contact:</p>'
+    +'<p><i>Maja Friedemann<br>Department of Experimental Psychology<br>New Radcliffe House<br>Radcliffe Observatory Quater<br>Woodstock Road, Oxford OX2 6GG<br>Email: maja.friedemann@psy.ox.ac.uk</i></p>'
+
     +'<h2 style="text-align: center"><br><br>Thank you for taking part in our study!<br>Please safely exit the study by clicking the button below.</h2>';
 
     // button

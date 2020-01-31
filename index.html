@@ -35,28 +35,18 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css">
     <!--custom JS: helper functions-->
     <script src="scripts/helper.js"></script>
-    <script src="scripts/gameboard.js"></script>
-    <script src="scripts/gameboard_forced.js"></script>
     <script src="scripts/dots.js"></script>
-    <!--custom JS: trials-->
-    <script src="scripts/jspsych-consent.js"></script>
-    <script src="scripts/jspsych-debriefing.js"></script>
-    <script src="scripts/jspsych-demographics.js"></script>
-    <script src="scripts/jspsych-dots.js"></script>
-    <script src="scripts/jspsych-feedback-form.js"></script>
-    <script src="scripts/jspsych-IST.js"></script>
-    <script src="scripts/jspsych-IST-forced.js"></script>
-    <script src="scripts/jspsych-IST-tutorial.js"></script>
-    <script src="scripts/jspsych-IUS12.js"></script>
-    <script src="scripts/jspsych-IUS27.js"></script>
-    <script src="scripts/jspsych-loading.js"></script>
-    <script src="scripts/jspsych-message-splash.js"></script>
-    <script src="scripts/jspsych-notice.js"></script>
-    <script src="scripts/jspsych-PIS.js"></script>
-    <script src="scripts/jspsych-PHQ9.js"></script>
-    <script src="scripts/jspsych-score-reveal.js"></script>
-    <script src="scripts/jspsych-SSMS.js"></script>
-    <script src="scripts/jspsych-STAI-Y2.js"></script>
+    <!--custom JS: trials using jPsych-->
+    <script src="scripts/jpsych/jspsych-consent.js"></script>
+    <script src="scripts/jpsych/jspsych-debriefing.js"></script>
+    <script src="scripts/jpsych/jspsych-demographics.js"></script>
+    <script src="scripts/jpsych/jspsych-dots.js"></script>
+    <script src="scripts/jpsych/jspsych-feedback-form.js"></script>
+    <script src="scripts/jpsych/jspsych-loading.js"></script>
+    <script src="scripts/jpsych/jspsych-message-splash.js"></script>
+    <script src="scripts/jpsych/jspsych-notice.js"></script>
+    <script src="scripts/jpsych/jspsych-PIS.js"></script>
+    <script src="scripts/jpsych/jspsych-score-reveal.js"></script>
 </head>
 
 <body></body>
@@ -69,28 +59,30 @@
 
     var ProlificID = getUrlVars()['PROLIFIC_PID'];
     console.log(ProlificID);
-    var completionCode = "VCYWS1GQ";
+    // ADD COMPLETION CODE HERE!!!!!!!!!!!!!!!
+    var completionCode = "AddCompletionCodeHere";
     var completionURL = "https://app.prolific.ac/submissions/complete?cc=" + completionCode;
     var PHQexclusionURL = "https://app.prolific.ac/submissions/complete?cc=EXCLU001";
 
     /* EXPERIMENT INFORMATION */
 
     var subjectID;
-    var exp_release = '4.0.0 public release';
-    var release_date = '2020/01/10';
+    var studyName = 'Confidence in group decision-making'
+    var exp_release = ' ';
+    var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'tiles only';
+    var trialTypeOrder = 'testing';
     var scoreRuleOrder;
-    var cohort = 'PR';
+    var cohort = 'PR'; //ask Linda what this is!!!!!!!!!!!!!!!!!!!
     var cohort_explain = '';
-    var CUREC_studyName = 'Understanding Individual Differences in Mechanisms of Uncertainty and Learning';
-    var CUREC_ID = 'R56625/RE003';
-    var CUREC_version = '2.4';
-    var CUREC_date = '2018/08/09';
-    var consent_version = '2.4';
-    var consent_date = '2018/08/09';
-    var PIS_version = '2.4';
-    var PIS_date = '2018/08/09'
+    var CUREC_studyName = 'Contextual influences on metacognitive judgements';
+    var CUREC_ID = 'R67369/RE001';
+    var CUREC_version = '5.0';
+    var CUREC_date = '2018/11/12';
+    var consent_version = '1.0';
+    var consent_date = '2020/01/01';
+    var PIS_version = '1.0';
+    var PIS_date = '2020/01/01'
     var startExperiment = Date.now();
     var currentAttempt = 1;
 
@@ -110,49 +102,20 @@
         setCookie('UIDMUL-IST-attempts', currentAttempt, 365);
     }
 
-    // seed the randomisations
+    // seed the randomisations        ask Linda what this is!!!!!!!
     Math.seedrandom(subjectID);
 
-    // set up counterbalancing
-    var counterBalance_seed1 = Math.random();
-    var counterBalance_seed2 = Math.random();
-
-    if (!testing_timeline) {
-
-        if (trialTypeOrder == false) {
-            // set trial type order
-            if (counterBalance_seed1 < 0.5) {
-                trialTypeOrder = 'dots-tiles';
-            } else {
-                trialTypeOrder = 'tiles-dots';
-            }
-        }
-
-        // set score rule order
-        if (counterBalance_seed2 > 0.5) {
-            scoreRuleOrder = 'FW-DW';
-        } else {
-            scoreRuleOrder = 'DW-FW';
-        }
-
-    } else {
-        trialTypeOrder = 'testing';
-        scoreRuleOrder = 'testing';
-    }
 
 
     /* IMAGES TO PRELOAD */
 
     var images = [
         'assets/oxford-logo.jpg',
-        'assets/gameboard.gif',
-        'assets/gameboard_2.4.0.gif',
-        'assets/gameboard-ISTc-forced.gif',
-        'assets/dotTask_2.5.0 practice.gif',
-        'assets/dotTask_2.5.0 seeAgain.gif',
         'assets/checkmark-white.svg',
+        'assets/checkmark-black.svg',
         'assets/down-arrow-2.svg',
-        'assets/up-arrow.svg'
+        'assets/up-arrow.svg',
+        'assets/dotTask_2.5.0 practice.gif' //change this to my task!!!!!!!!
     ];
 
     var dotsStaircase = new Staircase({
@@ -174,10 +137,6 @@
     dotsStaircase.init();
 
     /* DATA VARIABLES */
-    var IST_totalTrials = 0;
-    var IST_cumulativeScore = 0;
-    var IST_cumulativeCorrect = 0;
-
     var dots_totalTrials = 0;
     var dots_totalCorrect = 0;
     var dots_blockCount = 0;
@@ -214,74 +173,6 @@
         demographicsRTs: [],
         demographics_duration: 0,
 
-        PHQ_score: 0,
-        PHQ_scorelist: [],
-        PHQ_QA: {},
-        PHQ_RTs: [],
-        PHQ_duration: 0,
-
-        STAI_score: 0,
-        STAI_scorelist: [],
-        STAI_QA: {},
-        STAI_RTs: [],
-        STAI_duration: 0,
-
-        IUS_score: 0,
-        IUS_scorelist: [],
-        IUS_QA: {},
-        IUS_RTs: [],
-        IUS_duration: 0,
-
-        SSMS_score: 0,
-        SSMS_RTs: [],
-        SSMS_duration: 0,
-
-        SSMS_UE_score: 0,
-        SSMS_UE_scorelist: [],
-        SSMS_UE_QA: {},
-        SSMS_CD_score: 0,
-        SSMS_CD_scorelist: [],
-        SSMS_CD_QA: {},
-        SSMS_IA_score: 0,
-        SSMS_IA_scorelist: [],
-        SSMS_IA_QA: {},
-        SSMS_IN_score: 0,
-        SSMS_IN_scorelist: [],
-        SSMS_IN_QA: {},
-
-        IST_trialType: [],
-        IST_scoreRule: [],
-        IST_isTutorialMode: [],
-        IST_isForcedChoice: [],
-        IST_leftRight_randoms: [],
-        IST_scores: [],
-        IST_buttonChoice: [],
-        IST_isCorrect: [],
-        IST_FW_pCorrect: [],
-        IST_DW_pCorrect: [],
-        IST_difficulty: [],
-        IST_repetition: [],
-        IST_majoritySide: [],
-        IST_majorityColour: [],
-        IST_minorityColour: [],
-        IST_majorityTiles: [],
-        IST_minorityTiles: [],
-        IST_totalSeen: [],
-        IST_DW_totalSeen: [],
-        IST_FW_totalSeen: [],
-        IST_tileSequence: [],
-        IST_majoritySequence: [],
-        IST_minoritySequence: [],
-        IST_majoritySeen: [],
-        IST_minoritySeen: [],
-        IST_confidence_preset: [],
-        IST_confidence_actual: [],
-        IST_confidence_ratings: [],
-        IST_trialRT: [],
-        IST_choiceRT: [],
-        IST_tileRTs: [],
-        IST_confidenceRTs: [],
-
         dots_accuracy: [],
         dots_isTutorialMode: [],
         dots_staircase: [],
@@ -308,7 +199,7 @@
     // ethics
     var PIS = {
         type: 'jspsych-PIS',
-        studyName: CUREC_studyName,
+        studyName: studyName,
         CUREC_ID: CUREC_ID,
         version: PIS_version,
         date: PIS_date
@@ -316,7 +207,7 @@
 
     var consent = {
         type: 'jspsych-consent',
-        studyName: CUREC_studyName,
+        studyName: studyName,
         CUREC_ID: CUREC_ID,
         version: consent_version,
         date: consent_date
@@ -324,231 +215,17 @@
 
     var debriefing = {
         type: 'jspsych-debriefing',
-        studyName: CUREC_studyName,
+        studyName: studyName,
         CUREC_ID: CUREC_ID,
         version: CUREC_version,
         date: CUREC_date
     };
 
-    // questionnaires
-    var PHQ9 = {
-        type: 'jspsych-PHQ9',
-        subtitle: '(2 sections, estimated length: 2 minutes)',
-        activeBracketing: true,
-        redirectLink: PHQexclusionURL
-    };
-
-    var STAI_Y2 = {
-        type: 'jspsych-STAI-Y2',
-        subtitle: '(2 sections, estimated length: 5 minutes)'
-    };
-
-    var SSMS = {
-        type: 'jspsych-SSMS',
-        subtitle: '(4 sections, estimated length: 10 minutes)'
-    };
-
-    var IUS12 = {
-        type: 'jspsych-IUS12',
-        subtitle: '(2 sections, estimated length: 3 minutes)'
-    };
-
-    var IUS27 = {
-        type: 'jspsych-IUS27',
-        subtitle: '(5 sections, estimated length: 5 minutes)'
-    };
-
+    // demographics
     var demographics = {
         type: 'jspsych-demographics'
     };
 
-    // IST/ISTc tutorials
-
-    var DW_tutorial1 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'IST',
-        score_rule: 'DW',
-        showRule: true,
-        confidenceFrequency: 'none',
-        isFirstTime: true
-    };
-
-    var DW_tutorial2 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'IST',
-        score_rule: 'DW',
-        showRule: true,
-        confidenceFrequency: 'none',
-        isFirstTime: false
-    };
-
-    var FW_tutorial1 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'IST',
-        score_rule: 'FW',
-        showRule: true,
-        confidenceFrequency: 'none',
-        isFirstTime: true
-    };
-
-    var FW_tutorial2 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'IST',
-        score_rule: 'FW',
-        showRule: true,
-        confidenceFrequency: 'none',
-        isFirstTime: false
-    };
-
-    var DWc_tutorial1 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'ISTc',
-        score_rule: 'DW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: true
-    };
-
-    var DWc_tutorial2 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'ISTc',
-        score_rule: 'DW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: false
-    };
-
-    var FWc_tutorial1 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'ISTc',
-        score_rule: 'FW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: true
-    };
-
-    var FWc_tutorial2 = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'ISTc',
-        score_rule: 'FW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: false
-    };
-
-    var FWc_forced_tutorial = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'forced',
-        score_rule: 'FW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: false
-    };
-
-    var DWc_forced_tutorial = {
-        type: 'jspsych-IST-tutorial',
-        trial_type: 'forced',
-        score_rule: 'DW',
-        showRule: true,
-        confidenceFrequency: 'randomInt',
-        isFirstTime: false
-    }
-
-    // IST/ISTc experimental blocks
-
-    var DW_block = {
-        type: 'jspsych-IST',
-        trial_type: 'IST',
-        confidenceFrequency: 'none',
-        score_rule: 'DW',
-        showRule: true,
-        showScore: false,
-        showCumulative: false,
-        trial_count: 10
-    };
-
-    var FW_block = {
-        type: 'jspsych-IST',
-        trial_type: 'IST',
-        confidenceFrequency: 'none',
-        score_rule: 'FW',
-        showRule: true,
-        trial_count: 10
-    };
-
-    var DWc_block = {
-        type: 'jspsych-IST',
-        trial_type: 'ISTc',
-        confidenceFrequency: 'randomInt',
-        score_rule: 'DW',
-        showRule: true,
-        trial_count: 10
-    };
-
-    var FWc_block = {
-        type: 'jspsych-IST',
-        trial_type: 'ISTc',
-        confidenceFrequency: 'randomInt',
-        score_rule: 'FW',
-        showRule: true,
-        trial_count: 10
-    };
-
-    var FWc_forced_block = {
-        type: 'jspsych-IST-forced',
-        trial_type: 'ISTc',
-        confidenceFrequency: 'randomInt',
-        score_rule: 'FW',
-        pCorrect: 'FW',
-        showRule: true,
-        trial_count: 10
-        // pCorrect: [0.4, 1, 0.7, 0.5, 0.65, 0.75, 0.8, 1, 0.7, 0.6]
-    };
-
-    var DWc_forced_block = {
-        type: 'jspsych-IST-forced',
-        trial_type: 'ISTc',
-        confidenceFrequency: 'randomInt',
-        score_rule: 'DW',
-        pCorrect: 'DW',
-        showRule: true,
-        trial_count: 10
-        // pCorrect: [0.5, 1, 0.7, 0.5, 0.65, 0.75, 0.8, 1, 0.7, 0.6]
-    };
-
-    // IST score change / forced choice notification pages
-    var FW_prelude = {
-        type: 'jspsych-message-splash',
-        name: 'FW_prelude',
-        message: 'The game mode has now been set to "Fixed".',
-        submessage: '<h2>You will be playing the same game as before, but in "Fixed" mode, if you correctly choose the majority colour, you will <highlight style="color: rgb(13,255,146)">win 100 points, regardless of the number of tiles you choose</highlight>. However, you will still lose 100 points if you choose the majority colour incorrectly.</h2> <br><br> <h1>Press the OK button below to continue to the next 10 rounds.</h1>',
-        backgroundColor: 'rgb(0,0,0)',
-        subjectID: subjectID,
-        buttonEnabled: true,
-        buttonText: 'OK'
-    };
-
-    var DW_prelude = {
-        type: 'jspsych-message-splash',
-        name: 'DW_prelude',
-        message: 'The game mode has now been set to "Decreasing".',
-        submessage: '<h2>You will be playing the same game as before, but in "Decreasing" mode, the number of points you earn for a correct answer will vary: if you correctly choose the majority colour, you will <highlight style="color: rgb(13,255,146)">win 10 points for every black tile remaining on the board</highlight>. However, you will still lose 100 points if you choose the majority colour incorrectly.</h2> <br><br> <h1>Press the OK button below to continue to the next 10 rounds.</h1>',
-        backgroundColor: 'rgb(0,0,0)',
-        subjectID: subjectID,
-        buttonEnabled: true,
-        buttonText: 'OK'
-    };
-
-    var forced_prelude = {
-        type: 'jspsych-message-splash',
-        name: 'forced_prelude',
-        message: 'The computer will now tell you when to guess.',
-        submessage: '<h2>As before, you can turn over any of the tiles. The response buttons at the bottom will be grey at the start. <highlight style="color: rgb(13,255,146)">When they change colour, please make your best guess as to the majority colour.</highlight> You will win 100 points if you correctly choose the majority colour, and lose 100 points if you choose incorrectly.</h2> <br><br> <h1>Press the OK button below to continue to the next 20 rounds.</h1>',
-        backgroundColor: 'rgb(0,0,0)',
-        subjectID: subjectID,
-        buttonEnabled: true,
-        buttonText: 'OK'
-    };
 
     // dot task
     var dotTaskPractice1 = {
@@ -683,12 +360,6 @@
         submessageSize: '2.8vmin'
     };
 
-    var ISTScoreReveal = {
-        type: 'jspsych-score-reveal',
-        performanceType: 'score',
-        conversionFactor: 0.0003
-    };
-
     var dotsScoreReveal = {
         type: 'jspsych-score-reveal',
         performanceType: 'accuracy',
@@ -726,191 +397,46 @@
     /* TIMELINES FOR RELEASE & TESTING */
     switch(trialTypeOrder) {
 
-        case 'tiles only':
-            if (scoreRuleOrder == 'FW-DW') {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    FWc_tutorial1,
-                    FWc_block,
-                    DW_prelude,
-                    DWc_block,
-                    FWc_forced_tutorial,
-                    FWc_forced_block,
-                    DW_prelude,
-                    DWc_forced_block,
-                    ISTScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            } else {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    DWc_tutorial1,
-                    DWc_block,
-                    FW_prelude,
-                    FWc_block,
-                    DWc_forced_tutorial,
-                    DWc_forced_block,
-                    FW_prelude,
-                    FWc_forced_block,
-                    ISTScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            }
-            break;
-
-        case 'dots-tiles':
-            if (scoreRuleOrder == 'FW-DW') {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    PHQ9,
-                    STAI_Y2,
-                    SSMS,
-                    IUS27,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotTaskRest,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotsScoreReveal,
-                    FWc_tutorial1,
-                    FWc_block,
-                    DW_prelude,
-                    DWc_block,
-                    ISTScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            } else {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    PHQ9,
-                    STAI_Y2,
-                    SSMS,
-                    IUS27,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotTaskRest,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotsScoreReveal,
-                    DWc_tutorial1,
-                    DWc_block,
-                    FW_prelude,
-                    FWc_block,
-                    ISTScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            }
-            break;
-
-        case 'tiles-dots':
-            if (scoreRuleOrder == 'FW-DW') {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    PHQ9,
-                    STAI_Y2,
-                    SSMS,
-                    IUS27,
-                    FWc_tutorial1,
-                    FWc_block,
-                    DW_prelude,
-                    DWc_block,
-                    ISTScoreReveal,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotTaskRest,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotsScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            } else {
-                var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    PHQ9,
-                    STAI_Y2,
-                    SSMS,
-                    IUS27,
-                    DWc_tutorial1,
-                    DWc_block,
-                    FW_prelude,
-                    FWc_block,
-                    ISTScoreReveal,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotTaskRest,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotsScoreReveal,
-                    feedbackPoll,
-                    debriefing,
-                    thankYou
-                ];
-            }
+        case 'all':
+            var timeline = [
+                loading,
+                PIS,
+                consent,
+                demographics,
+                dotTaskInstructions1,
+                dotTaskPractice1,
+                dotTaskInstructions2,
+                dotTaskPractice2,
+                dotTaskStart,
+                dotTask1,
+                dotTaskRest,
+                dotTask2,
+                dotTaskRest,
+                dotTask3,
+                dotTaskRest,
+                dotTask4,
+                dotsScoreReveal,
+                feedbackPoll,
+                debriefing,
+                thankYou
+            ];
             break;
 
         case 'testing':
             var timeline = [
-                FWc_forced_tutorial,
-                FWc_forced_block,
-                DW_prelude,
-                DWc_forced_block,
-                ISTScoreReveal,
+                dotTaskInstructions1,
+                dotTaskPractice1,
+                dotTaskInstructions2,
+                dotTaskPractice2,
+                dotTaskStart,
+                dotTask1,
+                dotTaskRest,
+                dotTask2,
+                dotTaskRest,
+                dotTask3,
+                dotTaskRest,
+                dotTask4,
+                dotsScoreReveal,
                 feedbackPoll,
                 debriefing,
                 thankYou
@@ -918,7 +444,7 @@
             break;
 
         default:
-            var timeline = [loading];
+            var timeline = [loading];   //ask Linda what this is!!!
     }
 
     /* JSPSYCH & MONGODB */

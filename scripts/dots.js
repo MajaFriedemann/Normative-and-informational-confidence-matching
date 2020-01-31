@@ -34,7 +34,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
   var dotPairs = [];
   var dotConfidences = [];
   var dotRTs = [];
-  // var choice_timer;
+  var choice_timer;
   var confidence_timer;
 
   // determine which buttons to show

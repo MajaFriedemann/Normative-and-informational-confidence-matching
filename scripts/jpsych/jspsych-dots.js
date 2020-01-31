@@ -83,7 +83,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       redButtonEnabled: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Red button enabled?',
-        default: true,
+        default: false,
         description: 'Is the red (left) button enabled?'
       },
       redButtonName: {
@@ -95,7 +95,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       yellowButtonEnabled: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Yellow button enabled?',
-        default: true,
+        default: false,
         description: 'Is the yellow (middle) button enabled?'
       },
       yellowButtonName: {
@@ -125,7 +125,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       defaultOptionEnabled: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Default option for "See Again" enabled',
-        default: true,
+        default: false,
         description: 'Is the default option for "See Again" choice enabled?'
       }
     }

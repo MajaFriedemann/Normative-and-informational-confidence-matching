@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="" />
+    <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-PIS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-consent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-debriefing.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-demographics.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-feedback-form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-questionnaire.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/IST-c.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/ISTc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/LJW PHOTOGRAPHY favicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dotTask_2.5.0 seeAgain.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gameboard-ISTc-2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gameboard-ISTc-forced.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gameboard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gameboard.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gameboard_2.4.0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/multiply.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/gameboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/gameboard_forced.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-BDI-II.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-IST-forced.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-IST-tutorial.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-IST.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-IUS12.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-IUS27.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-PHQ9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-PIS.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-SSMS.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-STAI-Y2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-consent.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-debriefing.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-demographics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-dots.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-feedback-form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-loading.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-message-splash.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-notice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-questionnaire.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jspsych-score-reveal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,18 +68,27 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1X4jhhljCfWB6NtKdB7EIrTBKgR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../InformationSeeking-Linda-master" />
   </component>
@@ -54,11 +115,15 @@
       <option name="presentableId" value="Default" />
       <updated>1580312382010</updated>
       <workItem from="1580312383139" duration="2131000" />
+      <workItem from="1580462683556" duration="17786000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1580312465376">
