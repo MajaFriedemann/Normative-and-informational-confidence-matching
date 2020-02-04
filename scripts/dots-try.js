@@ -37,6 +37,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var choice_timer;
     var confidence_timer;
 
+
     // determine which buttons to show
     if (defaultOptionEnabled) {
         yellowButtonEnabled = false;
@@ -94,6 +95,29 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     );
     grid.draw(canvasID);
 
+    // draw the selection highlight masks
+    var mask1 = createGeneral(
+        mask1,
+        document.getElementById('jspsych-canvas-sliders-response-stimulus'),
+        'div',
+        'grid-mask mask-left',
+        'grid-mask-left',
+        ''
+    );
+
+    var mask2 = createGeneral(
+        mask2,
+        document.getElementById('jspsych-canvas-sliders-response-stimulus'),
+        'div',
+        'grid-mask mask-right',
+        'grid-mask-right',
+        ''
+    );
+    // hide the masks
+    $('.grid-mask').css('visibility', 'hidden');
+    // start the timer
+    start_timer = Date.now();
+
     // draw the slider
     var response_area = createGeneral(
         response_area,
@@ -110,619 +134,588 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         'div',
         'confidence-question',
         'confidence-question',
-        '<h1>Which box contained more dots?</h1> (click on scale to select)'
+        '<h1>Which box contained more dots?</h1> (left click for left box, right click for right box)'
     );
 
     var confidence_meter = noDragSlider('dots_slider', response_area, dots_tooltipLabels, dots_endLabels, buttonsToShow);
-
+    // hide the response area
+    $('.confidence-question').css('visibility', 'hidden');
     $('.response-area').css('visibility', 'hidden');
 
-    setTimeout(function () {
+    // enable the cursor
+    $('.jspsych-content').css('cursor', 'auto');
 
-        // draw the selection highlight masks
-        var mask1 = createGeneral(
-            mask1,
-            document.getElementById('jspsych-canvas-sliders-response-stimulus'),
-            'div',
-            'grid-mask mask-left',
-            'grid-mask-left',
-            ''
-        );
 
-        var mask2 = createGeneral(
-            mask2,
-            document.getElementById('jspsych-canvas-sliders-response-stimulus'),
-            'div',
-            'grid-mask mask-right',
-            'grid-mask-right',
-            ''
-        );
-
-        // reset the event loggers
-        $('.mask-left').off('click');
-        $('.mask-right').off('click');
-        $('.escape-button').off('click');
-        $('.submit-button').off('click');
-        $('.more-button').off('click');
-        $('.scale-row').off('mousemove').off('click');
-
-        // add keypress option
-        /*
-        $(document).off('keydown');
-        $(document).on('keydown', function(event) {
-          console.log(event.keyCode);
-          if (event.which == 37) {
+    // left or right mouse-click for decision
+    $(document).on('mousedown', function(event) {
+        console.log(event.button);
+        // record the RT
+        choice_timer = Date.now();
+        // turn off these event handlers
+        $(document).off('mousedown');
+        $('.grid-mask').css('cursor', 'auto');
+        // highlight the chosen box
+        if (event.button == 0) {
             $('.mask-left').css('border', '5px solid rgb(13,255,146');
             $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
-          } else if (event.which == 39) {
+        } else if (event.button == 2) {
             $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
             $('.mask-right').css('border', '5px solid rgb(13,255,146');
-          }
-        });
-        */
+        }
+        // make response area visible
+        $('.confidence-question').css('visibility', 'visible');
+        $('.response-area').css('visibility', 'visible');
+    });
 
-        setTimeout(function () {
-            $('.confidence-question').css('visibility', 'visible');
-            $('.response-area').css('visibility', 'visible');
-            $('.jspsych-content').css('cursor', 'auto');
-            // start the trial timer
-            start_timer = Date.now();
-        }, transitionPeriod);
+    // reset the event loggers
+    $('.mask-left').off('click');
+    $('.mask-right').off('click');
+    $('.escape-button').off('click');
+    $('.submit-button').off('click');
+    $('.more-button').off('click');
+    $('.scale-row').off('mousemove').off('click');
 
-        /* $('.mask-left').on('click', function() {
-          console.log('left grid clicked!');
-          // record the RT
-          choice_timer = Date.now();
-          // turn off these event handlers
-          $('.mask-left').off('click');
-          $('.mask-right').off('click');
-          $('.grid-mask').css('cursor', 'auto');
-          // highlight the chosen box
-          $('.mask-left').css('border', '5px solid rgb(13,255,146');
-          $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
-          // make response area visible
-          $('.confidence-question').css('visibility', 'visible');
-          $('.response-area').css('visibility', 'visible');
-        });
-
-        $('.mask-right').on('click', function() {
-          console.log('right grid clicked!');
-          // record the RT
-          choice_timer = Date.now();
-          // turn off these event handlers
-          $('.mask-left').off('click');
-          $('.mask-right').off('click');
-          $('.grid-mask').css('cursor', 'auto');
-          // highlight the chosen box
-          $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
-          $('.mask-right').css('border', '5px solid rgb(13,255,146');
-          // make response area visible
-          $('.confidence-question').css('visibility', 'visible');
-          $('.response-area').css('visibility', 'visible');
-        });
+    // add keypress option
+    /*
+    $(document).off('keydown');
+    $(document).on('keydown', function(event) {
+      console.log(event.keyCode);
+      if (event.which == 37) {
+        $('.mask-left').css('border', '5px solid rgb(13,255,146');
+        $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
+      } else if (event.which == 39) {
+        $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
+        $('.mask-right').css('border', '5px solid rgb(13,255,146');
+      }
+    });
     */
 
-        function recordRating(backendConfidence, majoritySide, type) {
-            if (backendConfidence !== undefined) {
-                // record correct/incorrect confidence
-                if (majoritySide == 'left') {
-                    var invertedConfidence = 100 - backendConfidence;
-                    dotConfidences.push(invertedConfidence);
+    function recordRating(backendConfidence, majoritySide, type) {     //add recording of initial response correctness!!!!!!!!!
+        if (backendConfidence !== undefined) {
+            // record correct/incorrect confidence
+            if (majoritySide == 'left') {
+                var invertedConfidence = 100 - backendConfidence;
+                dotConfidences.push(invertedConfidence);
 
-                    if (invertedConfidence > 50) {
-                        correctResponse = true;
-                    } else {
-                        correctResponse = false;
-                    }
-
-                    if (!isTutorialMode && type == 'submit') {
-                        dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse);
-                    }
+                if (invertedConfidence > 50) {
+                    correctResponse = true;
                 } else {
-                    dotConfidences.push(backendConfidence);
-
-                    if (backendConfidence > 50) {
-                        correctResponse = true;
-                    } else {
-                        correctResponse = false;
-                    }
-
-                    if (!isTutorialMode && type == 'submit') {
-                        dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
-                    }
+                    correctResponse = false;
                 }
-                console.log(dotPairs);
-                console.log(dotConfidences);
+
+                if (!isTutorialMode && type == 'submit') {
+                    dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse);
+                }
+            } else {
+                dotConfidences.push(backendConfidence);
+
+                if (backendConfidence > 50) {
+                    correctResponse = true;
+                } else {
+                    correctResponse = false;
+                }
+
+                if (!isTutorialMode && type == 'submit') {
+                    dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
+                }
             }
+            console.log(dotPairs);
+            console.log(dotConfidences);
         }
+    }
 
-        function buttonBackend(type) {
-            // turn off the button options
-            $('.scale-button').addClass('invisible');
+    function buttonBackend(type) {
+        // turn off the button options
+        $('.scale-button').addClass('invisible');
 
-            // record RT and reset the timer
-            confidence_timer = Date.now();
-            var RT = calculateRT(start_timer, confidence_timer);
-            dotRTs.push(RT);
+        // record RT and reset the timer
+        confidence_timer = Date.now();
+        var RT = calculateRT(start_timer, confidence_timer);
+        dotRTs.push(RT);
 
 
-            // other options
-            switch (type) {
-                case 'exit':
-                    sliderActive = true;
-                    break;
+        // other options
+        switch (type) {
+            case 'exit':
+                sliderActive = true;
+                break;
 
-                case 'seeAgain':
-                    secondTimeAround = true;
-                    recordRating(backendConfidence, majoritySide, type);
+            case 'seeAgain':
+                secondTimeAround = true;
+                recordRating(backendConfidence, majoritySide, type);
 
-                    // update the staircase based on this first response
+                // update the staircase based on this first response
+                dotsStaircase.next(correctResponse);
+                staircaseSteps++;
+
+                // reset the trial timer
+                start_timer = Date.now();
+
+                // set options for 'See Again' based on specified parameter
+
+                // same grid (simple mask-lifting)
+                if (seeAgain == 'same') {
+                    // save data
+                    dotPairs.push(dots);
+
+                    $('.response-area').css('visibility', 'hidden');
+                    $('.confidence-question').css('visibility', 'hidden');
+                    $('.grid-mask').css('visibility', 'hidden');
+                    $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
+
+                    var fixationCross = createGeneral(
+                        fixationCross,
+                        document.getElementById('jspsych-canvas-sliders-response-wrapper'),
+                        'div',
+                        'fixation-cross see-again',
+                        'fixation-cross',
+                        '+'
+                    );
+
+                    setTimeout(function () {
+                        document.getElementById('fixation-cross').remove();
+                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
+
+                        setTimeout(function () {
+                            $('.grid-mask').css('visibility', 'visible');
+
+                            setTimeout(function () {
+                                sliderActive = true;
+                                $('.confidence-question').css('visibility', 'visible');
+                                $('.response-area').css('visibility', 'visible');
+                                document.getElementById('more-button').remove();
+                                $('.submit-button').css('margin-left', '0');
+                            }, transitionPeriod);
+                        }, dotPeriod);
+                    }, fixationPeriod);
+
+                    // same dot counts, different grid
+                } else if (seeAgain == 'similar') {
+                    // save data
+                    dotPairs.push(dots);
+
+                    // clear the grids
+                    var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
+                    var context = dotCanvas.getContext('2d');
+                    context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
+                    context.beginPath();
+
+                    // hide masks and response areas
+                    $('.response-area').css('visibility', 'hidden');
+                    $('.confidence-question').css('visibility', 'hidden');
+                    $('.grid-mask').css('visibility', 'hidden');
+                    $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
+
+                    var fixationCross = createGeneral(
+                        fixationCross,
+                        document.getElementById('jspsych-canvas-sliders-response-wrapper'),
+                        'div',
+                        'fixation-cross see-again',
+                        'fixation-cross',
+                        '+'
+                    );
+
+                    setTimeout(function () {
+                        document.getElementById('fixation-cross').remove();
+                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
+                        // redraw the canvas with new dot values
+                        var gridNew = new DoubleDotGrid(dots[0], dots[1], {
+                            spacing: 100,
+                            paddingX: 6
+                        });
+                        gridNew.draw(canvasID);
+
+                        setTimeout(function () {
+                            $('.grid-mask').css('visibility', 'visible');
+
+                            setTimeout(function () {
+                                sliderActive = true;
+                                $('.confidence-question').css('visibility', 'visible');
+                                $('.response-area').css('visibility', 'visible');
+                                document.getElementById('more-button').remove();
+                                $('.submit-button').css('margin-left', '0');
+                            }, transitionPeriod);
+                        }, dotPeriod);
+                    }, fixationPeriod);
+
+                } else { // (i.e., easier dot counts)
+
+                    // clear the grids
+                    var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
+                    console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
+                    var context = dotCanvas.getContext('2d');
+                    context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
+                    context.beginPath();
+
+                    // hide masks and response areas
+                    $('.response-area').css('visibility', 'hidden');
+                    $('.confidence-question').css('visibility', 'hidden');
+                    $('.grid-mask').css('visibility', 'hidden');
+                    $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
+
+                    // update the dot difference
+                    high = dotCount + Math.E ** (Math.log(dotsStaircase.getLast('logSpace')) + 0.5);
+                    console.log(high);
+                    if (randomiser > 0.5) {
+                        dots = [low, high];
+                    } else {
+                        dots = [high, low];
+                    }
+                    dotPairs.push(dots);
+
+                    // redraw the fixation cross, etc.
+                    var fixationCross = createGeneral(
+                        fixationCross,
+                        document.getElementById('jspsych-canvas-sliders-response-wrapper'),
+                        'div',
+                        'fixation-cross see-again',
+                        'fixation-cross',
+                        '+'
+                    );
+
+                    setTimeout(function () {
+                        document.getElementById('fixation-cross').remove();
+                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
+                        // redraw the canvas with new dot values
+                        var gridNew = new DoubleDotGrid(dots[0], dots[1], {
+                            spacing: 100,
+                            paddingX: 6
+                        });
+                        gridNew.draw(canvasID);
+
+                        setTimeout(function () {
+                            $('.grid-mask').css('visibility', 'visible');
+
+                            setTimeout(function () {
+                                sliderActive = true;
+                                $('.confidence-question').css('visibility', 'visible');
+                                $('.response-area').css('visibility', 'visible');
+                                document.getElementById('more-button').remove();
+                                $('.submit-button').css('margin-left', '0');
+                            }, transitionPeriod);
+                        }, dotPeriod);
+                    }, fixationPeriod);
+                }
+
+                // clear the display and start a new trial
+                /*
+                document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
+                document.getElementById('response-area').remove();
+                console.log('display cleared: success!');
+                jsPsych.finishTrial();
+                */
+                break;
+
+            default:
+                recordRating(backendConfidence, majoritySide, type);
+
+                if (secondTimeAround) {
+                    trialDataVariable['dots_moreAsked'].push(true);
+
+                    // cancel the wait time
+                    if (isTutorialMode) {
+                        var waitTime = 1000;
+                    } else {
+                        var waitTime = 0;
+                    }
+
+                } else {
+                    trialDataVariable['dots_moreAsked'].push(false);
+
+                    // update the staircase because it is the first response
                     dotsStaircase.next(correctResponse);
                     staircaseSteps++;
 
-                    // reset the trial timer
-                    start_timer = Date.now();
-
-                    // set options for 'See Again' based on specified parameter
-
-                    // same grid (simple mask-lifting)
-                    if (seeAgain == 'same') {
-                        // save data
-                        dotPairs.push(dots);
-
-                        $('.response-area').css('visibility', 'hidden');
-                        $('.confidence-question').css('visibility', 'hidden');
-                        $('.grid-mask').css('visibility', 'hidden');
-                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
-
-                        var fixationCross = createGeneral(
-                            fixationCross,
-                            document.getElementById('jspsych-canvas-sliders-response-wrapper'),
-                            'div',
-                            'fixation-cross see-again',
-                            'fixation-cross',
-                            '+'
-                        );
-
-                        setTimeout(function () {
-                            document.getElementById('fixation-cross').remove();
-                            $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-
-                            setTimeout(function () {
-                                $('.grid-mask').css('visibility', 'visible');
-
-                                setTimeout(function () {
-                                    sliderActive = true;
-                                    $('.confidence-question').css('visibility', 'visible');
-                                    $('.response-area').css('visibility', 'visible');
-                                    document.getElementById('more-button').remove();
-                                    $('.submit-button').css('margin-left', '0');
-                                }, transitionPeriod);
-                            }, dotPeriod);
-                        }, fixationPeriod);
-
-                        // same dot counts, different grid
-                    } else if (seeAgain == 'similar') {
-                        // save data
-                        dotPairs.push(dots);
-
-                        // clear the grids
-                        var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                        var context = dotCanvas.getContext('2d');
-                        context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-                        context.beginPath();
-
-                        // hide masks and response areas
-                        $('.response-area').css('visibility', 'hidden');
-                        $('.confidence-question').css('visibility', 'hidden');
-                        $('.grid-mask').css('visibility', 'hidden');
-                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
-
-                        var fixationCross = createGeneral(
-                            fixationCross,
-                            document.getElementById('jspsych-canvas-sliders-response-wrapper'),
-                            'div',
-                            'fixation-cross see-again',
-                            'fixation-cross',
-                            '+'
-                        );
-
-                        setTimeout(function () {
-                            document.getElementById('fixation-cross').remove();
-                            $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-                            // redraw the canvas with new dot values
-                            var gridNew = new DoubleDotGrid(dots[0], dots[1], {
-                                spacing: 100,
-                                paddingX: 6
-                            });
-                            gridNew.draw(canvasID);
-
-                            setTimeout(function () {
-                                $('.grid-mask').css('visibility', 'visible');
-
-                                setTimeout(function () {
-                                    sliderActive = true;
-                                    $('.confidence-question').css('visibility', 'visible');
-                                    $('.response-area').css('visibility', 'visible');
-                                    document.getElementById('more-button').remove();
-                                    $('.submit-button').css('margin-left', '0');
-                                }, transitionPeriod);
-                            }, dotPeriod);
-                        }, fixationPeriod);
-
-                    } else { // (i.e., easier dot counts)
-
-                        // clear the grids
-                        var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                        console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
-                        var context = dotCanvas.getContext('2d');
-                        context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-                        context.beginPath();
-
-                        // hide masks and response areas
-                        $('.response-area').css('visibility', 'hidden');
-                        $('.confidence-question').css('visibility', 'hidden');
-                        $('.grid-mask').css('visibility', 'hidden');
-                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
-
-                        // update the dot difference
-                        high = dotCount + Math.E ** (Math.log(dotsStaircase.getLast('logSpace')) + 0.5);
-                        console.log(high);
-                        if (randomiser > 0.5) {
-                            dots = [low, high];
-                        } else {
-                            dots = [high, low];
-                        }
-                        dotPairs.push(dots);
-
-                        // redraw the fixation cross, etc.
-                        var fixationCross = createGeneral(
-                            fixationCross,
-                            document.getElementById('jspsych-canvas-sliders-response-wrapper'),
-                            'div',
-                            'fixation-cross see-again',
-                            'fixation-cross',
-                            '+'
-                        );
-
-                        setTimeout(function () {
-                            document.getElementById('fixation-cross').remove();
-                            $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-                            // redraw the canvas with new dot values
-                            var gridNew = new DoubleDotGrid(dots[0], dots[1], {
-                                spacing: 100,
-                                paddingX: 6
-                            });
-                            gridNew.draw(canvasID);
-
-                            setTimeout(function () {
-                                $('.grid-mask').css('visibility', 'visible');
-
-                                setTimeout(function () {
-                                    sliderActive = true;
-                                    $('.confidence-question').css('visibility', 'visible');
-                                    $('.response-area').css('visibility', 'visible');
-                                    document.getElementById('more-button').remove();
-                                    $('.submit-button').css('margin-left', '0');
-                                }, transitionPeriod);
-                            }, dotPeriod);
-                        }, fixationPeriod);
-                    }
-
-                    // clear the display and start a new trial
-                    /*
-                    document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
-                    document.getElementById('response-area').remove();
-                    console.log('display cleared: success!');
-                    jsPsych.finishTrial();
-                    */
-                    break;
-
-                default:
-                    recordRating(backendConfidence, majoritySide, type);
-
-                    if (secondTimeAround) {
-                        trialDataVariable['dots_moreAsked'].push(true);
-
-                        // cancel the wait time
-                        if (isTutorialMode) {
-                            var waitTime = 1000;
-                        } else {
-                            var waitTime = 0;
-                        }
-
+                    // calculate the wait time
+                    var waitTime = fixationPeriod + dotPeriod + transitionPeriod + RT;
+                    if (waitTime <= waitTimeLimit) {
+                        console.log('waitTime is ' + waitTime);
                     } else {
-                        trialDataVariable['dots_moreAsked'].push(false);
-
-                        // update the staircase because it is the first response
-                        dotsStaircase.next(correctResponse);
-                        staircaseSteps++;
-
-                        // calculate the wait time
-                        var waitTime = fixationPeriod + dotPeriod + transitionPeriod + RT;
-                        if (waitTime <= waitTimeLimit) {
-                            console.log('waitTime is ' + waitTime);
-                        } else {
-                            waitTime = waitTimeLimit;
-                            console.log('waitTime is ' + waitTime);
-                        }
+                        waitTime = waitTimeLimit;
+                        console.log('waitTime is ' + waitTime);
                     }
+                }
 
-                    trialDataVariable['dots_waitTimes'].push(waitTime);
-                    trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
-                    trialDataVariable['dots_pairs'].push(dotPairs);
-                    trialDataVariable['dots_confidences'].push(dotConfidences);
-                    trialDataVariable['dots_RTs'].push(dotRTs);
-                    trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
-                    trialCounterVariable++;
+                trialDataVariable['dots_waitTimes'].push(waitTime);
+                trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
+                trialDataVariable['dots_pairs'].push(dotPairs);
+                trialDataVariable['dots_confidences'].push(dotConfidences);
+                trialDataVariable['dots_RTs'].push(dotRTs);
+                trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
+                trialCounterVariable++;
 
-                    // give feedback
-                    if (isTutorialMode) {
-                        if (correctResponse) {
-                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                        } else {
-                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-                        }
-                        setTimeout(function () {
-                            // clear the display on a timer
-                            document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
-                            document.getElementById('response-area').remove();
-                            console.log('dot display cleared: success!')
-                            console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-                        }, 1000);
+                // give feedback
+                if (isTutorialMode) {
+                    if (correctResponse) {
+                        document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                     } else {
-                        // clear the display directly
+                        document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                    }
+                    setTimeout(function () {
+                        // clear the display on a timer
                         document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
                         document.getElementById('response-area').remove();
                         console.log('dot display cleared: success!')
                         console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-
-                        dots_totalTrials++;
-                    }
-
-                    if (trialCounterVariable < trialCount) {
-                        // draw the fixation dot
-                        setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled); }, waitTime);
-
-                    } else {
-                        // evaluate accuracy
-                        setTimeout(function () {
-                            var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
-                            console.log('accuracy: ' + accuracy);
-
-                            if (isTutorialMode) {
-                                if (accuracy >= accuracyThreshold) {
-                                    var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
-                                    var section4_button = 'CONTINUE';
-                                } else {
-                                    var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "Repeat" below to repeat the practice round.';
-                                    var section4_button = 'REPEAT';
-                                }
-
-                                // set up feedback page
-                                $('.jspsych-content-wrapper')
-                                    .css('width', '100%');
-
-                                var section4 = createGeneral(
-                                    section4,
-                                    parent,
-                                    'section',
-                                    'tutorial-section section4',
-                                    'dots-tutorial-section4',
-                                    ''
-                                );
-
-                                var section4_title = createGeneral(
-                                    section4_title,
-                                    section4,
-                                    'div',
-                                    'tutorial-text',
-                                    'dots-tutorial-text4',
-                                    section4_text
-                                );
-
-                                $('#dots-tutorial-text4').css('font-size', '3vmax');
-
-                                var section4_button = createGeneral(
-                                    section4_button,
-                                    section4,
-                                    'button',
-                                    'default-white-button glowy-box',
-                                    'dots-tutorial-continue',
-                                    '<div>' + section4_button + '</div>'
-                                );
-
-                                if (accuracy >= accuracyThreshold) {
-                                    $('#dots-tutorial-continue').on('click', function () {
-                                        console.log(trialDataVariable);
-                                        permanentDataVariable["dots_accuracy"].push(accuracy);
-                                        permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
-                                        permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
-                                        permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
-                                        permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
-                                        permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
-                                        permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
-                                        permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
-
-                                        $('body').css('cursor', 'auto');
-                                        jsPsych.finishTrial();
-                                        return;
-                                    });
-                                } else {
-                                    $('#dots-tutorial-continue').on('click', function () {
-                                        drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, isTutorialMode, accuracyThreshold, yellowButtonEnabled, redButtonEnabled, redButtonName, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled);
-                                        return;
-                                    });
-                                }
-                            } else {
-                                // if not in tutorial mode
-                                permanentDataVariable["dots_accuracy"].push(accuracy);
-                                permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
-                                permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
-                                permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
-                                permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
-                                permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
-                                permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
-                                permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
-                                permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
-
-                                dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
-                                dots_blockCount++;
-
-                                $('body').css('cursor', 'auto');
-                                jsPsych.finishTrial();
-                                return;
-                            }
-                        }, 1500);
-                    }
-            }
-        }
-
-
-        $('.scale-row').on({
-            mousemove: function (event) {
-                var scaleOffsetLeft = cumulativeOffset(document.getElementById('scale')).left;
-                var scaleWidth = document.getElementById('scale').offsetWidth;
-                var Xmin = scaleOffsetLeft;
-
-                if (sliderActive) {
-                    backendConfidence = Math.round(((event.pageX - Xmin) / scaleWidth) * 100);
-
-                    if (backendConfidence >= 100) {
-                        backendConfidence = 100;
-                        displayedConfidence = backendConfidence;
-                        document.body.style.setProperty('--displayedColor', upperColor);
-                    } else if (backendConfidence < 100 && backendConfidence >= 51) {
-                        backendConfidence = backendConfidence;
-                        displayedConfidence = backendConfidence;
-                        document.body.style.setProperty('--displayedColor', upperColor);
-                    } else if (backendConfidence < 51 && backendConfidence >= 49) {
-                        backendConfidence = backendConfidence;
-                        displayedConfidence = 51;
-                        if (backendConfidence >= 50) {
-                            document.body.style.setProperty('--displayedColor', upperColor);
-                        } else {
-                            document.body.style.setProperty('--displayedColor', lowerColor);
-                        }
-                    } else if (backendConfidence < 49 && backendConfidence > 0) {
-                        backendConfidence = backendConfidence;
-                        displayedConfidence = 100 - backendConfidence;
-                        document.body.style.setProperty('--displayedColor', lowerColor);
-                    } else {
-                        backendConfidence = 0;
-                        displayedConfidence = 100 - backendConfidence;
-                        document.body.style.setProperty('--displayedColor', lowerColor);
-                    }
-
-                    var barWidth = Math.abs((displayedConfidence - 50) * 0.5);
-                    if (backendConfidence >= 50) {
-                        $('#scale-right-fill, #confidence-value-right').css('width', barWidth.toString() + 'vmin').css('border-right', '5px solid rgb(255,50,50)');
-                        $('#scale-left-fill, #confidence-value-left').css('width', '0vmin').css('border-left', '5px solid rgba(0,0,0,0)');
-                    } else if (backendConfidence < 50) {
-                        $('#scale-left-fill, #confidence-value-left').css('width', barWidth.toString() + 'vmin').css('border-left', '5px solid rgb(255,50,50)');
-                        $('#scale-right-fill, #confidence-value-right').css('width', '0vmin').css('border-right', '5px solid rgba(0,0,0,0)');
-                    }
-
-                    if (showPercentage) {
-                        if (backendConfidence > 45) {
-                            document.getElementById('confidence-value-right').innerHTML = displayedConfidence + '%';
-                            document.getElementById('confidence-value-left').innerHTML = '';
-                        } else if (backendConfidence <= 45) {
-                            document.getElementById('confidence-value-left').innerHTML = displayedConfidence + '%';
-                            document.getElementById('confidence-value-right').innerHTML = '';
-                        }
-                    }
-                }
-            },
-            click: function () {
-                sliderActive = false;
-
-                // show buttons
-                if (!sliderActive) {
-                    $('.scale-button').removeClass('invisible');
-                }
-
-                if (defaultOptionEnabled) {
-                    // record data
-                    confidence_timer = Date.now();
-                    var RT = calculateRT(start_timer, confidence_timer);
-                    dotRTs.push(RT);
-                    recordRating(backendConfidence, majoritySide, 'initial');
-
-                    // wipe the slate and show the default option with timer if first time
-                    if (!secondTimeAround) {
-                        // clear the grids
-                        var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                        console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
-                        var context = dotCanvas.getContext('2d');
-                        context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-                        context.beginPath();
-
-                        // hide masks and response areas
-                        $('.response-area, .confidence-question, .grid-mask, #jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
-
-                        var defaultQuestionValue = '';
-                        if (redButtonName == 'SKIP INSTEAD') {
-                            defaultQuestionValue = 'See Again?';
-                        } else if (redButtonName == 'SEE AGAIN INSTEAD') {
-                            defaultQuestionValue = 'Continue?';
-                        }
-
-                        var defaultQuestion = createGeneral(
-                            defaultQuestion,
-                            document.getElementById('jspsych-canvas-sliders-response-wrapper'),
-                            'div',
-                            'fixation-cross see-again',
-                            'default-question',
-                            defaultQuestionValue
-                        );
-
-                        // draw a central timer
-                        countdownTimer(document.getElementById('jspsych-canvas-sliders-response-wrapper'), 3, 3000);
-
-                        $('.response-area, #tooltip-row-bottom').css('visibility', 'visible');
-                        $('#tooltip-row-top, #tooltip-arrow-top, #scale-row').css('visibility', 'hidden');
-
-                        setTimeout(function () {
-                            document.getElementById('countdown').remove();
-                            document.getElementById('default-question').remove();
-                            $('.response-area, #tooltip-row-bottom').css('visibility', 'hidden');
-                            $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-
-                            if (defaultQuestionValue == 'See Again?' && !secondTimeAround) {
-                                buttonBackend('seeAgain');
-                            } else {
-                                buttonBackend('submit');
-                            }
-                        }, 3000);
-
-                        // wipe the slate and end trial if second time
-                    } else {
-
-                    }
+                    }, 1000);
                 } else {
-                    //
+                    // clear the display directly
+                    document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
+                    document.getElementById('response-area').remove();
+                    console.log('dot display cleared: success!')
+                    console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
+
+                    dots_totalTrials++;
                 }
-            },
-        });
 
-        $('.escape-button').on('click', function () {
-            if (redButtonName == 'SKIP INSTEAD') {
-                buttonBackend('submit');
-            } else if (redButtonName == 'SEE AGAIN INSTEAD') {
-                buttonBackend('seeAgain');
-            } else {
-                buttonBackend('exit');
+                if (trialCounterVariable < trialCount) {
+                    // draw the fixation dot
+                    setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled); }, waitTime);
+
+                } else {
+                    // evaluate accuracy
+                    setTimeout(function () {
+                        var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
+                        console.log('accuracy: ' + accuracy);
+
+                        if (isTutorialMode) {
+                            if (accuracy >= accuracyThreshold) {
+                                var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                                var section4_button = 'CONTINUE';
+                            } else {
+                                var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "Repeat" below to repeat the practice round.';
+                                var section4_button = 'REPEAT';
+                            }
+
+                            // set up feedback page
+                            $('.jspsych-content-wrapper')
+                                .css('width', '100%');
+
+                            var section4 = createGeneral(
+                                section4,
+                                parent,
+                                'section',
+                                'tutorial-section section4',
+                                'dots-tutorial-section4',
+                                ''
+                            );
+
+                            var section4_title = createGeneral(
+                                section4_title,
+                                section4,
+                                'div',
+                                'tutorial-text',
+                                'dots-tutorial-text4',
+                                section4_text
+                            );
+
+                            $('#dots-tutorial-text4').css('font-size', '3vmax');
+
+                            var section4_button = createGeneral(
+                                section4_button,
+                                section4,
+                                'button',
+                                'default-white-button glowy-box',
+                                'dots-tutorial-continue',
+                                '<div>' + section4_button + '</div>'
+                            );
+
+                            if (accuracy >= accuracyThreshold) {
+                                $('#dots-tutorial-continue').on('click', function () {
+                                    console.log(trialDataVariable);
+                                    permanentDataVariable["dots_accuracy"].push(accuracy);
+                                    permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
+                                    permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
+                                    permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
+                                    permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
+                                    permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
+                                    permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
+                                    permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
+
+                                    $('body').css('cursor', 'auto');
+                                    jsPsych.finishTrial();
+                                    return;
+                                });
+                            } else {
+                                $('#dots-tutorial-continue').on('click', function () {
+                                    drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, isTutorialMode, accuracyThreshold, yellowButtonEnabled, redButtonEnabled, redButtonName, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled);
+                                    return;
+                                });
+                            }
+                        } else {
+                            // if not in tutorial mode
+                            permanentDataVariable["dots_accuracy"].push(accuracy);
+                            permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
+                            permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
+                            permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
+                            permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
+                            permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
+                            permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
+                            permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
+                            permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
+
+                            dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
+                            dots_blockCount++;
+
+                            $('body').css('cursor', 'auto');
+                            jsPsych.finishTrial();
+                            return;
+                        }
+                    }, 1500);
+                }
+        }
+    }
+
+
+    $('.scale-row').on({
+        mousemove: function (event) {
+            var scaleOffsetLeft = cumulativeOffset(document.getElementById('scale')).left;
+            var scaleWidth = document.getElementById('scale').offsetWidth;
+            var Xmin = scaleOffsetLeft;
+
+            if (sliderActive) {
+                backendConfidence = Math.round(((event.pageX - Xmin) / scaleWidth) * 100);
+
+                if (backendConfidence >= 100) {
+                    backendConfidence = 100;
+                    displayedConfidence = backendConfidence;
+                    document.body.style.setProperty('--displayedColor', upperColor);
+                } else if (backendConfidence < 100 && backendConfidence >= 51) {
+                    backendConfidence = backendConfidence;
+                    displayedConfidence = backendConfidence;
+                    document.body.style.setProperty('--displayedColor', upperColor);
+                } else if (backendConfidence < 51 && backendConfidence >= 49) {
+                    backendConfidence = backendConfidence;
+                    displayedConfidence = 51;
+                    if (backendConfidence >= 50) {
+                        document.body.style.setProperty('--displayedColor', upperColor);
+                    } else {
+                        document.body.style.setProperty('--displayedColor', lowerColor);
+                    }
+                } else if (backendConfidence < 49 && backendConfidence > 0) {
+                    backendConfidence = backendConfidence;
+                    displayedConfidence = 100 - backendConfidence;
+                    document.body.style.setProperty('--displayedColor', lowerColor);
+                } else {
+                    backendConfidence = 0;
+                    displayedConfidence = 100 - backendConfidence;
+                    document.body.style.setProperty('--displayedColor', lowerColor);
+                }
+
+                var barWidth = Math.abs((displayedConfidence - 50) * 0.5);
+                if (backendConfidence >= 50) {
+                    $('#scale-right-fill, #confidence-value-right').css('width', barWidth.toString() + 'vmin').css('border-right', '5px solid rgb(255,50,50)');
+                    $('#scale-left-fill, #confidence-value-left').css('width', '0vmin').css('border-left', '5px solid rgba(0,0,0,0)');
+                } else if (backendConfidence < 50) {
+                    $('#scale-left-fill, #confidence-value-left').css('width', barWidth.toString() + 'vmin').css('border-left', '5px solid rgb(255,50,50)');
+                    $('#scale-right-fill, #confidence-value-right').css('width', '0vmin').css('border-right', '5px solid rgba(0,0,0,0)');
+                }
+
+                if (showPercentage) {
+                    if (backendConfidence > 45) {
+                        document.getElementById('confidence-value-right').innerHTML = displayedConfidence + '%';
+                        document.getElementById('confidence-value-left').innerHTML = '';
+                    } else if (backendConfidence <= 45) {
+                        document.getElementById('confidence-value-left').innerHTML = displayedConfidence + '%';
+                        document.getElementById('confidence-value-right').innerHTML = '';
+                    }
+                }
             }
-        });
+        },
+        click: function () {
+            sliderActive = false;
 
-        $('.more-button').on('click', function () {
-            buttonBackend('seeAgain');
-        });
+            // show buttons
+            if (!sliderActive) {
+                $('.scale-button').removeClass('invisible');
+            }
 
-        $('.submit-button').on('click', function () {
+            if (defaultOptionEnabled) {
+                // record data
+                confidence_timer = Date.now();
+                var RT = calculateRT(start_timer, confidence_timer);
+                dotRTs.push(RT);
+                recordRating(backendConfidence, majoritySide, 'initial');
+
+                // wipe the slate and show the default option with timer if first time
+                if (!secondTimeAround) {
+                    // clear the grids
+                    var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
+                    console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
+                    var context = dotCanvas.getContext('2d');
+                    context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
+                    context.beginPath();
+
+                    // hide masks and response areas
+                    $('.response-area, .confidence-question, .grid-mask, #jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
+
+                    var defaultQuestionValue = '';
+                    if (redButtonName == 'SKIP INSTEAD') {
+                        defaultQuestionValue = 'See Again?';
+                    } else if (redButtonName == 'SEE AGAIN INSTEAD') {
+                        defaultQuestionValue = 'Continue?';
+                    }
+
+                    var defaultQuestion = createGeneral(
+                        defaultQuestion,
+                        document.getElementById('jspsych-canvas-sliders-response-wrapper'),
+                        'div',
+                        'fixation-cross see-again',
+                        'default-question',
+                        defaultQuestionValue
+                    );
+
+                    // draw a central timer
+                    countdownTimer(document.getElementById('jspsych-canvas-sliders-response-wrapper'), 3, 3000);
+
+                    $('.response-area, #tooltip-row-bottom').css('visibility', 'visible');
+                    $('#tooltip-row-top, #tooltip-arrow-top, #scale-row').css('visibility', 'hidden');
+
+                    setTimeout(function () {
+                        document.getElementById('countdown').remove();
+                        document.getElementById('default-question').remove();
+                        $('.response-area, #tooltip-row-bottom').css('visibility', 'hidden');
+                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
+
+                        if (defaultQuestionValue == 'See Again?' && !secondTimeAround) {
+                            buttonBackend('seeAgain');
+                        } else {
+                            buttonBackend('submit');
+                        }
+                    }, 3000);
+
+                    // wipe the slate and end trial if second time
+                } else {
+
+                }
+            } else {
+                //
+            }
+        },
+    });
+
+    $('.escape-button').on('click', function () {
+        if (redButtonName == 'SKIP INSTEAD') {
             buttonBackend('submit');
-        });
+        } else if (redButtonName == 'SEE AGAIN INSTEAD') {
+            buttonBackend('seeAgain');
+        } else {
+            buttonBackend('exit');
+        }
+    });
+
+    $('.more-button').on('click', function () {
+        buttonBackend('seeAgain');
+    });
+
+    $('.submit-button').on('click', function () {
+        buttonBackend('submit');
+    });
+
+
+    setTimeout(function () {
+        // unhide the masks
+        $('.grid-mask').css('visibility', 'visible');
     }, dotPeriod);
 }
 

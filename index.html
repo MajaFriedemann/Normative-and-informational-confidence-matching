@@ -35,7 +35,7 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css">
     <!--custom JS: helper functions-->
     <script src="scripts/helper.js"></script>
-    <script src="scripts/dots.js"></script>
+    <script src="scripts/dots-try.js"></script>
     <!--custom JS: trials using jPsych-->
     <script src="scripts/jpsych/jspsych-consent.js"></script>
     <script src="scripts/jpsych/jspsych-debriefing.js"></script>
@@ -265,7 +265,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 25,
+        trial_count: 4,
         blockCounterEnabled: true,
         seeAgain: 'easier'
     };
@@ -307,7 +307,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 25,
+        trial_count: 3,
         blockCounterEnabled: true,
         seeAgain: 'easier'
     };
@@ -424,16 +424,8 @@
 
         case 'testing':
             var timeline = [
-                dotTaskInstructions1,
-                dotTaskPractice1,
-                dotTaskInstructions2,
-                dotTaskPractice2,
                 dotTaskStart,
                 dotTask1,
-                dotTaskRest,
-                dotTask2,
-                dotTaskRest,
-                dotTask3,
                 dotTaskRest,
                 dotTask4,
                 dotsScoreReveal,
@@ -460,7 +452,6 @@
             var clientPromise = stitch.StitchClientFactory.create('uidmul-ist-sbgze');
             // add all experimental details to dataObject
             dataObject["dots_staircase"] = dotsStaircase.get('logSpace');
-            dataObject["IST_cumulativeScore"] = IST_cumulativeScore;
             dataObject["dots_overallAccuracy"] = dots_overallAccuracy;
             dataObject["bonus_earned"] = bonusPayment;
             dataObject["date_completed"] = longformDate();

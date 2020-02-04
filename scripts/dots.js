@@ -147,19 +147,19 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     $('.scale-row').off('mousemove').off('click');
 
     // add keypress option
-    /*
-    $(document).off('keydown');
-    $(document).on('keydown', function(event) {
+
+    //$(document).off('click');
+    $(document).on('click', function(event) {
       console.log(event.keyCode);
-      if (event.which == 37) {
+      if (event.which == 0) {
         $('.mask-left').css('border', '5px solid rgb(13,255,146');
         $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
-      } else if (event.which == 39) {
+      } else if (event.which == 2) {
         $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
         $('.mask-right').css('border', '5px solid rgb(13,255,146');
       }
     });
-    */
+
 
     setTimeout(function () {
       $('.confidence-question').css('visibility', 'visible');

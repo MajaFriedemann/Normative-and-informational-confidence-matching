@@ -1,3 +1,10 @@
+// In psychophysics, perception is often assessed using adaptive procedures (task difficulty is modified according to participants answers).
+// With staircase procedures, the stimulus intensity begins high and is reduced when right answers are provided and increased when wrong answers are provided.
+// Several parameters are generally used:
+// The equation converting the old value to the new one (according to the answer provided for the old one)
+// The number of right answers n needed to increase the difficulty (when only one wrong answer will decrease it; corresponds to 1-up, n-down).
+// The StaircaseJS module can be used to manage the value of a stimulus implementing an adaptive procedure, typically for psychophysical experiments made in JavaScript.
+
 function Staircase(stairs) {
   this.stairs = {};
   for (var i in stairs) {
@@ -305,7 +312,7 @@ Staircase.prototype.choose = function(goodAns) {
     ? 'harder'
     : 'easier';
   if(!goodAns)
-    stair.startingExplorationScale = 1; // First time we get easier we stop the inital exploration scaling.
+    stair.startingExplorationScale = 1; // First time we get easier we stop the initial exploration scaling.
   var wait = (stair.wait)
     ? 'wait'
     : 'noWait';

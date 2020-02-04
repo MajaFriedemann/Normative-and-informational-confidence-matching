@@ -113,7 +113,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       greenButtonName: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Green button name',
-        default: 'FINAL ANSWER',
+        default: 'SUBMIT',
         description: 'Text for the green (right) button'
       },
       blockCounterEnabled: {
