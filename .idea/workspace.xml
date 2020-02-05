@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/majaf.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/partner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/external/Staircase.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/external/Staircase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +81,7 @@
       <workItem from="1580462683556" duration="17786000" />
       <workItem from="1580720588182" duration="24901000" />
       <workItem from="1580815619455" duration="10684000" />
+      <workItem from="1580826517788" duration="11787000" />
     </task>
     <servers />
   </component>
