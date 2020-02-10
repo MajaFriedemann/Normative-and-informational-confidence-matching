@@ -82,6 +82,32 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         ''
     );
 
+    // determine partner's choice
+    let accuracy = 80;                  //make this somehow a trial variable?
+    var partnerChoice;
+    var random = Math.random();
+    if (random > accuracy) {
+        if (majoritySide == "left") {
+            partnerChoice = "left"
+        } else if (majoritySide == "right") {
+            partnerChoice = "right"
+        }
+    } else {
+        if (majoritySide == "left") {
+            partnerChoice = "right"
+        } else if (majoritySide == "right") {
+            partnerChoice = "left"
+        };
+    };
+
+
+    // determine partner's confidence
+    // randn_bm(min, max, skew) --> see helper.js
+    var partnerConfidence
+    partnerConfidence =  randn_bm(0, 50, 1)      // but make this somehow changeable for partners
+    console.log(partnerConfidence)
+
+
 
     // button name
     var buttonsToShow = {};
@@ -238,16 +264,26 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 document.getElementById('response-area').remove();
                 console.log('dot display cleared: success!')
                 console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-            }, 1000);
+            }, 1500);
         } else {
-            // clear the display directly
-            document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
-            document.getElementById('response-area').remove();
-            console.log('dot display cleared: success!')
-            console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
+            //give feedback (delete this part if you do not want feedback and keep only things inside the timeout function below (but delete timeout itself)
+            if (correctResponse) {
+                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+            } else {
+                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+            }
+            // clear the display
+            setTimeout(function () {
+                // clear the display on a timer
+                document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
+                document.getElementById('response-area').remove();
+                console.log('dot display cleared: success!')
+                console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
+            }, 1500);
 
             dots_totalTrials++;
         }
+
 
         if (trialCounterVariable < trialCount) {
             // draw the fixation dot
@@ -405,10 +441,28 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         click: function () {
             sliderActive = false;
 
-            // show buttons
-            if (!sliderActive) {
+            // draw partner's confidence marker
+            setTimeout(function (){
+                var partnerMarker = createGeneral(
+                    partnerMarker,
+                    document.getElementById('scale'),
+                    'div',
+                    '',
+                    'partnerMarker',
+                    ''
+                );
+                if (partnerChoice == "left") {
+                    $('#partnerMarker').css('left', partnerConfidence + '%');
+                } else if (partnerChoice == "right") {
+                    $('#partnerMarker').css('left', 50 + partnerConfidence + '%');
+                };
+            }, 300);
+
+            // shot submit button
+            setTimeout(function (){
                 $('.scale-button').removeClass('invisible');
-            }
+            }, 600);
+
 
             if (defaultOptionEnabled) {
                 // record data

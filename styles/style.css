@@ -1468,13 +1468,13 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   border-right: 5px solid white;
 }
 
-.noDragSlider.dots_slider .partnerMarker {
-  width: 7px;
+#partnerMarker {
+  width: 6px;
   height: 100%;
   background-color: yellow;
   position: absolute;
   left: 20%;
-  z-index:-1;
+  z-index:1;
   transform: translateX(-50%);
 }
 
