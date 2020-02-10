@@ -110,7 +110,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         '<h1>Which box contained more dots?</h1> (left click for left box, right click for right box)'
     );
 
-
     // hide the response area
     $('.confidence-question').css('visibility', 'hidden');
     $('.response-area').css('visibility', 'hidden');
@@ -146,6 +145,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         $('.confidence-question').css('visibility', 'visible');
         document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
         $('.response-area').css('visibility', 'visible');
+
     });
 
 
@@ -189,6 +189,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         }
     }
 
+
     function buttonBackend(type) {
         // turn off the button options
         $('.scale-button').addClass('invisible');
@@ -204,6 +205,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         dotsStaircase.next(correctResponse);
         staircaseSteps++;
 
+
         // calculate the wait time
         var waitTime = fixationPeriod + dotPeriod + transitionPeriod + RT;
         if (waitTime <= waitTimeLimit) {
@@ -212,6 +214,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             waitTime = waitTimeLimit;
             console.log('waitTime is ' + waitTime);
         }
+
 
         trialDataVariable['dots_waitTimes'].push(waitTime);
         trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
@@ -511,6 +514,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
  * @param {int} accuracyThreshold
  */
 
+//the script starts with the drawFixation function which is called in the jspsych-dots (this is also where all the necessary variable values are specified!)
 function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled) {
 
     // set style defaults for page
@@ -530,6 +534,7 @@ function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase
         .css('wrap-direction', 'column');
     $.scrollify.destroy();
 
+    //create the fixation cross
     var fixationCross = createGeneral(
         fixationCross,
         parent,
@@ -538,6 +543,8 @@ function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase
         'fixation-cross',
         '+'
     );
+
+    //timeout function clears the ficatoin cross, then draws the canvas for the dots grid, and then calls the drawDots function
     setTimeout(function () {
         // clear the fixation cross display
         document.getElementById('fixation-cross').remove();

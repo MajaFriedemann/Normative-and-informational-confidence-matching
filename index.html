@@ -59,7 +59,7 @@
 
     var ProlificID = getUrlVars()['PROLIFIC_PID'];
     console.log(ProlificID);
-    // ADD COMPLETION CODE HERE!!!!!!!!!!!!!!!
+    // NOTE ADD COMPLETION CODE HERE!!!!!!!!!!!!!!!
     var completionCode = "AddCompletionCodeHere";
     var completionURL = "https://app.prolific.ac/submissions/complete?cc=" + completionCode;
     var PHQexclusionURL = "https://app.prolific.ac/submissions/complete?cc=EXCLU001";
@@ -71,9 +71,9 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'testing';
+    var trialTypeOrder = 'testing';          /*"testing" or "all"*/
     var scoreRuleOrder;
-    var cohort = 'PR'; //ask Linda what this is!!!!!!!!!!!!!!!!!!!
+    var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
     var CUREC_studyName = 'Contextual influences on metacognitive judgements';
     var CUREC_ID = 'R67369/RE001';
@@ -89,7 +89,6 @@
 
     /* SEEDED RANDOMISATION
     Get the random subject identifier from cookies, or if there isn't one, set one and make a cookie with the random subject identifier to expire within the year */
-
     if (getCookie('UIDMUL-IST-subjectID')) {
         subjectID = getCookie('UIDMUL-IST-subjectID');
         //update the number of attempts
@@ -102,13 +101,12 @@
         setCookie('UIDMUL-IST-attempts', currentAttempt, 365);
     }
 
-    // seed the randomisations        ask Linda what this is!!!!!!!
+    // seed the randomisations (whenever a random number is generated it is seeded to the participantID so that it is reproducible)
     Math.seedrandom(subjectID);
 
 
 
     /* IMAGES TO PRELOAD */
-
     var images = [
         'assets/oxford-logo.jpg',
         'assets/checkmark-white.svg',
@@ -326,11 +324,16 @@
         img_id: 'dotTask-gif2'
     };
 
+    var dotTaskInstructions3 = {
+        type: 'jspsych-notice',
+        section1_text: 'Now you get a different partner',
+        section2_text: 'After clicking on the slider to register your initial answer, you will now see two buttons instead of one: "Final Answer" (to move on to the next trial if you are satisfied with your current answer) and "See Again" (to see <u>an easier version</u> of the dot grids again). <br><br> Press the "Continue" button to continue to a few more practice trials featuring the new "See Again" option.',
+        img_id: 'dotTask-gif2'
+    };
+
 
     // linking pages
-
     // flat bonus wording: <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded if you are more than 55% accurate over all trials in the next 4 blocks, based on your "Final Answer".</highlight>
-
     // Brier score wording: <highlight style="color: rgb(13,255,146)">You will earn points depending on whether your "Final Answer" is correct and how accurate your confidence judgment was.</highlight> For instance, you would earn 1 point if you answer "Certainly Left" and are correct, but 0 points if you answer "Certainly Left" and are incorrect. Your points will be converted to a cash bonus at the end of the experiment, so <u>you will earn more with more accurate confidence judgments</u>.
 
     var dotTaskStart = {
@@ -411,7 +414,7 @@
                 dotTask1,
                 dotTaskRest,
                 dotTask2,
-                dotTaskRest,
+                dotTaskInstructions3,
                 dotTask3,
                 dotTaskRest,
                 dotTask4,
