@@ -127,6 +127,12 @@ jsPsych.plugins['jspsych-dots'] = (function () {
         pretty_name: 'Default option for "See Again" enabled',
         default: false,
         description: 'Is the default option for "See Again" choice enabled?'
+      },
+      partner: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Partner confidence skewed to being over- or underconfident',
+        default: 'underconfident',
+        description: 'Partner confidence low or high'
       }
     }
   };
@@ -198,7 +204,8 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       trial.yellowButtonName,
       trial.greenButtonEnabled,
       trial.greenButtonName,
-      trial.defaultOptionEnabled
+      trial.defaultOptionEnabled,
+      trial.partner
       ));
 
   };

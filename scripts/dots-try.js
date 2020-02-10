@@ -23,7 +23,7 @@
  * @param {int} accuracyThreshold
  */
 
-function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled) {
+function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner) {
 
     // default variables
     var backendConfidence;
@@ -33,6 +33,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var start_timer;
     var dotPairs = [];
     var dotConfidences = [];
+    var partnerConfidences = [];
     var dotRTs = [];
     var choice_timer;
     var confidence_timer;
@@ -86,7 +87,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     let accuracy = 80;                  //make this somehow a trial variable?
     var partnerChoice;
     var random = Math.random();
-    if (random > accuracy) {
+    if (random < accuracy) {
         if (majoritySide == "left") {
             partnerChoice = "left"
         } else if (majoritySide == "right") {
@@ -104,8 +105,39 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // determine partner's confidence
     // randn_bm(min, max, skew) --> see helper.js
     var partnerConfidence
-    partnerConfidence =  randn_bm(0, 50, 1)      // but make this somehow changeable for partners
-    console.log(partnerConfidence)
+    var skew
+    if (partner == "underconfident") {
+        if (partnerChoice == "left") {
+            skew = 0.25                     // confidence distribution skewed to the right (i.e. the middle for a left choice)
+        } else if (partnerChoice == "right") {
+            skew = 2                       // confidence distribution skewed to the left (i.e. the middle for a right choice)
+        }
+    } else if (partner == "overconfident") {
+        if (partnerChoice == "left") {
+            skew = 2                         // confidence distribution skewed to the left (i.e. the extreme for a left choice)
+        } else if (partnerChoice == "right") {
+            skew = 0.25                      // confidence distribution skewed to the right (i.e. the extreme for a right choice)
+        }
+    }
+    console.log('skew ' + skew);
+    partnerConfidence =  randn_bm(0, 50, skew);
+
+
+    // //store partners confidence in the correct choice (i.e. if its below 50, they got it wrong)
+    // if (partnerChoice == "left") {
+    //     let partnerConfidenceScore = round((partnerConfidence),0);
+    // } else {
+    //     let partnerConfidenceScore = round((50 + partnerConfidence),0);
+    // }
+    //
+    // if (majoritySide == 'left') {
+    //     let partnerInvertedConfidence = 100 - partnerConfidenceScore;
+    //     console.log("partner confidence in correct response " + partnerInvertedConfidence);
+    //     //partnerConfidences.push(partnerInvertedConfidence);
+    // } else {
+    //     console.log("partner confidence in correct response " + partnerConfidenceScore);
+    //     //partnerConfidences.push(partnerConfidence);
+    // }
 
 
 
@@ -181,11 +213,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
 
+    // confidence is stored as "confidence in the correct answer"
+    // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
     function recordRating(backendConfidence, majoritySide, type) {     //NOTE add recording of initial response correctness!!!!!!!!!
         if (backendConfidence !== undefined) {
+            console.log("bakendconfidence " + backendConfidence)
+            console.log("majority side " + majoritySide)
             // record correct/incorrect confidence
             if (majoritySide == 'left') {
                 var invertedConfidence = 100 - backendConfidence;
+                console.log("invertedconfidence " + invertedConfidence)
                 dotConfidences.push(invertedConfidence);
 
                 if (invertedConfidence > 50) {
@@ -193,6 +230,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 } else {
                     correctResponse = false;
                 }
+                console.log("correctresponse " + correctResponse)
 
                 if (!isTutorialMode && type == 'submit') {
                     dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse);
@@ -246,6 +284,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
         trialDataVariable['dots_pairs'].push(dotPairs);
         trialDataVariable['dots_confidences'].push(dotConfidences);
+        //trialDataVariable['partner_confidences'].push(partnerConfidences);
         trialDataVariable['dots_RTs'].push(dotRTs);
         trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
         trialCounterVariable++;
@@ -253,7 +292,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         // give feedback
         if (isTutorialMode) {
-            if (correctResponse) {
+            if (correctResponse == true) {
                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
             } else {
                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
@@ -264,10 +303,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 document.getElementById('response-area').remove();
                 console.log('dot display cleared: success!')
                 console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-            }, 1500);
+            }, 1200);
         } else {
             //give feedback (delete this part if you do not want feedback and keep only things inside the timeout function below (but delete timeout itself)
-            if (correctResponse) {
+            if (correctResponse == true) {
                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
             } else {
                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
@@ -279,7 +318,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 document.getElementById('response-area').remove();
                 console.log('dot display cleared: success!')
                 console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-            }, 1500);
+            }, 1200);
 
             dots_totalTrials++;
         }
@@ -287,7 +326,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         if (trialCounterVariable < trialCount) {
             // draw the fixation dot
-            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled); }, waitTime);
+            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, waitTime);
 
         } else {
             // evaluate accuracy
@@ -355,7 +394,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         });
                     } else {
                         $('#dots-tutorial-continue').on('click', function () {
-                            drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, isTutorialMode, accuracyThreshold, yellowButtonEnabled, redButtonEnabled, redButtonName, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled);
+                            drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, isTutorialMode, accuracyThreshold, yellowButtonEnabled, redButtonEnabled, redButtonName, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner);
                             return;
                         });
                     }
@@ -441,6 +480,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         click: function () {
             sliderActive = false;
 
+            // record data
+            confidence_timer = Date.now();
+            var RT = calculateRT(start_timer, confidence_timer);
+            dotRTs.push(RT);
+            recordRating(backendConfidence, majoritySide, 'initial');
+
             // draw partner's confidence marker
             setTimeout(function (){
                 var partnerMarker = createGeneral(
@@ -465,11 +510,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
             if (defaultOptionEnabled) {
-                // record data
-                confidence_timer = Date.now();
-                var RT = calculateRT(start_timer, confidence_timer);
-                dotRTs.push(RT);
-                recordRating(backendConfidence, majoritySide, 'initial');
+
 
                 // wipe the slate and show the default option with timer if first time
                 if (!secondTimeAround) {
@@ -569,7 +610,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
  */
 
 //the script starts with the drawFixation function which is called in the jspsych-dots (this is also where all the necessary variable values are specified!)
-function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled) {
+function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner) {
 
     // set style defaults for page
     parent.innerHTML = '';
@@ -613,6 +654,6 @@ function drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase
         parent.innerHTML += html;
 
         // call the draw dots function
-        drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled);
+        drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner);
     }, fixationPeriod);
 }
