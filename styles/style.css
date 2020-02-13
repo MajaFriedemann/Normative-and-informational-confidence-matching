@@ -1478,6 +1478,15 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   transform: translateX(-50%);
 }
 
+#higherConfidenceBox {
+  z-index: 100;
+  position: absolute;
+  width: 11px;
+  height: 6vmin;
+  border: 6px solid orange;
+  background: transparent;
+}
+
 .nonselectable {
   user-select: none;
   -moz-user-select: none;

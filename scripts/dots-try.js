@@ -104,40 +104,57 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
     // determine partner's confidence
     // randn_bm(min, max, skew) --> see helper.js
-    var partnerConfidence
-    var skew
+    var partnerConfidence;
+    var partnerConfidenceMarker;
+    var partnerCorrectResponse;
+    var skew = 2;
     if (partner == "underconfident") {
         if (partnerChoice == "left") {
-            skew = 0.25                     // confidence distribution skewed to the right (i.e. the middle for a left choice)
+            skew = 1/skew                     // confidence distribution skewed to the right (i.e. the middle for a left choice)
         } else if (partnerChoice == "right") {
-            skew = 2                       // confidence distribution skewed to the left (i.e. the middle for a right choice)
+            skew = skew                       // confidence distribution skewed to the left (i.e. the middle for a right choice)
         }
     } else if (partner == "overconfident") {
         if (partnerChoice == "left") {
-            skew = 2                         // confidence distribution skewed to the left (i.e. the extreme for a left choice)
+            skew = skew                         // confidence distribution skewed to the left (i.e. the extreme for a left choice)
         } else if (partnerChoice == "right") {
-            skew = 0.25                      // confidence distribution skewed to the right (i.e. the extreme for a right choice)
+            skew = 1/skew                     // confidence distribution skewed to the right (i.e. the extreme for a right choice)
         }
     }
-    console.log('skew ' + skew);
     partnerConfidence =  randn_bm(0, 50, skew);
 
+    //this is for the marker (cannot deal with inverted confidence score etc)
+    partnerConfidenceMarker = partnerConfidence;
 
-    // //store partners confidence in the correct choice (i.e. if its below 50, they got it wrong)
-    // if (partnerChoice == "left") {
-    //     let partnerConfidenceScore = round((partnerConfidence),0);
-    // } else {
-    //     let partnerConfidenceScore = round((50 + partnerConfidence),0);
-    // }
-    //
-    // if (majoritySide == 'left') {
-    //     let partnerInvertedConfidence = 100 - partnerConfidenceScore;
-    //     console.log("partner confidence in correct response " + partnerInvertedConfidence);
-    //     //partnerConfidences.push(partnerInvertedConfidence);
-    // } else {
-    //     console.log("partner confidence in correct response " + partnerConfidenceScore);
-    //     //partnerConfidences.push(partnerConfidence);
-    // }
+
+    //store partners confidence in the correct choice (i.e. if its below 50, they got it wrong)
+    if (partnerChoice == "left") {
+        partnerConfidence = round((partnerConfidence),0);
+    } else {
+        partnerConfidence = round((50 + partnerConfidence),0);
+    }
+
+    if (majoritySide == 'left') {
+        var partnerInvertedConfidence = 100 - partnerConfidence;
+        console.log("partner confidence in correct choice " + partnerInvertedConfidence);
+        partnerConfidences.push(partnerInvertedConfidence);
+
+        if (partnerInvertedConfidence > 50) {
+            partnerCorrectResponse = true;
+        } else {
+            partnerCorrectResponse = false;
+        }
+
+    } else {
+        console.log("partner confidence in correct choice " + partnerConfidence);
+        partnerConfidences.push(partnerConfidence);
+
+        if (partnerConfidence > 50) {
+            partnerCorrectResponse = true;
+        } else {
+            partnerCorrectResponse = false;
+        }
+    }
 
 
 
@@ -184,8 +201,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     // left or right mouse-click for decision
+    var initialChoice
     $(document).on('mousedown', function(event) {
-        console.log(event.button);
         // record the RT
         choice_timer = Date.now();
         // turn off these event handlers
@@ -193,9 +210,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         $('.grid-mask').css('cursor', 'auto');
         // highlight the chosen box
         if (event.button == 0) {
+            initialChoice = "left"
             $('.mask-left').css('border', '5px solid rgb(13,255,146');
             $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
         } else if (event.button == 2) {
+            initialChoice = "right"
             $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
             $('.mask-right').css('border', '5px solid rgb(13,255,146');
         }
@@ -204,6 +223,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
         $('.response-area').css('visibility', 'visible');
 
+        console.log("initialChoice " + initialChoice);
     });
 
 
@@ -217,12 +237,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
     function recordRating(backendConfidence, majoritySide, type) {     //NOTE add recording of initial response correctness!!!!!!!!!
         if (backendConfidence !== undefined) {
-            console.log("bakendconfidence " + backendConfidence)
-            console.log("majority side " + majoritySide)
+            console.log("majority side " + majoritySide);
             // record correct/incorrect confidence
             if (majoritySide == 'left') {
                 var invertedConfidence = 100 - backendConfidence;
-                console.log("invertedconfidence " + invertedConfidence)
+                console.log("confidence in correct choice " + invertedConfidence);
                 dotConfidences.push(invertedConfidence);
 
                 if (invertedConfidence > 50) {
@@ -230,12 +249,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 } else {
                     correctResponse = false;
                 }
-                console.log("correctresponse " + correctResponse)
 
                 if (!isTutorialMode && type == 'submit') {
                     dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse);
                 }
             } else {
+                console.log("confidence in correct choice " + backendConfidence);
                 dotConfidences.push(backendConfidence);
 
                 if (backendConfidence > 50) {
@@ -248,8 +267,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
                 }
             }
-            console.log(dotPairs);
-            console.log(dotConfidences);
         }
     }
 
@@ -273,10 +290,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         // calculate the wait time
         var waitTime = fixationPeriod + dotPeriod + transitionPeriod + RT;
         if (waitTime <= waitTimeLimit) {
-            console.log('waitTime is ' + waitTime);
+            waitTime = waitTime;
         } else {
             waitTime = waitTimeLimit;
-            console.log('waitTime is ' + waitTime);
         }
 
 
@@ -284,7 +300,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
         trialDataVariable['dots_pairs'].push(dotPairs);
         trialDataVariable['dots_confidences'].push(dotConfidences);
-        //trialDataVariable['partner_confidences'].push(partnerConfidences);
+        trialDataVariable['partner_confidences'].push(partnerConfidences);
         trialDataVariable['dots_RTs'].push(dotRTs);
         trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
         trialCounterVariable++;
@@ -301,7 +317,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 // clear the display on a timer
                 document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
                 document.getElementById('response-area').remove();
-                console.log('dot display cleared: success!')
                 console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
             }, 1200);
         } else {
@@ -316,7 +331,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 // clear the display on a timer
                 document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
                 document.getElementById('response-area').remove();
-                console.log('dot display cleared: success!')
                 console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
             }, 1200);
 
@@ -383,6 +397,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                             permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                             permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
+                            permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
                             permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                             permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
@@ -405,6 +420,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                     permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                     permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
+                    permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
                     permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                     permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                     permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
@@ -497,16 +513,33 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     ''
                 );
                 if (partnerChoice == "left") {
-                    $('#partnerMarker').css('left', partnerConfidence + '%');
+                    $('#partnerMarker').css('left', partnerConfidenceMarker + '%');
                 } else if (partnerChoice == "right") {
-                    $('#partnerMarker').css('left', 50 + partnerConfidence + '%');
+                    $('#partnerMarker').css('left', 50 + partnerConfidenceMarker + '%');
                 };
             }, 300);
+
+            // draw box around response with higher confidence
+            setTimeout(function (){
+                var higherConfidenceBox = createGeneral(
+                    higherConfidenceBox,
+                    document.getElementById('scale'),
+                    'div',
+                    '',
+                    'higherConfidenceBox',
+                    ''
+                );
+                if (partnerChoice == "left") {
+                    $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 2 + '%');
+                } else if (partnerChoice == "right") {
+                    $('#higherConfidenceBox').css('left', 50 + partnerConfidenceMarker - 2 + '%');
+                };
+            }, 700);
 
             // shot submit button
             setTimeout(function (){
                 $('.scale-button').removeClass('invisible');
-            }, 600);
+            }, 1000);
 
 
             if (defaultOptionEnabled) {
@@ -516,7 +549,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (!secondTimeAround) {
                     // clear the grids
                     var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                    console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
                     var context = dotCanvas.getContext('2d');
                     context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
                     context.beginPath();
