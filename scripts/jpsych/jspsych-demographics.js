@@ -61,8 +61,8 @@ jsPsych.plugins['jspsych-demographics'] = (function () {
       'question demographics-question',
       'demographics-question1',
       '<h2>' + trial.questions.age + '</h2>'
-      + '<input id="age" name="age" class="slider" type="range" min="18" max="60" value="18">'
-      + '<label for="age">18 years old</label>'
+      + '<input id="age" name="age" class="slider" type="range" min="17" max="60" value="17">'
+      + '<label for="age">17 years old</label>'
     );
     var button1 = createGeneral(
       button1,

@@ -71,7 +71,7 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'testing';          /*"testing" or "all"*/
+    var trialTypeOrder = 'all';          /*"testing" or "all"*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
@@ -237,10 +237,11 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 25,
+        trial_count: 4,
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
-        seeAgain: 'easier'
+        seeAgain: 'easier',
+        partner: 'none'
     };
 
     var dotTaskPractice2 = {
@@ -252,7 +253,8 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 25,
+        trial_count: 4,
+        greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'practice'
     };
@@ -268,6 +270,7 @@
         isTutorialMode: false,
         trial_count: 4,
         blockCounterEnabled: true,
+        greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'underconfident'
     };
@@ -281,8 +284,9 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 25,
+        trial_count: 4,
         blockCounterEnabled: true,
+        greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'underconfident'
     };
@@ -296,8 +300,9 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 25,
+        trial_count: 4,
         blockCounterEnabled: true,
+        greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'overconfident'
     };
@@ -311,15 +316,16 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 3,
+        trial_count: 4,
         blockCounterEnabled: true,
+        greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'overconfident'
     };
 
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
-        section1_text: 'In the next part of the experiment, you will be playing a game with dots.',
+        section1_text: 'In this experiment, you will be playing a game with dots.',
         section2_text: 'During this game, you will see two boxes containing dots on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. You will give your answer on a sliding scale to indicate which box you think contained more dots, and also how confident you are in that decision. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards one side if you\'re confident - then click on the slider bar to register your answer. After you respond, you will get feedback about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>. <br><br> The task will start off quite easy <u>but will become harder</u> as you progress. <br><br> Press the "Continue" button to continue to some practice trials.',
         img_id: 'dotTask-gif1'
     };
@@ -409,10 +415,10 @@
 
         case 'all':
             var timeline = [
-                loading,
-                PIS,
-                consent,
-                demographics,
+                //loading,
+                //PIS,
+                //consent,
+                //demographics,
                 dotTaskInstructions1,
                 dotTaskPractice1,
                 dotTaskInstructions2,
