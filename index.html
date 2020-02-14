@@ -82,7 +82,7 @@
     var consent_version = '1.0';
     var consent_date = '2020/01/01';
     var PIS_version = '1.0';
-    var PIS_date = '2020/01/01'
+    var PIS_date = '2020/01/01';
     var startExperiment = Date.now();
     var currentAttempt = 1;
 
@@ -177,6 +177,7 @@
         dots_pairs: [],
         dots_majoritySide: [],
         dots_confidences: [],
+        initial_choices: [],
         partner_confidences: [],
         dots_defaultOption: [],
         dots_moreAsked: [],
@@ -252,7 +253,8 @@
         waitTimeLimit: 2000,
         isTutorialMode: true,
         trial_count: 25,
-        seeAgain: 'easier'
+        seeAgain: 'easier',
+        partner: 'practice'
     };
 
     var dotTask1 = {

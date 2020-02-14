@@ -1475,7 +1475,6 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   position: absolute;
   left: 20%;
   z-index:1;
-  transform: translateX(-50%);
 }
 
 #higherConfidenceBox {

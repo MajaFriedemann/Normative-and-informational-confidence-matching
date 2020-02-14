@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
     </list>
@@ -91,6 +90,7 @@
       <workItem from="1581511639994" duration="55000" />
       <workItem from="1581512458175" duration="6000" />
       <workItem from="1581522342731" duration="11592000" />
+      <workItem from="1581672669364" duration="10468000" />
     </task>
     <servers />
   </component>
