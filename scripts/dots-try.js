@@ -303,11 +303,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         // give feedback
         if (partner == "none") {
-            if (correctResponse == true) {
-                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-            } else {
-                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-            }
             setTimeout(function () {
                 // clear the display on a timer
                 document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
@@ -541,23 +536,23 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                     //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
                     if (partnerConfidence < participantConfidence) {
-                        $('#higherConfidenceBox').css('left', participantConfidenceMarker - 2 + '%');
+                        $('#higherConfidenceBox').css('left', participantConfidenceMarker - 1.8 + '%');
                         setTimeout(function () {
                             if (participantConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                             } else {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
                             }
-                        }, 500);
+                        }, 300);
                     } else {
-                        $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 2 + '%');
+                        $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 1.8 + '%');
                         setTimeout(function () {
                             if (partnerConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                             } else {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
                             }
-                        }, 500);
+                        }, 300);
                     }
                     console.log("participantConfidenceMarker " + participantConfidenceMarker);
                     console.log("participantConfidence " + participantConfidence);
@@ -566,7 +561,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     console.log("partnerConfidenceMarker " + partnerConfidenceMarker);
                     console.log("partnerConfidence " + partnerConfidence);
                     console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
-                }, 1000);
+                }, 900);
 
                 // shot submit button
                 setTimeout(function (){
@@ -574,6 +569,15 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }, 1200);
 
             } else {
+                // feedback if there is no partner
+                setTimeout(function (){
+                    if (correctResponse == true) {
+                        document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                    } else {
+                        document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                    }
+                }, 400);
+
                 // shot submit button more quickly if there is no partner to wait for
                 setTimeout(function (){
                     $('.scale-button').removeClass('invisible');
