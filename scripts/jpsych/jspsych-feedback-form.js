@@ -157,15 +157,6 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
     createSurveyMatrix(
       feedbackPoll,
       '',
-      'feedbackPoll-lookdesign',
-      [
-        'What do you think about the look/design of this experiment?'
-      ],
-      ['1<br>looks terrible', '2', '3', '4', '5<br>looks great']
-    );
-    createSurveyMatrix(
-      feedbackPoll,
-      '',
       'feedbackPoll-experience',
       [
         'Overall, how was your experience in this experiment?'

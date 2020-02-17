@@ -40,6 +40,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var confidence_timer;
 
 
+    // prevent context menu from opening on right click
+    // only comment out for testing purposes!!
+    // document.addEventListener("contextmenu", function (e) {
+    //     e.preventDefault();
+    // }, false);
+
+
     // determine the parameters for the dot grids
     var low = dotCount;
     var high = Math.round(dotCount + dotsStaircase.getLast('logSpace'));
@@ -227,7 +234,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // confidence is stored as "confidence in the correct answer"
     // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
     var participantConfidenceCorrect;
-    function recordRating(backendConfidence, majoritySide, type) {     //NOTE add recording of initial response correctness!!!!!!!!!
+    function recordRating(backendConfidence, majoritySide, type) {
         if (backendConfidence !== undefined) {
             console.log("majority side " + majoritySide);
             // record correct/incorrect confidence
@@ -236,7 +243,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 participantConfidenceCorrect = invertedConfidence;
                 dotConfidences.push(invertedConfidence);
 
-                if (invertedConfidence > 50) {
+                if (invertedConfidence > 50) {                         ////////change this!
                     correctResponse = true;
                 } else {
                     correctResponse = false;
@@ -340,7 +347,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 if (isTutorialMode) {
                     if (accuracy >= accuracyThreshold) {
-                        var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        if (partner != "none") {
+                            var section4_text = 'Congratulations, your joint accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        } else {
+                            var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        }
                         var section4_button = 'CONTINUE';
                     } else {
                         var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "Repeat" below to repeat the practice round.';
@@ -536,7 +547,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                     //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
                     if (partnerConfidence < participantConfidence) {
-                        $('#higherConfidenceBox').css('left', participantConfidenceMarker - 1.8 + '%');
+                        $('#higherConfidenceBox').css('left', participantConfidenceMarker - 1.6 + '%');
                         setTimeout(function () {
                             if (participantConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
@@ -545,7 +556,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             }
                         }, 300);
                     } else {
-                        $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 1.8 + '%');
+                        $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 1.6 + '%');
                         setTimeout(function () {
                             if (partnerConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';

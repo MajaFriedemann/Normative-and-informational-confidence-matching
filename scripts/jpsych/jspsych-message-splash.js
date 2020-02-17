@@ -189,7 +189,7 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
 
     // custom page options
     if (trial.name == "dotRest") {
-      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + dots_blockCount + ' of 4. Your accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%.</h1>';
+      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + dots_blockCount + ' of 4. Your joint accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%.</h1>';
     }
 
     // make sure page starts at the top every time
