@@ -147,6 +147,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       partner_confidences: [],
       dots_moreAsked: [],
       dots_isCorrect: [],
+      dots_jointCorrect: [],
       dots_isTutorialMode: [],
       dots_firstIsCorrect: [],
       dots_RTs: [],

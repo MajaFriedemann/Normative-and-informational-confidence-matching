@@ -2,25 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/a5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/a6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/gif pictures/a7.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dotTask_2.4.0.gif" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dotTask_2.4.0.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dotTask_2.5.0 practice.gif" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dotTask_2.5.0 practice.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-debriefing.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-debriefing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-feedback-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-feedback-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +95,7 @@
       <workItem from="1581784874349" duration="3104000" />
       <workItem from="1581788190579" duration="29000" />
       <workItem from="1581788381835" duration="703000" />
-      <workItem from="1581931009574" duration="10890000" />
+      <workItem from="1581931009574" duration="13383000" />
     </task>
     <servers />
   </component>

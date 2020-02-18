@@ -38,11 +38,12 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
 
     // calculate overall accuracy
     dots_overallAccuracy = round(dots_totalCorrect / dots_totalTrials, 2) * 100;
+    dots_jointOverallAccuracy = round(dots_jointTotalCorrect / dots_totalTrials, 2) * 100;
 
     switch(trial.performanceType) {
       case 'accuracy':
         // calculate current bonus
-        if (dots_overallAccuracy >= trial.bonusThreshold) {
+        if (dots_jointOverallAccuracy >= trial.bonusThreshold) {
           currentBonus = trial.flatBonusAmount;
         } else {
           currentBonus = 0;
@@ -50,7 +51,7 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
         // calculate total bonus
         newBonusPayment = bonusPayment + currentBonus; // bonusPayment defined globally
         // update messages
-        paymentMessage = 'Congratulations, you have achieved an overall accuracy of ' + dots_overallAccuracy + '% in this experiment!';
+        paymentMessage = 'Congratulations, you have achieved an overall accuracy of ' + dots_jointOverallAccuracy + '% in this experiment!';
         break;
 
       case 'score':

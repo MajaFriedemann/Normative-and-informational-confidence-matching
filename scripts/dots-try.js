@@ -28,6 +28,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // default variables
     var backendConfidence;
     var correctResponse;
+    var jointCorrectResponse;
     var sliderActive = true;
     var secondTimeAround = false;
     var start_timer;
@@ -250,7 +251,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }
 
                 if (!isTutorialMode && type == 'submit') {
-                    dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse);
+                    dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
                 }
             } else {
                 participantConfidenceCorrect = backendConfidence;
@@ -298,7 +299,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
         trialDataVariable['dots_waitTimes'].push(waitTime);
-        trialDataVariable['dots_isCorrect'].push(correctResponse); // this is for calculating the bonus
+        trialDataVariable['dots_isCorrect'].push(correctResponse);
+        trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
         trialDataVariable['dots_pairs'].push(dotPairs);
         trialDataVariable['dots_confidences'].push(dotConfidences);
         trialDataVariable['initial_choices'].push(initialChoices);
@@ -348,6 +350,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (isTutorialMode) {
                     if (accuracy >= accuracyThreshold) {
                         if (partner != "none") {
+                            accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
                             var section4_text = 'Congratulations, your joint accuracy during the last set of practice trials was ' + accuracy + '%.';
                         } else {
                             var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
@@ -402,6 +405,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
                             permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                             permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
+                            permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
@@ -426,6 +430,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
                     permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                     permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
+                    permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                     permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                     permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
@@ -551,8 +556,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         setTimeout(function () {
                             if (participantConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                                jointCorrectResponse = true;
                             } else {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                                jointCorrectResponse = false;
                             }
                         }, 300);
                     } else {
@@ -560,11 +567,15 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         setTimeout(function () {
                             if (partnerConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                                jointCorrectResponse = true;
                             } else {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                                jointCorrectResponse = false;
                             }
                         }, 300);
                     }
+                    dots_jointTotalCorrect += trialDataVariable.dots_jointCorrect.filter(Boolean).length;
+
                     console.log("participantConfidenceMarker " + participantConfidenceMarker);
                     console.log("participantConfidence " + participantConfidence);
                     console.log("participantConfidenceCorrect " + participantConfidenceCorrect);
