@@ -907,7 +907,7 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
 }
 
 .gameboard-gif#dotTask-gif2 {
-  background: url("../assets/dotTask_2.5.0 seeAgain.gif");
+  background: url("../assets/dotTask_2.4.0.gif");
   background-size: 35vmax 35vmax;
   background-position: center;
   background-repeat: no-repeat;

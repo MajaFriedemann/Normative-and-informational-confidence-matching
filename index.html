@@ -72,7 +72,7 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'all';          /*"testing" or "all"*/
+    var trialTypeOrder = 'testing';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
@@ -114,7 +114,8 @@
         'assets/checkmark-black.svg',
         'assets/down-arrow-2.svg',
         'assets/up-arrow.svg',
-        'assets/dotTask_2.5.0 practice.gif' //change this to my task!!!!!!!!
+        'assets/dotTask_2.5.0 practice.gif',
+        'assets/dotTask_2.4.0.gif'
     ];
 
     var dotsStaircase = new Staircase({
@@ -241,7 +242,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,
+        trial_count: 3,
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -257,7 +258,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,
+        trial_count: 3,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'practice'
@@ -272,7 +273,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,
+        trial_count: 3,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -288,7 +289,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,
+        trial_count: 3,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -304,7 +305,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,
+        trial_count: 3,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -320,7 +321,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,
+        trial_count: 3,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -337,7 +338,7 @@
     var dotTaskInstructions2 = {
         type: 'jspsych-notice',
         section1_text: 'From now on, you will make joint decisions with another participant.',
-        section2_text: 'After responding with a left or right click and indicating your confidence on the slider, you will now see the response of another participant for the same dots-grid. This other participant did about as well as you did in the practice trials. The <u>decision that was reported with higher confidence</u> will then be selected as  <u>your joint decision</u>  based on which you will get feedback. <br><br> Press the "continue" button to do a few more practice trials with this new joint decision rule.',
+        section2_text: 'After responding with a left or right click and indicating your confidence on the slider, you will now see the response of another participant for the same dots-grid. This other participant did about as well as you did in the practice trials. The <u>decision that is reported with higher confidence</u> will be selected as  <u>your joint decision</u>  based on which you will get feedback.<br><br>In the example on the left, the other participant\'s choice was reported with higher   <br><br>Press the "continue" button to do a few more practice trials with this new joint decision rule.',
         img_id: 'dotTask-gif2'
     };
 
@@ -421,10 +422,10 @@
             var partnerOrder = Math.random();
             if (partnerOrder > 0.5) {
                 var timeline = [
-                    //loading,
-                    //PIS,
-                    //consent,
-                    //demographics,
+                    loading,
+                    PIS,
+                    consent,
+                    demographics,
                     dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
@@ -444,10 +445,10 @@
                 ];
             } else {
                 var timeline = [
-                    //loading,
-                    //PIS,
-                    //consent,
-                    //demographics,
+                    loading,
+                    PIS,
+                    consent,
+                    demographics,
                     dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
@@ -469,17 +470,48 @@
             break;
 
         case 'testing':
-            var timeline = [
-                dotTaskStart,
-                dotTask1,
-                dotTaskRest,
-                dotTask4,
-                dotsScoreReveal,
-                feedbackPoll,
-                debriefing,
-                thankYou
-            ];
+            var partnerOrder = Math.random();
+            if (partnerOrder > 0.5) {
+                var timeline = [
+                    dotTaskInstructions1,
+                    dotTaskPractice1,
+                    dotTaskInstructions2,
+                    dotTaskPractice2,
+                    dotTaskStart,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskInstructions3,
+                    dotTask3,
+                    dotTaskRest,
+                    dotTask4,
+                    dotsScoreReveal,
+                    feedbackPoll,
+                    debriefing,
+                    thankYou
+                ];
+            } else {
+                var timeline = [
+                    dotTaskInstructions1,
+                    dotTaskPractice1,
+                    dotTaskInstructions2,
+                    dotTaskPractice2,
+                    dotTaskStart,
+                    dotTask3,
+                    dotTaskRest,
+                    dotTask4,
+                    dotTaskInstructions3,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask2,
+                    dotsScoreReveal,
+                    feedbackPoll,
+                    debriefing,
+                    thankYou
+                ];
+            }
             break;
+
 
         default:
             var timeline = [loading];
@@ -502,6 +534,13 @@
             dataObject["bonus_earned"] = bonusPayment;
             dataObject["date_completed"] = longformDate();
             dataObject["duration"] = testTime;
+
+
+            // if in testing mode, save data to local drive
+            if (trialTypeOrder == "testing") {
+            }
+
+
 
             // link up to Stitch
             clientPromise.then(client => {

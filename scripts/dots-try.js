@@ -41,11 +41,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var confidence_timer;
 
 
-    // prevent context menu from opening on right click
-    // only comment out for testing purposes!!
-    // document.addEventListener("contextmenu", function (e) {
-    //     e.preventDefault();
-    // }, false);
+    // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
+    if (trialTypeOrder == "all") {
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        }, false);
+    }
 
 
     // determine the parameters for the dot grids
@@ -107,8 +108,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             partnerChoice = "right"
         } else if (majoritySide == "right") {
             partnerChoice = "left"
-        };
-    };
+        }
+        ;
+    }
+    ;
 
 
     // determine partner's confidence
@@ -118,16 +121,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var partnerConfidenceCorrect;
     var skew;
     if (partner == "underconfident") {
-            skew = 2                       // confidence distribution skewed to small values
-        } else if (partner == "overconfident") {
-            skew = 1/2                     // confidence distribution skewed to large values
-        } else {
-            skew = 1                       // confidence distribution not skewed for practice partner (and none partner)
+        skew = 2                       // confidence distribution skewed to small values
+    } else if (partner == "overconfident") {
+        skew = 1 / 2                     // confidence distribution skewed to large values
+    } else {
+        skew = 1                       // confidence distribution not skewed for practice partner (and none partner)
     }
 
     // partners confidence in their own choice from 0-50
     if (partner !== "none") {
-        partnerConfidence =  round((randn_bm(0, 50, skew)), 0);
+        partnerConfidence = round((randn_bm(0, 50, skew)), 0);
     } else {
         partnerConfidence = 0
     }
@@ -194,7 +197,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
     // left or right mouse-click for decision
     var initialChoice;
-    $(document).on('mousedown', function(event) {
+    $(document).on('mousedown', function (event) {
         // record the RT
         choice_timer = Date.now();
         // turn off these event handlers
@@ -231,10 +234,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     $('.scale-row').off('mousemove').off('click');
 
 
-
     // confidence is stored as "confidence in the correct answer"
     // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
     var participantConfidenceCorrect;
+
     function recordRating(backendConfidence, majoritySide, type) {
         if (backendConfidence !== undefined) {
             console.log("majority side " + majoritySide);
@@ -270,6 +273,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         }
     }
 
+    function saveData(name, data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save-data.php');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({filename: name, filedata: data}));
+    }
 
     function buttonBackend(type) {
         // turn off the button options
@@ -334,7 +343,19 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             }, 1200);
 
             dots_totalTrials++;
+
+
         }
+
+        let numOfTrials = partnerConfidenceMarker;
+        jsPsych.data.get().addToLast(dataObject);
+        //let numOfTrials = jsPsych.data.get().count();
+        console.log(numOfTrials);
+        jsPsych.data.get().addToLast({trialNum: numOfTrials});
+        let fileName = numOfTrials.toString();
+        fileName = 'experiment_data' + fileName;
+        saveData(fileName, jsPsych.data.get().filter({trialNum: numOfTrials}).csv());
+        console.log(jsPsych.data.get().filter({trialNum: numOfTrials}));
 
 
         if (trialCounterVariable < trialCount) {
