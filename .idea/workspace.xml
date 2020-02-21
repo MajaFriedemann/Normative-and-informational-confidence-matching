@@ -2,19 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data0.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data1.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data50.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data71.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data75.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/experiment_data79.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data0.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data1.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data50.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data71.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data75.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/experiment_data79.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +103,8 @@
       <workItem from="1581788381835" duration="703000" />
       <workItem from="1581931009574" duration="13383000" />
       <workItem from="1582023833890" duration="8693000" />
-      <workItem from="1582043565346" duration="7569000" />
+      <workItem from="1582043565346" duration="30775000" />
+      <workItem from="1582199611884" duration="34886000" />
     </task>
     <servers />
   </component>
@@ -127,17 +127,21 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="56" key="SettingsEditor/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582045439316" />
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1580826275554">
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1582298533937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1580826275554" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582298533937" />
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1" timestamp="1580733845088">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1580733845088" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1581932000651">
+    <state x="463" y="10" width="611" height="804" key="find.popup" timestamp="1582287734402">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1581932000651" />
+    <state x="463" y="10" width="611" height="804" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582287734402" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582285535138">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582285535138" />
   </component>
 </project>

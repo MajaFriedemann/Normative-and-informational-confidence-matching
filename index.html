@@ -183,8 +183,8 @@
         dots_confidences: [],
         initial_choices: [],
         partner_confidences: [],
-        dots_defaultOption: [],
-        dots_moreAsked: [],
+        //dots_defaultOption: [],
+        //dots_moreAsked: [],
         dots_isCorrect: [],
         dots_jointCorrect: [],
         dots_RTs: [],
@@ -246,8 +246,9 @@
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
-        partner: 'none'
+        partner: 'none',
     };
+
 
     var dotTaskPractice2 = {
         type: 'jspsych-dots',
@@ -473,7 +474,6 @@
             var partnerOrder = Math.random();
             if (partnerOrder > 0.5) {
                 var timeline = [
-                    dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
                     dotTaskPractice2,
@@ -492,7 +492,6 @@
                 ];
             } else {
                 var timeline = [
-                    dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
                     dotTaskPractice2,
@@ -534,12 +533,6 @@
             dataObject["bonus_earned"] = bonusPayment;
             dataObject["date_completed"] = longformDate();
             dataObject["duration"] = testTime;
-
-
-            // if in testing mode, save data to local drive
-            if (trialTypeOrder == "testing") {
-            }
-
 
 
             // link up to Stitch

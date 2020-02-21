@@ -1107,3 +1107,69 @@ function countdownTimer(parent, number, duration) {
     countdownNumberEl.textContent = countdown;
   }, duration);
 }
+
+
+ //data to csv format and download csv
+ function toCsv(input) {
+   return input.map(row => row.join(',')).join('\n')
+ }
+
+ function saveData(name, data) {
+   data = toCsv(data);
+   var xhr = new XMLHttpRequest();
+   xhr.open('POST', 'save-data.php');
+   xhr.setRequestHeader('Content-Type', 'application/json');
+   xhr.send(JSON.stringify({filename: name, filedata: data}));
+ }
+
+// save data in csv format
+ function saveCSV() {
+   // convert dataObject to CSV format
+   // convert DataObject into an array where first entry is the object key
+   var entries = Object.entries(dataObject);
+
+   //list of no of trials in each block
+   const trialsInBlock = [];
+   // for loop to find number of trials in block
+   for (const entry of entries) {
+     if (typeof entry[1] === "object" && entry[1].length) {
+       if (typeof entry[1][0] === "object" && entry[1][0].length) {
+         for (const subentry of entry[1]) {
+           trialsInBlock.push(subentry.length);
+         }
+         break;
+       }
+     }
+   }
+   // expand shorter block lists to trial length
+   // non-objects, lists of non-objects, lists of lists
+   for (let i=0; i < entries.length; i++) {
+     const entry = entries[i];
+     if (typeof entry[1] != "object") {
+       // turn into list
+       const x = [];
+       const y = entry[1];
+       for(let b = 0; b < trialsInBlock.length; b++)
+         for(let t = 0; t < trialsInBlock[b].length; t++)
+           x.push(y);
+       entries[i] = x;
+     } else {
+       // list of lists
+       if (typeof entry[1][0] == "object") {
+         const x = [];
+       for(let b = 0; b < trialsInBlock.length; b++)
+         for(let t = 0; t < trialsInBlock[b].length; t++)
+           x.push(entry[1][b][t]);
+       entries[i] = x;
+       // list
+       } else {
+         const x = [];
+         for(let b = 0; b < trialsInBlock.length; b++)
+           for(let t = 0; t < trialsInBlock[b].length; t++)
+             x.push(entry[1][b]);
+         entries[i] = x;
+       }
+     }
+   }
+   saveData("data", entries)
+ }

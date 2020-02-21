@@ -30,15 +30,15 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var correctResponse;
     var jointCorrectResponse;
     var sliderActive = true;
-    var secondTimeAround = false;
     var start_timer;
-    var dotPairs = [];
-    var dotConfidences = [];
-    var initialChoices = [];
-    var partnerConfidences = [];
-    var dotRTs = [];
+    var dotPairs;
+    var dotConfidences;
+    var initialChoices;
+    var partnerConfidences;
+    var dotRTs;
     var choice_timer;
     var confidence_timer;
+    var accuracyThreshold = 50;  //threshold for practice trials (if we are in tutorialmode)
 
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -49,20 +49,24 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     }
 
 
+    // disable the cursor so that response is made with left/right mouse-click (enabled again after initial decision to use confidence slider
+    $('.jspsych-content').css('cursor', 'none');
+
+
     // determine the parameters for the dot grids
+    var dots, majoritySide;
     var low = dotCount;
     var high = Math.round(dotCount + dotsStaircase.getLast('logSpace'));
-
     var randomiser = Math.random();
     if (randomiser > 0.5) {
-        var dots = [low, high];
-        var majoritySide = 'right';
+        dots = [low, high];
+        majoritySide = 'right';
     } else {
-        var dots = [high, low];
-        var majoritySide = 'left';
+        dots = [high, low];
+        majoritySide = 'left';
     }
-    trialDataVariable['dots_majoritySide'].push(majoritySide);
-    dotPairs.push(dots);
+    trialDataVariable['dots_majoritySide'].push(majoritySide) ;
+    dotPairs = dots;
 
 
     // draw the grid
@@ -93,11 +97,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         ''
     );
 
+
     // determine partner's choice
-    let accuracy = 75;
+    let partnerAccuracy = 75;
     var partnerChoice;
     var random = Math.random();
-    if (random < accuracy) {
+    if (random < partnerAccuracy) {
         if (majoritySide == "left") {
             partnerChoice = "left"
         } else if (majoritySide == "right") {
@@ -108,10 +113,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             partnerChoice = "right"
         } else if (majoritySide == "right") {
             partnerChoice = "left"
-        }
-        ;
-    }
-    ;
+        };
+    };
 
 
     // determine partner's confidence
@@ -135,7 +138,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         partnerConfidence = 0
     }
 
-
     // partner confidence marker on the slider
     if (partnerChoice == "left") {
         partnerConfidenceMarker = 50 - partnerConfidence
@@ -150,7 +152,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         partnerConfidenceCorrect = 50 - partnerConfidence
     }
 
-    partnerConfidences.push(partnerConfidenceCorrect);
+    partnerConfidences = partnerConfidenceCorrect;
 
 
     // button name
@@ -180,13 +182,15 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         '<h1>Which box contained more dots?</h1> (left click for left box, right click for right box)'
     );
 
+
+    // reset the event loggers
+    $('.submit-button').off('click');
+    $('.scale-row').off('mousemove').off('click');
+
+
     // hide the response area
     $('.confidence-question').css('visibility', 'hidden');
     $('.response-area').css('visibility', 'hidden');
-
-
-    // enable the cursor
-    $('.jspsych-content').css('cursor', 'auto');
 
 
     // hide the masks (i.e. show the stimulus)
@@ -198,115 +202,73 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // left or right mouse-click for decision
     var initialChoice;
     $(document).on('mousedown', function (event) {
-        // record the RT
+
+        // record the reaction time
         choice_timer = Date.now();
-        // turn off these event handlers
-        $(document).off('mousedown');
+        var RT = calculateRT(start_timer, choice_timer);
+        dotRTs = RT;
+
+        // enable the cursor
+        $('.jspsych-content').css('cursor', 'auto');
         $('.grid-mask').css('cursor', 'auto');
-        // highlight the chosen box
+
+
+        // turn off this event handler
+        $(document).off('mousedown');
+
+
+        // highlight the chosen box and record if initial response (via mouse click) was correct or false
         if (event.button == 0) {
-            initialChoice = "left"
+            initialChoice = "left";
             $('.mask-left').css('border', '5px solid rgb(13,255,146');
             $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
         } else if (event.button == 2) {
-            initialChoice = "right"
+            initialChoice = "right";
             $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
             $('.mask-right').css('border', '5px solid rgb(13,255,146');
         }
-        // make response area visible
-        $('.confidence-question').css('visibility', 'visible');
-        document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
-        $('.response-area').css('visibility', 'visible');
-
         var response;
         if (initialChoice == majoritySide) {
             response = "correct"
         } else {
             response = "false"
         }
-        initialChoices.push(response);
-        console.log("initialChoice " + response);
+        initialChoices = response;
+
+
+        // make response area visible
+        $('.confidence-question').css('visibility', 'visible');
+        document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
+        $('.response-area').css('visibility', 'visible');
+
     });
 
 
-    // reset the event loggers
-    $('.submit-button').off('click');
-    $('.scale-row').off('mousemove').off('click');
-
-
-    // confidence is stored as "confidence in the correct answer"
-    // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
-    var participantConfidenceCorrect;
-
-    function recordRating(backendConfidence, majoritySide, type) {
-        if (backendConfidence !== undefined) {
-            console.log("majority side " + majoritySide);
-            // record correct/incorrect confidence
-            if (majoritySide == 'left') {
-                var invertedConfidence = 100 - backendConfidence;
-                participantConfidenceCorrect = invertedConfidence;
-                dotConfidences.push(invertedConfidence);
-
-                if (invertedConfidence > 50) {                         ////////change this!
-                    correctResponse = true;
-                } else {
-                    correctResponse = false;
-                }
-
-                if (!isTutorialMode && type == 'submit') {
-                    dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
-                }
-            } else {
-                participantConfidenceCorrect = backendConfidence;
-                dotConfidences.push(backendConfidence);
-
-                if (backendConfidence > 50) {
-                    correctResponse = true;
-                } else {
-                    correctResponse = false;
-                }
-
-                if (!isTutorialMode && type == 'submit') {
-                    dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
-                }
-            }
-        }
-    }
-
-    function saveData(name, data) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'save-data.php');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({filename: name, filedata: data}));
-    }
-
+    // participant clicks on continue button
     function buttonBackend(type) {
         // turn off the button options
         $('.scale-button').addClass('invisible');
 
 
-        // record RT and reset the timer
-        confidence_timer = Date.now();
-        var RT = calculateRT(start_timer, confidence_timer);
-
-        console.log("RT is " + RT);
-        dotRTs.push(RT);
-
-
-        // update the staircase
+        // update the staircase (correctResponse is true or false such that dots stimulus becomes harder or easier)
         dotsStaircase.next(correctResponse);
         staircaseSteps++;
 
 
-        // calculate the wait time
-        var waitTime = fixationPeriod + dotPeriod + transitionPeriod + RT;
-        if (waitTime <= waitTimeLimit) {
-            waitTime = waitTime;
-        } else {
-            waitTime = waitTimeLimit;
-        }
+        // calculate the wait time (this is from stimulus presentation until clicking continue, whereas RT is from stimulus presentation to initial choice via mouse-lick
+        confidence_timer = Date.now();
+        var waitTime = calculateRT(start_timer, confidence_timer);
 
 
+        // clear the display on a timer
+        setTimeout(function () {
+            document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
+            document.getElementById('response-area').remove();
+            console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
+        }, 500);
+
+
+        //record trial data
         trialDataVariable['dots_waitTimes'].push(waitTime);
         trialDataVariable['dots_isCorrect'].push(correctResponse);
         trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
@@ -317,69 +279,38 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_RTs'].push(dotRTs);
         trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
         trialCounterVariable++;
+        dots_totalTrials++;
 
 
-        // give feedback
-        if (partner == "none") {
-            setTimeout(function () {
-                // clear the display on a timer
-                document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
-                document.getElementById('response-area').remove();
-                console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-            }, 500);
-        } else {
-            //give feedback (delete this part if you do not want feedback and keep only things inside the timeout function below (but delete timeout itself)
-            // if (correctResponse == true) {
-            //     document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-            // } else {
-            //     document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-            // }
-            // clear the display
-            setTimeout(function () {
-                // clear the display on a timer
-                document.getElementById('jspsych-canvas-sliders-response-wrapper').remove();
-                document.getElementById('response-area').remove();
-                console.log('that was trial ' + trialCounterVariable + ' of ' + trialCount);
-            }, 1200);
-
-            dots_totalTrials++;
-
-
-        }
-
-        let numOfTrials = partnerConfidenceMarker;
-        jsPsych.data.get().addToLast(dataObject);
-        //let numOfTrials = jsPsych.data.get().count();
-        console.log(numOfTrials);
-        jsPsych.data.get().addToLast({trialNum: numOfTrials});
-        let fileName = numOfTrials.toString();
-        fileName = 'experiment_data' + fileName;
-        saveData(fileName, jsPsych.data.get().filter({trialNum: numOfTrials}).csv());
-        console.log(jsPsych.data.get().filter({trialNum: numOfTrials}));
-
-
+        // if current trial-number is less than total trial-number, call the drawFixation function and begin new trial
         if (trialCounterVariable < trialCount) {
-            // draw the fixation dot
             setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, waitTime);
 
+
+        // if current trial-number is equal to total trial-number, then evaluate accuracy and end the block
         } else {
             // evaluate accuracy
             setTimeout(function () {
-                var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
-                console.log('accuracy: ' + accuracy);
 
+                // if there is no partner, accuracy is based on individual responses, otherwise its based on joint decision accuracy
+                if (partner != "none") {
+                    var accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
+                } else {
+                    var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
+                }
+
+                //if we are in tutorial mode, practice trials need to be repeated in case accuracy is below accuracy threshold
                 if (isTutorialMode) {
                     if (accuracy >= accuracyThreshold) {
+                        var section4_button = 'CONTINUE';
                         if (partner != "none") {
-                            accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
                             var section4_text = 'Congratulations, your joint accuracy during the last set of practice trials was ' + accuracy + '%.';
                         } else {
                             var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
                         }
-                        var section4_button = 'CONTINUE';
                     } else {
-                        var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "Repeat" below to repeat the practice round.';
                         var section4_button = 'REPEAT';
+                        var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
                     }
 
                     // set up feedback page
@@ -415,33 +346,49 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         '<div>' + section4_button + '</div>'
                     );
 
+
+                    // if practice block was successful
                     if (accuracy >= accuracyThreshold) {
+
+                        // we save the data
+                        saveCSV();
+
                         $('#dots-tutorial-continue').on('click', function () {
-                            console.log(trialDataVariable);
                             permanentDataVariable["dots_accuracy"].push(accuracy);
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                             permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                             permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
                             permanentDataVariable["initial_choices"].push(trialDataVariable["initial_choices"]);
                             permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
-                            permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
+                            //permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                             permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                             permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
+                            // enable cursor for whole screen
                             $('body').css('cursor', 'auto');
+
+                            // finish the trial
                             jsPsych.finishTrial();
                             return;
                         });
+
+
+                    // if the practice block was not successful, we do not save the data and start a new block of trials
                     } else {
+                        trialCounterVariable = 0;
                         $('#dots-tutorial-continue').on('click', function () {
-                            drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, isTutorialMode, accuracyThreshold, yellowButtonEnabled, redButtonEnabled, redButtonName, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner);
-                            return;
+                            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, waitTime);
                         });
                     }
+
+
+                // if we are not in tutorial mode
                 } else {
-                    // if not in tutorial mode
+                    // we save the data
+                    saveCSV();
+
                     permanentDataVariable["dots_accuracy"].push(accuracy);
                     permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
@@ -449,16 +396,21 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
                     permanentDataVariable["initial_choices"].push(trialDataVariable["initial_choices"]);
                     permanentDataVariable["partner_confidences"].push(trialDataVariable["partner_confidences"]);
-                    permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
+                    //permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                     permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                     permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                     permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                     permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
+
+                   // increase the block count
                     dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
                     dots_blockCount++;
 
+                    // enable the cursor for the whole screen
                     $('body').css('cursor', 'auto');
+
+                    // finish the trial
                     jsPsych.finishTrial();
                     return;
                 }
@@ -467,6 +419,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     }
 
 
+    // enables slider
     $('.scale-row').on({
         mousemove: function (event) {
             var scaleOffsetLeft = cumulativeOffset(document.getElementById('scale')).left;
@@ -476,6 +429,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             if (sliderActive) {
                 backendConfidence = Math.round(((event.pageX - Xmin) / scaleWidth) * 100);
 
+                // style code
                 if (backendConfidence >= 100) {
                     backendConfidence = 100;
                     displayedConfidence = backendConfidence;
@@ -522,13 +476,53 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }
             }
         },
+
+
+        // when participant clicks on slider to indicate their confidence
         click: function () {
+            // disable the slider
             sliderActive = false;
 
-            // record data
-            confidence_timer = Date.now();
-            var RT = calculateRT(start_timer, confidence_timer);
-            dotRTs.push(RT);
+
+            // confidence is stored as "confidence in the correct answer"
+            // i.e. if a person has confidence of 4% in their response but it is the incorrect one, this will be stored as 46% (confidence in the correct choice)
+            var participantConfidenceCorrect;
+
+            function recordRating(backendConfidence, majoritySide, type) {
+                if (backendConfidence !== undefined) {
+                    console.log("majority side " + majoritySide);
+                    // record correct/incorrect confidence
+                    if (majoritySide == 'left') {
+                        var invertedConfidence = 100 - backendConfidence;
+                        participantConfidenceCorrect = invertedConfidence;
+                        dotConfidences = invertedConfidence;
+
+                        if (invertedConfidence > 50) {
+                            correctResponse = true;
+                        } else {
+                            correctResponse = false;
+                        }
+
+                        if (!isTutorialMode && type == 'submit') {
+                            dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
+                        }
+                    } else {
+                        participantConfidenceCorrect = backendConfidence;
+                        dotConfidences = backendConfidence;
+
+                        if (backendConfidence > 50) {
+                            correctResponse = true;
+                        } else {
+                            correctResponse = false;
+                        }
+
+                        if (!isTutorialMode && type == 'submit') {
+                            dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
+                        }
+                    }
+                }
+            }
+
             recordRating(backendConfidence, majoritySide, 'initial');
 
             // draw partner's confidence marker
@@ -548,7 +542,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
             // draw box around response with higher confidence
             // note here: the stored confidence values in the data object are confidences in the correct choice;
-            // the "abs" confidences are on a scale of 0-50 regardless of left/right correct/wrong choice; they are necessary to compare who had higher confidence in the case that participant and partner choose different sides
+            // the normal confidences are on a scale of 0-50 regardless of left/right correct/wrong choice; they are necessary to compare who had higher confidence in the case that participant and partner choose different sides
             // the confidence scores for the markers are on a scale from 0-100 going from left to right on the confidence scale
             if (partner !== "none") {
                 setTimeout(function () {
@@ -606,13 +600,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
                 }, 900);
 
+
                 // shot submit button
                 setTimeout(function (){
                     $('.scale-button').removeClass('invisible');
                 }, 1200);
 
+
+            // if there is no partner
             } else {
-                // feedback if there is no partner
+                // give feedback based on individual choice
                 setTimeout(function (){
                     if (correctResponse == true) {
                         document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
@@ -626,76 +623,24 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     $('.scale-button').removeClass('invisible');
                 }, 700);
             }
-
-
-            if (defaultOptionEnabled) {
-                // wipe the slate and show the default option with timer if first time
-                if (!secondTimeAround) {
-                    // clear the grids
-                    var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                    var context = dotCanvas.getContext('2d');
-                    context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-                    context.beginPath();
-
-                    // hide masks and response areas
-                    $('.response-area, .confidence-question, .grid-mask, #jspsych-canvas-sliders-response-canvas').css('visibility', 'hidden');
-
-                    var defaultQuestionValue = '';
-                    if (redButtonName == 'SKIP INSTEAD') {
-                        defaultQuestionValue = 'See Again?';
-                    } else if (redButtonName == 'SEE AGAIN INSTEAD') {
-                        defaultQuestionValue = 'Continue?';
-                    }
-
-                    var defaultQuestion = createGeneral(
-                        defaultQuestion,
-                        document.getElementById('jspsych-canvas-sliders-response-wrapper'),
-                        'div',
-                        'fixation-cross see-again',
-                        'default-question',
-                        defaultQuestionValue
-                    );
-
-                    // draw a central timer
-                    countdownTimer(document.getElementById('jspsych-canvas-sliders-response-wrapper'), 3, 3000);
-
-                    $('.response-area, #tooltip-row-bottom').css('visibility', 'visible');
-                    $('#tooltip-row-top, #tooltip-arrow-top, #scale-row').css('visibility', 'hidden');
-
-                    setTimeout(function () {
-                        document.getElementById('countdown').remove();
-                        document.getElementById('default-question').remove();
-                        $('.response-area, #tooltip-row-bottom').css('visibility', 'hidden');
-                        $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-
-                        if (defaultQuestionValue == 'See Again?' && !secondTimeAround) {
-                            buttonBackend('seeAgain');
-                        } else {
-                            buttonBackend('submit');
-                        }
-                    }, 3000);
-
-                    // wipe the slate and end trial if second time
-                } else {
-
-                }
-            } else {
-                //
-            }
         },
     });
 
 
+    // when continue button is clicked, the above specified function is called
     $('.submit-button').on('click', function () {
         buttonBackend('submit');
     });
 
 
+    // hide the stimulus again for the next trial
     setTimeout(function () {
         // unhide the masks
         $('.grid-mask').css('visibility', 'visible');
         $('.confidence-question').css('visibility', 'visible');
     }, dotPeriod);
+
+
 }
 
 /**
