@@ -150,6 +150,8 @@
     var bonusPayment = 0;
 
     var dataObject = {
+        trial_count: [],
+        block_count: [],
         subjectID: subjectID,
         prolificID: ProlificID,
         experiment_version: exp_release,
@@ -176,13 +178,13 @@
         demographics_duration: 0,
 
         dots_accuracy: [],
-        dots_isTutorialMode: [],
+        //dots_isTutorialMode: [],
         dots_staircase: [],
-        dots_pairs: [],
         dots_majoritySide: [],
         dots_confidences: [],
         initial_choices: [],
         partner_confidences: [],
+        dots_pairs: [],
         //dots_defaultOption: [],
         //dots_moreAsked: [],
         dots_isCorrect: [],
@@ -242,7 +244,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 3,
+        trial_count: 1,
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -259,7 +261,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 3,
+        trial_count: 1,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'practice'
@@ -274,7 +276,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 3,
+        trial_count: 1,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -290,7 +292,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 3,
+        trial_count: 1,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -306,7 +308,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 3,
+        trial_count: 1,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -322,7 +324,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 3,
+        trial_count: 1,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -435,6 +437,7 @@
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
+                    dotTaskRest,
                     dotTaskInstructions3,
                     dotTask3,
                     dotTaskRest,
@@ -458,6 +461,7 @@
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
+                    dotTaskRest,
                     dotTaskInstructions3,
                     dotTask1,
                     dotTaskRest,
@@ -481,6 +485,7 @@
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
+                    dotTaskRest,
                     dotTaskInstructions3,
                     dotTask3,
                     dotTaskRest,
@@ -499,6 +504,7 @@
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
+                    dotTaskRest,
                     dotTaskInstructions3,
                     dotTask1,
                     dotTaskRest,
@@ -533,6 +539,8 @@
             dataObject["bonus_earned"] = bonusPayment;
             dataObject["date_completed"] = longformDate();
             dataObject["duration"] = testTime;
+
+            saveCSV(subjectID);
 
 
             // link up to Stitch

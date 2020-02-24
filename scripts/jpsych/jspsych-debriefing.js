@@ -144,11 +144,13 @@ jsPsych.plugins['jspsych-debriefing'] = (function () {
 
     // button
     instructAcknowledge.onclick = function() {
-      var debriefingResponse = document.getElementById('debriefing-question').value;
-      dataObject['debriefing'] = debriefingResponse;
+      var debrief;
+      debrief = "acknowledged";
+      dataObject['debriefing'] = debrief;
       console.log(dataObject);
       jsPsych.finishTrial();
       return;
+      saveCSV(subjectID, currentAttempt);
     };
 
     // make sure page starts at the top every time

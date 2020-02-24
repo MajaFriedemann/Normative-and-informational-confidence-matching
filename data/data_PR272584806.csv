@@ -1,3 +1,4 @@
+trial_count,1,2,3,4,5,6
 subjectID,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806
 prolificID,,,,,,
 experiment_version, , , , , , 
@@ -5,7 +6,7 @@ experiment_version_date,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2
 experiment_condition,,,,,,
 trialType_order,testing,testing,testing,testing,testing,testing
 scoreRule_order,,,,,,
-attempts,438,438,438,438,438,438
+attempts,461,461,461,461,461,461
 CUREC_ID,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001
 CUREC_version,5.0,5.0,5.0,5.0,5.0,5.0
 CUREC_date,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12
@@ -24,14 +25,14 @@ dots_accuracy,67,67,67,100,100,100
 dots_isTutorialMode,,,,,,
 dots_staircase,,,,,,
 dots_majoritySide,right,left,right,right,right,right
-dots_confidences,37,61,52,65,60,60
-initial_choices,false,correct,correct,correct,correct,false
-partner_confidences,50,50,50,84,75,79
-dots_pairs,200,300,300,200,200,300,200,267,200,267,200,255
-dots_isCorrect,false,true,true,true,true,true
+dots_confidences,65,56,35,53,61,65
+initial_choices,correct,correct,false,correct,false,false
+partner_confidences,50,50,50,80,68,79
+dots_pairs,[200,300],[300,200],[200,267],[200,300],[200,300],[200,282]
+dots_isCorrect,true,true,false,true,true,true
 dots_jointCorrect,,,,true,true,true
-dots_RTs,410,480,643,643,808,634
-dots_waitTimes,2574,2409,2579,4246,3504,3349
+dots_RTs,47749,653,290,601,414,423
+dots_waitTimes,50939,2568,2021,3928,3766,3899
 technical_issues,,,,,,
 feedback_strategy,,,,,,
 feedback_technical,,,,,,

@@ -1484,6 +1484,7 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   height: 6vmin;
   border: 6px solid orange;
   background: transparent;
+  align-self: center;
 }
 
 .nonselectable {

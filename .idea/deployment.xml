@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="XAMPP" deleteMissingItems="true">
+  <component name="PublishConfigData" serverName="XAMPP Apache" deleteMissingItems="true">
     <serverData>
       <paths name="XAMPP">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="XAMPP Apache">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

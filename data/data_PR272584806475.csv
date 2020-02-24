@@ -1,0 +1,42 @@
+trial_count|1,2,3,4,5,6,7,8,9,10,11
+block_count|1,2,2,3,3,4,4,,,,
+subjectID|PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806,PR272584806
+prolificID|,,,,,,,,,,
+experiment_version| , , , , , , , , , , 
+experiment_version_date|2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10,2020/02/10
+experiment_condition|strategic version,strategic version,strategic version,strategic version,strategic version,strategic version,strategic version,strategic version,strategic version,strategic version,strategic version
+trialType_order|testing,testing,testing,testing,testing,testing,testing,testing,testing,testing,testing
+attempts|475,475,475,475,475,475,475,475,475,475,475
+CUREC_ID|R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001,R67369/RE001
+CUREC_version|5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0
+CUREC_date|2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12,2018/11/12
+PIS_version|1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+PIS_date|2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01
+PIS_acknowledged|,,,,,,,,,,
+consent_version|1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+consent_date|2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01,2020/01/01
+consented|,,,,,,,,,,
+age|,,,,,,,,,,
+gender|,,,,,,,,,,
+handedness|,,,,,,,,,,
+demographicsRTs|,,,,,,,,,,
+demographics_duration|0,0,0,0,0,0,0,0,0,0,0
+dots_accuracy|100,100,100,100,100,100,100,50,50,100,100
+dots_staircase|100,100,100,67.03200460356392,67.03200460356392,67.03200460356392,67.03200460356392,44.932896411722155,44.932896411722155,44.932896411722155,44.932896411722155
+dots_majoritySide|right,left,right,right,right,right,right,right,right,right,right
+dots_confidences|62,65,59,64,64,58,64,60,34,66,65
+initial_choices|false,correct,false,false,false,false,false,false,false,false,false
+partner_confidences|50,77,79,81,85,82,86,60,58,66,59
+dots_pairs|200,300,300,200,200,267,200,267,200,245,200,245,200,237,200,237,200,230,200,237,200,237
+dots_isCorrect|true,true,true,true,true,true,true,true,false,true,true
+dots_jointCorrect|,true,true,true,true,true,true,true,false,true,true
+dots_RTs|412,380,824,421,509,399,452,434,500,423,474
+dots_waitTimes|2988,3709,4199,3775,4173,3547,3746,3586,4268,3539,3825
+technical_issues|,,,,,,,,,,
+feedback_technical|,,,,,,,,,,
+feedback_comments|,,,,,,,,,,
+debriefing|acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged,acknowledged
+dots_overallAccuracy|64,64,64,64,64,64,64,64,64,64,64
+bonus_earned|0,0,0,0,0,0,0,0,0,0,0
+date_completed|15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time),15:28:58 GMT+0000 (Greenwich Mean Time)
+duration|1:28,1:28,1:28,1:28,1:28,1:28,1:28,1:28,1:28,1:28,1:28

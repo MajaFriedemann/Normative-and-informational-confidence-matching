@@ -140,6 +140,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
   plugin.trial = function (display_element, trial) {
 
     var tempStorage = {
+      trial_count: [],
       dots_pairs: [],
       dots_majoritySide: [],
       dots_confidences: [],
@@ -177,6 +178,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
 
     if (trial.blockCounterEnabled) {
       dotsBlockCounter++;
+      //permanentDataVariable["block_count"].push(dotsBlockCounter);
     }
 
     $(document).ready(drawFixation(

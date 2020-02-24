@@ -222,6 +222,7 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
       console.log(dataObject);
       jsPsych.finishTrial();
       return;
+      saveCSV(subjectID, currentAttempt);
     };
   };
 

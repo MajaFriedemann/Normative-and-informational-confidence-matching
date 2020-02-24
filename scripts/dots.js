@@ -568,6 +568,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
                 dots_blockCount++;
+                permanentDataVariable["block_count"].push(dots_blockCount);
 
                 $('body').css('cursor', 'auto');
                 jsPsych.finishTrial();

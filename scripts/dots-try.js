@@ -99,7 +99,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     // determine partner's choice
-    let partnerAccuracy = 75;
+    let partnerAccuracy = 73;
     var partnerChoice;
     var random = Math.random();
     if (random < partnerAccuracy) {
@@ -272,19 +272,20 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_waitTimes'].push(waitTime);
         trialDataVariable['dots_isCorrect'].push(correctResponse);
         trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
-        trialDataVariable['dots_pairs'].push(dotPairs);
+        trialDataVariable['dots_pairs'].push(JSON.stringify(dotPairs));
         trialDataVariable['dots_confidences'].push(dotConfidences);
         trialDataVariable['initial_choices'].push(initialChoices);
         trialDataVariable['partner_confidences'].push(partnerConfidences);
         trialDataVariable['dots_RTs'].push(dotRTs);
-        trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
+        //trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
         trialCounterVariable++;
         dots_totalTrials++;
+        trialDataVariable['trial_count'].push(dots_totalTrials);
 
 
         // if current trial-number is less than total trial-number, call the drawFixation function and begin new trial
         if (trialCounterVariable < trialCount) {
-            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, waitTime);
+            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, 400);
 
 
         // if current trial-number is equal to total trial-number, then evaluate accuracy and end the block
@@ -351,10 +352,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     if (accuracy >= accuracyThreshold) {
 
                         // we save the data
-                        saveCSV();
 
                         $('#dots-tutorial-continue').on('click', function () {
                             permanentDataVariable["dots_accuracy"].push(accuracy);
+                            permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                             permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                             permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
@@ -365,6 +366,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
+
+                            saveCSV(subjectID, currentAttempt);
 
                             // enable cursor for whole screen
                             $('body').css('cursor', 'auto');
@@ -378,8 +381,24 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     // if the practice block was not successful, we do not save the data and start a new block of trials
                     } else {
                         trialCounterVariable = 0;
+                        // reset trial data variable
+                        trialDataVariable = {
+                            trial_count: [],
+                            dots_pairs: [],
+                            dots_majoritySide: [],
+                            dots_confidences: [],
+                            initial_choices: [],
+                            partner_confidences: [],
+                            dots_moreAsked: [],
+                            dots_isCorrect: [],
+                            dots_jointCorrect: [],
+                            dots_isTutorialMode: [],
+                            dots_firstIsCorrect: [],
+                            dots_RTs: [],
+                            dots_waitTimes: []
+                        };
                         $('#dots-tutorial-continue').on('click', function () {
-                            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, waitTime);
+                            setTimeout(function () { drawFixation(parent, canvasWidth, canvasHeight, dotCount, dotsStaircase, upperColor, lowerColor, dots_tooltipLabels, dots_endLabels, showPercentage, seeAgain, waitTimeLimit, fixationPeriod, dotPeriod, transitionPeriod, trialCount, trialCounterVariable, trialDataVariable, permanentDataVariable, isTutorialMode, accuracyThreshold, redButtonEnabled, redButtonName, yellowButtonEnabled, yellowButtonName, greenButtonEnabled, greenButtonName, defaultOptionEnabled, partner); }, 400);
                         });
                     }
 
@@ -387,10 +406,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 // if we are not in tutorial mode
                 } else {
                     // we save the data
-                    saveCSV();
 
                     permanentDataVariable["dots_accuracy"].push(accuracy);
-                    permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
+                    permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
+                    //permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                     permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                     permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
@@ -402,10 +421,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                     permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
+                    saveCSV(subjectID, currentAttempt);
+
 
                    // increase the block count
                     dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
                     dots_blockCount++;
+                    permanentDataVariable["block_count"].push(dots_blockCount);
 
                     // enable the cursor for the whole screen
                     $('body').css('cursor', 'auto');
@@ -567,7 +589,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                     //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
                     if (partnerConfidence < participantConfidence) {
-                        $('#higherConfidenceBox').css('left', participantConfidenceMarker - 1.6 + '%');
+                        $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 8px)');
                         setTimeout(function () {
                             if (participantConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
@@ -578,7 +600,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             }
                         }, 300);
                     } else {
-                        $('#higherConfidenceBox').css('left', partnerConfidenceMarker - 1.6 + '%');
+                        $('#higherConfidenceBox').css('left', 'calc(' + partnerConfidenceMarker + '% - 7.5px)');
                         setTimeout(function () {
                             if (partnerConfidenceCorrect > 50) {
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';

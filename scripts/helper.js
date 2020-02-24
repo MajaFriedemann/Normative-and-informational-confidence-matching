@@ -1111,7 +1111,10 @@ function countdownTimer(parent, number, duration) {
 
  //data to csv format and download csv
  function toCsv(input) {
-   return input.map(row => row.join(',')).join('\n')
+  let newInput = input.map(row => {
+    return [row[0], row[1].join('|')];
+  });
+   return newInput.map(row => row.join('|')).join('\n')
  }
 
  function saveData(name, data) {
@@ -1123,7 +1126,7 @@ function countdownTimer(parent, number, duration) {
  }
 
 // save data in csv format
- function saveCSV() {
+ function saveCSV(ID, attempts) {
    // convert dataObject to CSV format
    // convert DataObject into an array where first entry is the object key
    var entries = Object.entries(dataObject);
@@ -1148,28 +1151,29 @@ function countdownTimer(parent, number, duration) {
      if (typeof entry[1] != "object") {
        // turn into list
        const x = [];
-       const y = entry[1];
+       var y = entry[1];
        for(let b = 0; b < trialsInBlock.length; b++)
-         for(let t = 0; t < trialsInBlock[b].length; t++)
+         for(let t = 0; t < trialsInBlock[b]; t++)
            x.push(y);
-       entries[i] = x;
+       entries[i][1] = x;
      } else {
        // list of lists
        if (typeof entry[1][0] == "object") {
          const x = [];
        for(let b = 0; b < trialsInBlock.length; b++)
-         for(let t = 0; t < trialsInBlock[b].length; t++)
+         for(let t = 0; t < trialsInBlock[b]; t++)
            x.push(entry[1][b][t]);
-       entries[i] = x;
+       entries[i][1] = x;
        // list
        } else {
          const x = [];
          for(let b = 0; b < trialsInBlock.length; b++)
-           for(let t = 0; t < trialsInBlock[b].length; t++)
+           for(let t = 0; t < trialsInBlock[b]; t++)
              x.push(entry[1][b]);
-         entries[i] = x;
+         entries[i][1] = x;
        }
      }
    }
-   saveData("data", entries)
+   saveData("data_" + ID + attempts, entries)
  }
+
