@@ -38,7 +38,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var dotRTs;
     var choice_timer;
     var confidence_timer;
-    var accuracyThreshold = 50;  //threshold for practice trials (if we are in tutorialmode)
+    var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
 
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -99,9 +99,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     // determine partner's choice
-    let partnerAccuracy = 73;
+    let partnerAccuracy = 74;
     var partnerChoice;
-    var random = Math.random();
+    var random = 100*(Math.random());
     if (random < partnerAccuracy) {
         if (majoritySide == "left") {
             partnerChoice = "left"
@@ -203,6 +203,23 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var initialChoice;
     $(document).on('mousedown', function (event) {
 
+        // turn off this event handler
+        $(document).off('mousedown');
+
+        // //prevent double click
+        // var event = $(document).click(function(e) {
+        //     e.stopPropagation();
+        //     e.preventDefault();
+        //     e.stopImmediatePropagation();
+        //     return false;
+        // });
+        //
+        // //enable mouse click again for confidence slider
+        // setTimeout(function () {
+        //     $(document).unbind('click');
+        // }, 300);
+
+
         // record the reaction time
         choice_timer = Date.now();
         var RT = calculateRT(start_timer, choice_timer);
@@ -211,10 +228,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         // enable the cursor
         $('.jspsych-content').css('cursor', 'auto');
         $('.grid-mask').css('cursor', 'auto');
-
-
-        // turn off this event handler
-        $(document).off('mousedown');
 
 
         // highlight the chosen box and record if initial response (via mouse click) was correct or false
@@ -272,6 +285,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_waitTimes'].push(waitTime);
         trialDataVariable['dots_isCorrect'].push(correctResponse);
         trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
+        dots_jointTotalCorrect += trialDataVariable.dots_jointCorrect.filter(Boolean).length;
         trialDataVariable['dots_pairs'].push(JSON.stringify(dotPairs));
         trialDataVariable['dots_confidences'].push(dotConfidences);
         trialDataVariable['initial_choices'].push(initialChoices);
@@ -295,9 +309,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 // if there is no partner, accuracy is based on individual responses, otherwise its based on joint decision accuracy
                 if (partner != "none") {
-                    var accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
+                    accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
                 } else {
-                    var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
+                    accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
                 }
 
                 //if we are in tutorial mode, practice trials need to be repeated in case accuracy is below accuracy threshold
@@ -306,8 +320,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         var section4_button = 'CONTINUE';
                         if (partner != "none") {
                             var section4_text = 'Congratulations, your joint accuracy during the last set of practice trials was ' + accuracy + '%.';
+                            dots_blockCount = 0;
                         } else {
                             var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                            dots_blockCount = -1;
                         }
                     } else {
                         var section4_button = 'REPEAT';
@@ -366,6 +382,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
+                            permanentDataVariable["block_count"].push(dots_blockCount);
 
                             saveCSV(subjectID, currentAttempt);
 
@@ -611,7 +628,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             }
                         }, 300);
                     }
-                    dots_jointTotalCorrect += trialDataVariable.dots_jointCorrect.filter(Boolean).length;
 
                     console.log("participantConfidenceMarker " + participantConfidenceMarker);
                     console.log("participantConfidence " + participantConfidence);

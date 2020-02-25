@@ -487,7 +487,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
           } else {
             // evaluate accuracy
             setTimeout(function () {
-              var accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
+              accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
               console.log('accuracy: ' + accuracy);
 
               if (isTutorialMode) {

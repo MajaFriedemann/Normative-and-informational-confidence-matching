@@ -2,58 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806465.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806466.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806467.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806468.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806471.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806472.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806475.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806476.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806478.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806479.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806480.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806481.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806482.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806484.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806485.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806486.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806487.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806488.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806489.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806490.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806491.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806492.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806493.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806494.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806496.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806497.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806505.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806507.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806512.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806513.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806514.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806515.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806516.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806517.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806518.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806519.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806520.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806541.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806542.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806465.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806466.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806467.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806468.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806471.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806472.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806475.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806476.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806478.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806479.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806480.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806481.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806482.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806484.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806485.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806486.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806487.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806488.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806489.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806490.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806491.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806492.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806493.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806494.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806496.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806497.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806505.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806507.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806512.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806513.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806514.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806515.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806516.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806517.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806518.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806519.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_PR272584806520.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-debriefing.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-debriefing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-feedback-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-feedback-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +143,7 @@
       <workItem from="1581931009574" duration="13383000" />
       <workItem from="1582023833890" duration="8693000" />
       <workItem from="1582043565346" duration="30775000" />
-      <workItem from="1582199611884" duration="69270000" />
+      <workItem from="1582199611884" duration="80772000" />
     </task>
     <servers />
   </component>
@@ -184,10 +178,10 @@
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1580733845088" />
-    <state x="449" y="20" width="611" height="804" key="find.popup" timestamp="1582570078549">
+    <state x="536" y="3" width="611" height="804" key="find.popup" timestamp="1582632251025">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="449" y="20" width="611" height="804" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582570078549" />
+    <state x="536" y="3" width="611" height="804" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582632251025" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582285535138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

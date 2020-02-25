@@ -72,7 +72,7 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'testing';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
+    var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
@@ -146,6 +146,7 @@
     var dots_cumulativeScore = 0;
     var dots_overallAccuracy = 0;
     var dots_jointOverallAccuracy = 0;
+    var accuracy = 0;
 
     var bonusPayment = 0;
 
@@ -244,7 +245,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 1,
+        trial_count: 2,
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -261,7 +262,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 1,
+        trial_count: 2,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'practice'
@@ -276,7 +277,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 1,
+        trial_count: 2,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -292,7 +293,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 1,
+        trial_count: 2,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -308,7 +309,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 1,
+        trial_count: 2,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -324,7 +325,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 1,
+        trial_count: 2,
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -388,7 +389,7 @@
         type: 'jspsych-score-reveal',
         performanceType: 'accuracy',
         bonusThreshold: 60,
-        flatBonusAmount: 0.5
+        flatBonusAmount: 0.75
     };
 
     var thankYou = {
@@ -425,7 +426,7 @@
             var partnerOrder = Math.random();
             if (partnerOrder > 0.5) {
                 var timeline = [
-                    loading,
+                    //loading,
                     PIS,
                     consent,
                     demographics,
@@ -449,7 +450,7 @@
                 ];
             } else {
                 var timeline = [
-                    loading,
+                    //loading,
                     PIS,
                     consent,
                     demographics,
@@ -540,7 +541,7 @@
             dataObject["date_completed"] = longformDate();
             dataObject["duration"] = testTime;
 
-            saveCSV(subjectID);
+            saveCSV(subjectID, currentAttempt);
 
 
             // link up to Stitch

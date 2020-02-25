@@ -38,7 +38,15 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
 
     // calculate overall accuracy
     dots_overallAccuracy = round(dots_totalCorrect / dots_totalTrials, 2) * 100;
-    dots_jointOverallAccuracy = round(dots_jointTotalCorrect / dots_totalTrials, 2) * 100;
+
+    //dots_jointOverallAccuracy = round(dots_jointTotalCorrect / dots_totalTrials, 2) * 100;
+
+    var accurate = 0;
+    for (var block=3; block <=5; block++) {
+      accurate += dataObject["dots_accuracy"][block];
+    }
+    accurate += accuracy;   //for the last block as this has not yet been pushed to the dataObject
+    dots_jointOverallAccuracy = accurate / 4;
 
     switch(trial.performanceType) {
       case 'accuracy':
