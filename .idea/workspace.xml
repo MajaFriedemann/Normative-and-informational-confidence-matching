@@ -1,54 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806541.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806542.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806465.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806466.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806467.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806468.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806471.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806472.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806475.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806476.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806478.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806479.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806480.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806481.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806482.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806484.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806485.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806486.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806487.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806488.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806489.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806490.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806491.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806492.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806493.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806494.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806496.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806497.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806505.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806507.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806512.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806513.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806514.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806515.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806516.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806517.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806518.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806519.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806520.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
-    </list>
+    <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -143,7 +96,7 @@
       <workItem from="1581931009574" duration="13383000" />
       <workItem from="1582023833890" duration="8693000" />
       <workItem from="1582043565346" duration="30775000" />
-      <workItem from="1582199611884" duration="80772000" />
+      <workItem from="1582199611884" duration="81092000" />
     </task>
     <servers />
   </component>
