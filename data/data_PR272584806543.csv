@@ -1,0 +1,45 @@
+trial_count|1|2|5|6|7|8|9|10|11|12|13|14
+block_count|-1|-1|0|0|1|1|2|2|3|3|4|4
+subjectID|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806|PR272584806
+prolificID||||||||||||
+experiment_version| | | | | | | | | | | | 
+experiment_version_date|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10|2020/02/10
+experiment_condition||||||||||||
+trialType_order|all|all|all|all|all|all|all|all|all|all|all|all
+scoreRule_order||||||||||||
+attempts|543|543|543|543|543|543|543|543|543|543|543|543
+CUREC_ID|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001|R67369/RE001
+CUREC_version|5.0|5.0|5.0|5.0|5.0|5.0|5.0|5.0|5.0|5.0|5.0|5.0
+CUREC_date|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12|2018/11/12
+PIS_version|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0
+PIS_date|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01
+PIS_acknowledged|true|true|true|true|true|true|true|true|true|true|true|true
+consent_version|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0|1.0
+consent_date|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01|2020/01/01
+consented|true|true|true|true|true|true|true|true|true|true|true|true
+age|19|19|19|19|19|19|19|19|19|19|19|19
+gender|other|other|other|other|other|other|other|other|other|other|other|other
+handedness|left|left|left|left|left|left|left|left|left|left|left|left
+demographicsRTs|2731|2731|2665|2665|3234|3234||||||
+demographics_duration|8636|8636|8636|8636|8636|8636|8636|8636|8636|8636|8636|8636
+dots_accuracy|100|100|100|100|100|100|100|100|100|100|100|100
+dots_staircase|100|100|100|100|67.03200460356392|67.03200460356392|67.03200460356392|67.03200460356392|100|100|100|100
+dots_majoritySide|right|left|right|left|left|left|right|right|left|right|right|right
+dots_confidences|58|88|98|100|75|100|99|74|92|65|71|75
+initial_choices|false|correct|correct|correct|correct|correct|false|false|correct|false|correct|correct
+partner_confidences|50|50|72|35|87|81|84|86|39|67|31|68
+dots_pairs|[200,300]|[300,200]|[200,300]|[300,200]|[282,200]|[282,200]|[200,267]|[200,267]|[261,200]|[200,261]|[200,255]|[200,255]
+dots_isCorrect|true|true|true|true|true|true|true|true|true|true|true|true
+dots_jointCorrect|||true|true|true|true|true|true|true|true|true|true
+dots_RTs|5065|762|2781|2202|170906|2009|1834|2671|2796|2008|1773|1009
+dots_waitTimes|10669|5784|9419|13451|333176|9705|10518|11261|8800|7823|8677|20646
+technical_issues|true|true|true|true|true|true|true|true|true|true|true|true
+feedback_strategy||||||||||||
+feedback_technical|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!|ICAN'T RIGHT CLICK!
+feedback_comments||||||||||||
+debriefing|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged|acknowledged
+feedback_ratings||||||||||||
+dots_overallAccuracy|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999|56.99999999999999
+bonus_earned|0.75|0.75|0.75|0.75|0.75|0.75|0.75|0.75|0.75|0.75|0.75|0.75
+date_completed|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)|13:05:20 GMT+0000 (Greenwich Mean Time)
+duration|31:48|31:48|31:48|31:48|31:48|31:48|31:48|31:48|31:48|31:48|31:48|31:48

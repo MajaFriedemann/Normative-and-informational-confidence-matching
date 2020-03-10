@@ -72,7 +72,7 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
+    var trialTypeOrder = 'testing';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
@@ -124,7 +124,7 @@
             down: 2,
             up: 1,
             wait: true,
-            operation: 'logspace',
+            operation: 'logspace',          // accuracy is staircased to .71
             breaks: [0, 5, 10],
             stepSizeDown: [0.4, 0.2, 0.1],
             stepSizeUp: [0.4, 0.2, 0.1],
@@ -245,10 +245,10 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 2,
+        trial_count: 2,             //make trial count 40 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
-        seeAgain: 'easier',
+        seeAgain: 'practice1',
         partner: 'none',
     };
 
@@ -262,10 +262,10 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 2,
+        trial_count: 2,                 //make trial count 10 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
-        partner: 'practice'
+        partner: 'none'
     };
 
     var dotTask1 = {
@@ -277,7 +277,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,
+        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -293,7 +293,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,
+        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -309,7 +309,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,
+        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -325,7 +325,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,
+        trial_count: 2,                 //make trial count 50 here (100 trials per partner)f
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -335,14 +335,16 @@
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
-        section2_text: 'During this game, you will see two boxes containing dots on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more box, you respond with a left mouse-click. If you think the right box contained more dots, you respond with a right mouse-click. Following this, you will indicate your confidence in the decision on a sliding scale. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, you will get feedback about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>. <br><br> The task will start off quite easy <u>but will become harder</u> as you progress. Press the "continue" button to continue to some practice trials.',
+        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a left mouse-click. If you think the right box contained more dots, you respond with a right mouse-click. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
+            '<br><br> Press the "continue" button to continue to some practice trials.',
         img_id: 'dotTask-gif1'
     };
 
     var dotTaskInstructions2 = {
         type: 'jspsych-notice',
-        section1_text: 'From now on, you will make joint decisions with another participant.',
-        section2_text: 'After responding with a left or right click and indicating your confidence on the slider, you will now see the response of another participant for the same dots-grid. This other participant did about as well as you did in the practice trials. The <u>decision that is reported with higher confidence</u> will be selected as  <u>your joint decision</u>  based on which you will get feedback.<br><br>In the example on the left, the other participant\'s choice was reported with higher   <br><br>Press the "continue" button to do a few more practice trials with this new joint decision rule.',
+        section1_text: 'From now on, you will indicate your confidence in your decisions.',
+        section2_text: 'After responding with a left or right click, you will now indicate your confidence in the decision on a sliding scale. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, you will get feedback about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
+            ' <br><br>Press the "continue" button to do a few more practice trials with the confidence slider.',
         img_id: 'dotTask-gif2'
     };
 
@@ -363,7 +365,7 @@
         name: 'dotStart',
         subjectID: subjectID,
         message: 'You have now completed the practice trials for the dot task.',
-        submessage: 'For the rest of the experiment, you\'ll be doing the task you just practiced. There will be <u>four blocks of 25 trials</u>, which should take approximately 15 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 25 trials.',
+        submessage: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the response of another participant for the same dots-grid. This other participant did about as well as you did in the practice trials. The <u>decision that is reported with higher confidence</u> will be selected as  <u>your joint decision</u>  based on which you will get feedback.<br><br>In the example on the left, the other participant\'s choice was reported with higher confidence and thus chosen as the joint decision.  There will be <u>four blocks of 50 trials</u>, which should take approximately 25 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 50 trials.',
         backgroundColor: 'rgb(0,0,0)',
         buttonEnabled: true,
         buttonText: 'CONTINUE',

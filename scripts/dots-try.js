@@ -42,11 +42,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
-    if (trialTypeOrder == "all") {
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        }, false);
-    }
+    // if (trialTypeOrder == "all") {
+    //     document.addEventListener("contextmenu", function (e) {
+    //         e.preventDefault();
+    //     }, false);
+    // }
+
+    //change to the above if you want the contextmenu enabled in case of "testing"
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+    }, false);
 
 
     // disable the cursor so that response is made with left/right mouse-click (enabled again after initial decision to use confidence slider
@@ -206,54 +211,59 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         // turn off this event handler
         $(document).off('mousedown');
 
-        // //prevent double click
-        // var event = $(document).click(function(e) {
-        //     e.stopPropagation();
-        //     e.preventDefault();
-        //     e.stopImmediatePropagation();
-        //     return false;
-        // });
-        //
-        // //enable mouse click again for confidence slider
-        // setTimeout(function () {
-        //     $(document).unbind('click');
-        // }, 300);
-
-
         // record the reaction time
         choice_timer = Date.now();
         var RT = calculateRT(start_timer, choice_timer);
         dotRTs = RT;
 
-        // enable the cursor
-        $('.jspsych-content').css('cursor', 'auto');
-        $('.grid-mask').css('cursor', 'auto');
+        //skip some of the steps if we are in practice1 which is only used for staircasing (if (seeAgain != "practice1"))
 
 
-        // highlight the chosen box and record if initial response (via mouse click) was correct or false
-        if (event.button == 0) {
-            initialChoice = "left";
-            $('.mask-left').css('border', '5px solid rgb(13,255,146');
-            $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
-        } else if (event.button == 2) {
-            initialChoice = "right";
-            $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
-            $('.mask-right').css('border', '5px solid rgb(13,255,146');
-        }
-        var response;
-        if (initialChoice == majoritySide) {
-            response = "correct"
-        } else {
-            response = "false"
-        }
-        initialChoices = response;
+        setTimeout(function () {
+            // enable the cursor
+            $('.jspsych-content').css('cursor', 'auto');
+            $('.grid-mask').css('cursor', 'auto');
 
 
-        // make response area visible
-        $('.confidence-question').css('visibility', 'visible');
-        document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
-        $('.response-area').css('visibility', 'visible');
+            // highlight the chosen box and record if initial response (via mouse click) was correct or false
+            if (event.button == 0) {
+                initialChoice = "left";
+                $('.mask-left').css('border', '5px solid rgb(13, 219, 255');
+                $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
+            } else if (event.button == 2) {
+                initialChoice = "right";
+                $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
+                $('.mask-right').css('border', '5px solid rgb(13, 219, 255');
+            }
+            var response;
+            if (initialChoice == majoritySide) {
+                response = "correct"
+            } else {
+                response = "false"
+            }
+            initialChoices = response;
 
+
+            // make response area visible
+            if (seeAgain !== "practice1") {
+                $('.confidence-question').css('visibility', 'visible');
+                document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
+                $('.response-area').css('visibility', 'visible');
+            } else {
+                //automatically trigger click on slider
+                //automatically trigger click on continue button
+                //just put confidence at 50% (watch that initial response and not confidence response is used for "correct" response)
+                backendConfidence = 50;
+                $('.scale-row').click();
+                if (initialChoice === majoritySide) {
+                    correctResponse = true;
+                } else {
+                    correctResponse = false;
+                }
+                $('.submit-button').click();
+            }
+
+        }, 600);
     });
 
 
@@ -519,6 +529,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         // when participant clicks on slider to indicate their confidence
         click: function () {
+
+            //avoid double clicks by disabling click event for slider
+            document.getElementById('scale-row').style.pointerEvents = 'none';
+
             // disable the slider
             sliderActive = false;
 
@@ -577,7 +591,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     );
                     $('#partnerMarker').css('left', partnerConfidenceMarker + '%');
                 }
-            }, 300);
+            }, 600);
 
             // draw box around response with higher confidence
             // note here: the stored confidence values in the data object are confidences in the correct choice;
@@ -615,7 +629,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
                                 jointCorrectResponse = false;
                             }
-                        }, 300);
+                        }, 500);
                     } else {
                         $('#higherConfidenceBox').css('left', 'calc(' + partnerConfidenceMarker + '% - 7.5px)');
                         setTimeout(function () {
@@ -626,7 +640,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                 document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
                                 jointCorrectResponse = false;
                             }
-                        }, 300);
+                        }, 600);
                     }
 
                     console.log("participantConfidenceMarker " + participantConfidenceMarker);
@@ -636,7 +650,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     console.log("partnerConfidenceMarker " + partnerConfidenceMarker);
                     console.log("partnerConfidence " + partnerConfidence);
                     console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
-                }, 900);
+                }, 500);
 
 
                 // shot submit button
@@ -654,7 +668,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     } else {
                         document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
                     }
-                }, 400);
+                }, 500);
 
                 // shot submit button more quickly if there is no partner to wait for
                 setTimeout(function (){
