@@ -44,6 +44,7 @@
     <script src="scripts/jpsych/jspsych-feedback-form.js"></script>
     <script src="scripts/jpsych/jspsych-loading.js"></script>
     <script src="scripts/jpsych/jspsych-message-splash.js"></script>
+    <script src="scripts/jpsych/jspsych-partner-message1.js"></script>
     <script src="scripts/jpsych/jspsych-notice.js"></script>
     <script src="scripts/jpsych/jspsych-PIS.js"></script>
     <script src="scripts/jpsych/jspsych-score-reveal.js"></script>
@@ -103,7 +104,58 @@
     }
 
     // seed the randomisations (whenever a random number is generated it is seeded to the participantID so that it is reproducible)
-    Math.seedrandom(subjectID);
+    // dont do this for testing
+    // if (trialTypeOrder === "all") {
+    //     Math.seedrandom(subjectID);
+    // }
+
+
+    // randomize partner order
+    var partnerOrder = Math.random();  //used to decide if under- or overconfident partner is first
+
+    // randomize color of partner (used for marker color in dots.try and for background color in jspsych-partner-message)
+    var color = Math.random();
+    var color1;
+    var color2;
+    var partner1color;
+    var partner2color;
+    var partner1c;
+    var partner2c;
+    // if color < 0.5, then the underconfident partner will be gold and the overconfident partner will be purple
+    if (color < 0.5) {
+        color1 = "yellow";
+        color2 = "magenta";
+        // if partnerOrder > 0.5, then the underconfident partner will be the first one and overconfident partner the second one
+        if (partnerOrder > 0.5) {
+            partner1color = "yellow";
+            partner1c = color1;
+            partner2color = "purple";
+            partner2c = color2;
+        // if partnerOrder < 0.5, then the overconfident partner will be the first one and underconfident partner the second one
+        } else {
+            partner1color = "purple";
+            partner1c = color2;
+            partner2color = "yellow";
+            partner2c = color1;
+        }
+    // if color > 0.5, then the underconfident partner will be purple and the overconfident partner will be gold
+    } else {
+        color1 = "magenta";
+        color2 = "yellow";
+        // if partnerOrder > 0.5, then the underconfident partner will be the first one and overconfident partner the second one
+        if (partnerOrder > 0.5) {
+            partner1color = "purple";
+            partner1c = color1;
+            partner2color = "yellow";
+            partner2c = color2;
+        // if partnerOrder < 0.5, then the overconfident partner will be the first one and underconfident partner the second one
+        } else {
+            partner1color = "yellow";
+            partner1c = color2;
+            partner2color = "purple";
+            partner2c = color1;
+        }
+    }
 
 
 
@@ -115,7 +167,9 @@
         'assets/down-arrow-2.svg',
         'assets/up-arrow.svg',
         'assets/dotTask_2.5.0 practice.gif',
-        'assets/dotTask_2.4.0.gif'
+        'assets/dotTask_2.4.0.gif',
+        'assets/dotTask_2.6.0.gif',
+        'assets/partner.png',
     ];
 
     var dotsStaircase = new Staircase({
@@ -245,7 +299,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 2,             //make trial count 40 here
+        trial_count: 4,             //make trial count 40 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -262,7 +316,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 2,                 //make trial count 10 here
+        trial_count: 4,                 //make trial count 10 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'none'
@@ -277,7 +331,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -293,7 +347,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -309,7 +363,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -335,15 +389,15 @@
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
-        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a left mouse-click. If you think the right box contained more dots, you respond with a right mouse-click. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
+        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
             '<br><br> Press the "continue" button to continue to some practice trials.',
         img_id: 'dotTask-gif1'
     };
 
     var dotTaskInstructions2 = {
         type: 'jspsych-notice',
-        section1_text: 'From now on, you will indicate your confidence in your decisions.',
-        section2_text: 'After responding with a left or right click, you will now indicate your confidence in the decision on a sliding scale. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, you will get feedback about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
+        section1_text: 'From now on, you will indicate your confidence in your decisions and get feedback if your choice was correct or incorrect.',
+        section2_text: 'After responding with a left or right click, you will now <u>indicate your confidence</u> in the decision <u>on a sliding scale</u>. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, <u>you will get feedback</u> about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
             ' <br><br>Press the "continue" button to do a few more practice trials with the confidence slider.',
         img_id: 'dotTask-gif2'
     };
@@ -351,26 +405,41 @@
     var dotTaskInstructions3 = {
         type: 'jspsych-notice',
         section1_text: 'Great! You are half-way through. For the next 2 blocks you will be paired with a different participant',
-        section2_text: 'Based on your responses, we have selected another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will now see another participant\'s response for the same dots-grid, who did about as well as you did in the practice trials. The <u>decision that was reported with higher confidence</u> will then be selected as  <u>your joint decision</u>  based on which you will get feedback. <br><br> Press the "continue" button to do 2 more blocks of the dot task.',
+        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the <u>other participant\'s response</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> Press the "continue" button to do 2 more blocks of the dot task.',
         img_id: 'dotTask-gif2'
     };
+
     var dotTaskStart = {
+        type: 'jspsych-notice',
+        section1_text: 'You have now completed the practice trials for the dot task.',
+        section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the <u>response of another past participant</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> There will be <u>four blocks of 50 trials</u>, which should take approximately 25 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 50 trials',
+        img_id: 'dotTask-gif3'
+    };
 
-    // linking pages
-    // flat bonus wording: <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded if you are more than 55% accurate over all trials in the next 4 blocks, based on your "Final Answer".</highlight>
-    // Brier score wording: <highlight style="color: rgb(13,255,146)">You will earn points depending on whether your "Final Answer" is correct and how accurate your confidence judgment was.</highlight> For instance, you would earn 1 point if you answer "Certainly Left" and are correct, but 0 points if you answer "Certainly Left" and are incorrect. Your points will be converted to a cash bonus at the end of the experiment, so <u>you will earn more with more accurate confidence judgments</u>.
+    // var dotTaskStart = {
+    //     type: 'jspsych-message-splash',
+    //     name: 'dotStart',
+    //     subjectID: subjectID,
+    //     message: 'You have now completed the practice trials for the dot task.',
+    //     submessage: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the <u>response of another past participant</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <u>decision that is reported with higher confidence</u> will be selected as  <highlight style="color: rgb(13,255,146)"> <u>your joint decision</u> </highlight>  based on which you will get feedback.<br><br>In the example on the left, the other participant\'s choice was reported with higher confidence and thus chosen as the joint decision.  There will be <u>four blocks of 50 trials</u>, which should take approximately 25 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 50 trials.',
+    //     backgroundColor: 'rgb(0,0,0)',
+    //     buttonEnabled: true,
+    //     buttonText: 'CONTINUE',
+    //     lineSpacing: '130%',
+    //     submessageSize: '2.8vmin'
+    // };
 
 
-        type: 'jspsych-message-splash',
-        name: 'dotStart',
-        subjectID: subjectID,
-        message: 'You have now completed the practice trials for the dot task.',
-        submessage: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the response of another participant for the same dots-grid. This other participant did about as well as you did in the practice trials. The <u>decision that is reported with higher confidence</u> will be selected as  <u>your joint decision</u>  based on which you will get feedback.<br><br>In the example on the left, the other participant\'s choice was reported with higher confidence and thus chosen as the joint decision.  There will be <u>four blocks of 50 trials</u>, which should take approximately 25 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 50 trials.',
-        backgroundColor: 'rgb(0,0,0)',
-        buttonEnabled: true,
-        buttonText: 'CONTINUE',
-        lineSpacing: '130%',
-        submessageSize: '2.8vmin'
+    var partner1 = {
+        type: 'jspsych-partner-message1',
+        section2_text: 'We have selected your first partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner1c +  '" >' + partner1color + ' </highlight> bar. <br><br>The decision reported with higher confidence will be selected as your joint decision.',
+        img_id: 'dotTask-partner'
+    };
+
+    var partner2 = {
+        type: 'jspsych-partner-message1',
+        section2_text: 'We have selected your second partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner2c +  '" >' + partner2color + ' </highlight> bar. <br><br>The decision reported with higher confidence will be selected as your joint decision.',
+        img_id: 'dotTask-partner'
     };
 
     var dotTaskRest = {
@@ -386,6 +455,7 @@
         lineSpacing: '130%',
         submessageSize: '2.8vmin'
     };
+
 
     var dotsScoreReveal = {
         type: 'jspsych-score-reveal',
@@ -425,7 +495,6 @@
     switch(trialTypeOrder) {
 
         case 'all':
-            var partnerOrder = Math.random();
             if (partnerOrder > 0.5) {
                 var timeline = [
                     //loading,
@@ -437,11 +506,13 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
+                    partner1,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    partner2,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
@@ -461,11 +532,13 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
+                    partner1,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    partner2,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
@@ -478,18 +551,20 @@
             break;
 
         case 'testing':
-            var partnerOrder = Math.random();
             if (partnerOrder > 0.5) {
                 var timeline = [
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
+                    //dotTaskInstructions1,
+                    //dotTaskPractice1,
+                    //dotTaskInstructions2,
+                    //dotTaskPractice2,
+                    //dotTaskStart,
+                    partner1,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    partner2,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
@@ -500,15 +575,18 @@
                 ];
             } else {
                 var timeline = [
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
+                    //dotTaskInstructions1,
+                    //dotTaskPractice1,
+                    //dotTaskInstructions2,
+                    //dotTaskPractice2,
+                    //dotTaskStart,
+                    partner1,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    partner2,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,

@@ -38,7 +38,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var dotRTs;
     var choice_timer;
     var confidence_timer;
-    var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
+    var accuracyThreshold = 55;  //threshold for practice trials (if we are in tutorialmode)
 
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -120,6 +120,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             partnerChoice = "left"
         };
     };
+
 
 
     // determine partner's confidence
@@ -218,6 +219,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         //skip some of the steps if we are in practice1 which is only used for staircasing (if (seeAgain != "practice1"))
 
+        //time out for presenting blue box around chosen option (and confidence slider) as changes in screen can affect EEG signal
 
         setTimeout(function () {
             // enable the cursor
@@ -250,20 +252,18 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 document.getElementById("confidence-question").innerHTML = "<h1>Indicate your confidence with the slider below</h1>";
                 $('.response-area').css('visibility', 'visible');
             } else {
-                //automatically trigger click on slider
-                //automatically trigger click on continue button
-                //just put confidence at 50% (watch that initial response and not confidence response is used for "correct" response)
-                backendConfidence = 50;
-                $('.scale-row').click();
+                //use initial response rather than confidence rating to for "correct response" as fed into function when continue button is clicked
                 if (initialChoice === majoritySide) {
                     correctResponse = true;
                 } else {
                     correctResponse = false;
                 }
-                $('.submit-button').click();
+                //automatically trigger click on continue button
+                setTimeout(function () {
+                    buttonBackend('submit');
+                }, 600)
             }
-
-        }, 600);
+        }, 700);
     });
 
 
@@ -328,11 +328,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (isTutorialMode) {
                     if (accuracy >= accuracyThreshold) {
                         var section4_button = 'CONTINUE';
-                        if (partner != "none") {
-                            var section4_text = 'Congratulations, your joint accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        if (seeAgain !== "practice1") {
                             dots_blockCount = 0;
                         } else {
-                            var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
                             dots_blockCount = -1;
                         }
                     } else {
@@ -407,6 +406,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                     // if the practice block was not successful, we do not save the data and start a new block of trials
                     } else {
+                        dots_totalTrials = 0;
                         trialCounterVariable = 0;
                         // reset trial data variable
                         trialDataVariable = {
@@ -507,10 +507,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 var barWidth = Math.abs((displayedConfidence - 50) * 0.5);
                 if (backendConfidence >= 50) {
-                    $('#scale-right-fill, #confidence-value-right').css('width', barWidth.toString() + 'vmin').css('border-right', '5px solid rgb(255,50,50)');
+                    $('#scale-right-fill, #confidence-value-right').css('width', barWidth.toString() + 'vmin').css('border-right', '5px solid rgb(13, 219, 255)');
                     $('#scale-left-fill, #confidence-value-left').css('width', '0vmin').css('border-left', '5px solid rgba(0,0,0,0)');
                 } else if (backendConfidence < 50) {
-                    $('#scale-left-fill, #confidence-value-left').css('width', barWidth.toString() + 'vmin').css('border-left', '5px solid rgb(255,50,50)');
+                    $('#scale-left-fill, #confidence-value-left').css('width', barWidth.toString() + 'vmin').css('border-left', '5px solid rgb(13, 219, 255)');
                     $('#scale-right-fill, #confidence-value-right').css('width', '0vmin').css('border-right', '5px solid rgba(0,0,0,0)');
                 }
 
@@ -578,6 +578,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
             recordRating(backendConfidence, majoritySide, 'initial');
 
+
+
             // draw partner's confidence marker
             setTimeout(function (){
                 if (partner !== "none") {
@@ -590,6 +592,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         ''
                     );
                     $('#partnerMarker').css('left', partnerConfidenceMarker + '%');
+                    if (partner === "underconfident") {
+                        $('#partnerMarker').css('background-color', color1);
+                    } else if (partner === "overconfident") {
+                        $('#partnerMarker').css('background-color', color2);
+                    } else {
+                        $('#partnerMarker').css('background-color', "darkorange");
+                    }
                 }
             }, 600);
 
@@ -597,19 +606,18 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             // note here: the stored confidence values in the data object are confidences in the correct choice;
             // the normal confidences are on a scale of 0-50 regardless of left/right correct/wrong choice; they are necessary to compare who had higher confidence in the case that participant and partner choose different sides
             // the confidence scores for the markers are on a scale from 0-100 going from left to right on the confidence scale
+
+            var higherConfidenceBox = createGeneral(
+                higherConfidenceBox,
+                document.getElementById('scale'),
+                'div',
+                '',
+                'higherConfidenceBox',
+                ''
+            );
+
             if (partner !== "none") {
                 setTimeout(function () {
-                    var higherConfidenceBox = createGeneral(
-                        higherConfidenceBox,
-                        document.getElementById('scale'),
-                        'div',
-                        '',
-                        'higherConfidenceBox',
-                        ''
-                    );
-                    if (partner == "none") {
-                        $('#higherConfidenceBox').css('visibility', 'invisible');
-                    }
                     var participantConfidence;
                     var participantConfidenceMarker = backendConfidence;
                     if (participantConfidenceMarker > 50) {
@@ -619,29 +627,52 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     }
 
                     //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
-                    if (partnerConfidence < participantConfidence) {
-                        $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 8px)');
-                        setTimeout(function () {
-                            if (participantConfidenceCorrect > 50) {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                                jointCorrectResponse = true;
+                    setTimeout(function () {
+                        if (partnerConfidence < participantConfidence) {
+                            if (participantConfidenceMarker > 50) {
+                                $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% + 2px)');
                             } else {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-                                jointCorrectResponse = false;
+                                $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 2px)');
                             }
+                            //$('#higherConfidenceBox').css('left', participantConfidenceMarker + '%');
+                            $('#higherConfidenceBox').css('visibility', 'visible');
+                            setTimeout(function (){
+                                if (participantConfidenceCorrect > 50) {
+                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: limegreen">JOINT CORRECT</h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid limegreen');
+                                    jointCorrectResponse = true;
+                                } else {
+                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: red">JOINT INCORRECT</h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid red');
+                                    jointCorrectResponse = false;
+                                }
+                            }, 500);
+
+
+                        } else {
+                            $('#higherConfidenceBox').css('left', partnerConfidenceMarker + '%');
+                            $('#higherConfidenceBox').css('visibility', 'visible');
+                            setTimeout(function (){
+                                if (partnerConfidenceCorrect > 50) {
+                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: limegreen">JOINT CORRECT</h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid limegreen');
+                                    jointCorrectResponse = true;
+                                } else {
+                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: red">JOINT INCORRECT</h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid red');
+                                    jointCorrectResponse = false;
+                                }
+                            }, 500);
+                        }
+
+                        // shot submit button
+                        setTimeout(function (){
+                            $('.scale-button').removeClass('invisible');
                         }, 500);
-                    } else {
-                        $('#higherConfidenceBox').css('left', 'calc(' + partnerConfidenceMarker + '% - 7.5px)');
-                        setTimeout(function () {
-                            if (partnerConfidenceCorrect > 50) {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                                jointCorrectResponse = true;
-                            } else {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-                                jointCorrectResponse = false;
-                            }
-                        }, 600);
-                    }
+
+
+                    }, 200);
+
 
                     console.log("participantConfidenceMarker " + participantConfidenceMarker);
                     console.log("participantConfidence " + participantConfidence);
@@ -650,30 +681,34 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     console.log("partnerConfidenceMarker " + partnerConfidenceMarker);
                     console.log("partnerConfidence " + partnerConfidence);
                     console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
-                }, 500);
+                }, 1000);
 
 
-                // shot submit button
-                setTimeout(function (){
-                    $('.scale-button').removeClass('invisible');
-                }, 1200);
 
 
             // if there is no partner
             } else {
                 // give feedback based on individual choice
                 setTimeout(function (){
+                    if (backendConfidence > 50) {
+                        $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% + 2px)');
+                    } else {
+                        $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% - 2px)');
+                    }
                     if (correctResponse == true) {
                         document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                        $('#higherConfidenceBox').css('border', '6px solid limegreen');
                     } else {
                         document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                        $('#higherConfidenceBox').css('border', '6px solid red');
                     }
-                }, 500);
+                    $('#higherConfidenceBox').css('visibility', 'visible');
+                }, 700);
 
                 // shot submit button more quickly if there is no partner to wait for
                 setTimeout(function (){
                     $('.scale-button').removeClass('invisible');
-                }, 700);
+                }, 1000);
             }
         },
     });

@@ -262,7 +262,7 @@ section.tutorial-section, .section.tutorial-section {
 section.tutorial-section.section1, .section.tutorial-section.section1 {
   display: flex;
   flex-direction: column;
-  background-color: rgb(128,128,128);
+  background-color: rgb(10,128,128);
 }
 
 section.tutorial-section.section1 .tutorial-text, .section.tutorial-section.section1 .tutorial-text {
@@ -913,6 +913,32 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   background-repeat: no-repeat;
 }
 
+.gameboard-gif#dotTask-gif3 {
+  background: url("../assets/dotTask_2.6.0.gif");
+  background-size: 35vmax 35vmax;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.gameboard-gif#dotTask-partner {
+  background: url("../assets/partner.png");
+  background-size: 18vmax 18vmax;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#partnerOval {
+  z-index: 100;
+  position: absolute;
+  border: 6px solid orangered;
+  background: transparent;
+  align-self: center;
+  width: 24vmax;
+  height: 28vmax;
+  border-radius: 50%;
+  transform: translateX(30%);
+}
+
 #Oxford-logo {
   width: 15vmax;
   height: 15vmax;
@@ -1475,6 +1501,7 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   position: absolute;
   left: 20%;
   z-index:1;
+  transform: translateX(-50%);
 }
 
 #higherConfidenceBox {
@@ -1485,6 +1512,8 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   border: 6px solid orange;
   background: transparent;
   align-self: center;
+  visibility: hidden;
+  transform: translateX(-50%);
 }
 
 .nonselectable {

@@ -2,16 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806543.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806544.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806547.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806548.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806549.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806550.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.6.0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/gif pictures/A.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/gif pictures/B.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/gif pictures/C.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/gif pictures/D.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/partner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806592.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806597.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806613.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806614.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806615.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806616.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806619.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806631.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806632.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806633.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806634.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806635.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806636.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806637.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806640.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806641.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806642.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806653.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806700.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806701.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806717.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806810.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/data_PR272584806815.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806542.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_PR272584806542.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dotTask_2.4.0.gif" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dotTask_2.4.0.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/dotTask_2.5.0 practice.gif" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dotTask_2.5.0 practice.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,15 +83,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../InformationSeeking-Linda-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/jpsych" />
     <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\DotTask\scripts\jpsych" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.jspsych-partner-message1.js">
     <configuration name="dots-try.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/scripts/dots-try.js" working-dir="$PROJECT_DIR$/scripts">
+      <method v="2" />
+    </configuration>
+    <configuration name="jspsych-partner-message1.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message1.js" working-dir="$PROJECT_DIR$/scripts/jpsych">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.jspsych-partner-message1.js" />
         <item itemvalue="Node.js.dots-try.js" />
       </list>
     </recent_temporary>
@@ -111,7 +149,9 @@
       <workItem from="1583244497826" duration="643000" />
       <workItem from="1583751553317" duration="721000" />
       <workItem from="1583758501920" duration="1396000" />
-      <workItem from="1583835084151" duration="7814000" />
+      <workItem from="1583835084151" duration="9423000" />
+      <workItem from="1583845737231" duration="6179000" />
+      <workItem from="1583923711983" duration="41650000" />
     </task>
     <servers />
   </component>
@@ -138,18 +178,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="56" key="SettingsEditor/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582539791192" />
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1582562717206">
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1584010946555">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1582562717206" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1584010946555" />
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1" timestamp="1580733845088">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1580733845088" />
-    <state x="536" y="3" width="611" height="804" key="find.popup" timestamp="1583839275783">
+    <state x="371" y="-5" width="774" height="799" key="find.popup" timestamp="1584110288181">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="536" y="3" width="611" height="804" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1583839275783" />
+    <state x="371" y="-5" width="774" height="799" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1584110288181" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582285535138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

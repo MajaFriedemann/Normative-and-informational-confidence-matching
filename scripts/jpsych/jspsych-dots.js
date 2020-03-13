@@ -137,6 +137,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
     }
   };
 
+
   plugin.trial = function (display_element, trial) {
 
     var tempStorage = {

@@ -668,8 +668,9 @@ function noDragSlider(name, parent, tooltipLabels, endLabels, buttonLabels) {
     'div',
     'scale-content scale-left scale-fill ' + name,
     'scale-left-fill',
-    ''
+    '',
   );
+
   var scaleRightFill = createGeneral(
     scaleRightFill,
     scaleRight,
