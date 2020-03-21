@@ -119,7 +119,8 @@ class DoubleDotGrid {
  * BASIC FUNCTIONS
  *******************/
 
- /* function for sampling from normal distribution with given min, max, and skew  */
+ /* function for sampling from normal distribution with given min, max, and skew
+ * Standard Normal variate using Box-Muller transform.*/
  function randn_bm(min, max, skew) {
    let u = 0, v = 0;
    while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)

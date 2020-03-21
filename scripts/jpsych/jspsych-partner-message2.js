@@ -2,12 +2,12 @@
  * Example plugin template
  */
 
-jsPsych.plugins['jspsych-partner-message2'] = (function () {
+jsPsych.plugins['jspsych-partner-message1'] = (function () {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'jspsych-partner-message2',
+    name: 'jspsych-partner-message1',
     prettyName: 'Message Splash',
     parameters: {
       section2_text: {
@@ -35,7 +35,8 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
     $('body')
         .css('height', 'auto')
         .css('background-color', 'black')
-        .css('overflow-y', 'auto');
+        .css('overflow-y', 'auto')
+        .css('visibility', 'hidden');
     //delay display (to give impression of searching for partner)
     setTimeout(function() {
       $('body').css('visibility', 'visible');
@@ -46,7 +47,6 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
     // make sure page starts at the top every time
     removeHash();
     removeQueryString();
-
 
 
     /* SECTION 2: Overview */
@@ -60,14 +60,6 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
     );
 
 
-    //align screen color to partner marker color
-    // if (partnerOrder > 0.5) {   //this means first underconfident, then overconfident partner (which partnerOrder is randomized but now we are at partner 2)
-    //   section2.style.backgroundColor = color2;      //underconfident partner has color1 (which color this is is randomized)
-    // } else {
-    //   section2.style.backgroundColor = color1;      //overconfident partner has color2 (which color this is is randomized)
-    // }
-
-
     var section2_image = createGeneral(
         section2_image,
         section2,
@@ -76,6 +68,25 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
         trial.img_id,
         ''
     );
+
+    var section2_oval = createGeneral(
+        section2_oval,
+        document.getElementById('dotTask-partner'),
+        'div',
+        'oval',
+        'partnerOval',
+        ''
+    );
+
+    // //align oval color to partner marker color
+    var bordercolor;
+    if (partnerOrder > 0.5) {   //this means first underconfident, then overconfident partner (which partnerOrder is randomized but now we are at partner 1)
+      bordercolor = "6px solid " + color2;      //underconfident partner has color1 (which color this is is randomized)
+    } else {
+      bordercolor = "6px solid " + color1;      //overconfident partner has color2 (which color this is is randomized)
+    }
+    $('#partnerOval').css('border', bordercolor);
+
 
     var section2_title = createGeneral(
         section2_title,
@@ -108,6 +119,7 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
     $('html, body').animate({
       scrollTop: $('#notice-section1').offset().top
     }, 1);
+
   }; // close plugin.trial
 
   return plugin;

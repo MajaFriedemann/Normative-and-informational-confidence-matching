@@ -58,7 +58,7 @@ jsPsych.plugins['jspsych-PIS'] = (function () {
 
       + '<br><h4>7. Expenses and payments</h4>'
 
-      +'<p>You will receive £10 per hour for your participation in this task. . You may have the opportunity during parts of the study to earn up to an additional £10 per hour dependent on your performance.</p>'
+      +'<p>You will receive £10 per hour for your participation in this task. . You may have the opportunity during parts of the study to earn up to an additional £5 dependent on your performance.</p>'
 
       + '<br><h4>8. What happens to the data provided?</h4>'
 

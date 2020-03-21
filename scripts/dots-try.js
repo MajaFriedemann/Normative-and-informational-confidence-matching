@@ -103,11 +103,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     );
 
 
-    // determine partner's choice
-    let partnerAccuracy = 74;
+    //determine partner's p(correct) and then their choice
+    // get p(correct) using randn_bm(min, max, skew) --> see helper.js
+    var pCorrect;
+    //p correct from normal distribution between 0.6 and 1 (mean 0.8)
+    pCorrect = randn_bm(0.6, 1, 1);
+
+    // pick correct response with p(Correct)
     var partnerChoice;
-    var random = 100*(Math.random());
-    if (random < partnerAccuracy) {
+    var random = Math.random();
+    if (random < pCorrect) {
         if (majoritySide == "left") {
             partnerChoice = "left"
         } else if (majoritySide == "right") {
@@ -122,27 +127,25 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     };
 
 
-
-    // determine partner's confidence
-    // randn_bm(min, max, skew) --> see helper.js
+    //given p(correct), determine partner's confidence according to c + (x - .5) * s + e
+    //c is a constant do differentiate over- and under-confident partners (overconfident set to 0.6, underconfident set to 0.2)
+    //s is the slope which I set to 0.8
+    //e is random noise which I will sample from a normal distribution with m=0 and sd=.05
     var partnerConfidence;
     var partnerConfidenceMarker;
     var partnerConfidenceCorrect;
-    var skew;
+    var error;
+    error = randn_bm(-0.05*3, 0.05*3, 1);
     if (partner == "underconfident") {
-        skew = 2                       // confidence distribution skewed to small values
+        partnerConfidence = 0.2 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;                     //change scale frmo 0-1 to 0-50
     } else if (partner == "overconfident") {
-        skew = 1 / 2                     // confidence distribution skewed to large values
+        partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;
     } else {
-        skew = 1                       // confidence distribution not skewed for practice partner (and none partner)
+        partnerConfidence = 0   //if partner = none
     }
 
-    // partners confidence in their own choice from 0-50
-    if (partner !== "none") {
-        partnerConfidence = round((randn_bm(0, 50, skew)), 0);
-    } else {
-        partnerConfidence = 0
-    }
 
     // partner confidence marker on the slider
     if (partnerChoice == "left") {

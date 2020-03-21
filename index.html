@@ -73,7 +73,7 @@
     var exp_release = ' ';
     var release_date = '2020/02/10';
     var testing_timeline = false;
-    var trialTypeOrder = 'testing';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
+    var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
     var cohort_explain = '';
@@ -299,7 +299,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,             //make trial count 40 here
+        trial_count: 60,             //make trial count 60 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -316,7 +316,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,                 //make trial count 10 here
+        trial_count: 5,                 //make trial count 5 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'none'
@@ -331,7 +331,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -347,7 +347,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -363,7 +363,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 4,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -379,7 +379,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 50 here (100 trials per partner)f
+        trial_count: 50,                 //make trial count 50 here (100 trials per partner)f
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -405,8 +405,8 @@
     var dotTaskInstructions3 = {
         type: 'jspsych-notice',
         section1_text: 'Great! You are half-way through. For the next 2 blocks you will be paired with a different participant',
-        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the <u>other participant\'s response</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> Press the "continue" button to do 2 more blocks of the dot task.',
-        img_id: 'dotTask-gif2'
+        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the <u>other participant\'s response</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br>Press the "continue" button to do 2 more blocks of the dot task.',
+        img_id: 'dotTask-gif3'
     };
 
     var dotTaskStart = {
@@ -437,7 +437,7 @@
     };
 
     var partner2 = {
-        type: 'jspsych-partner-message1',
+        type: 'jspsych-partner-message2',
         section2_text: 'We have selected your second partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner2c +  '" >' + partner2color + ' </highlight> bar. <br><br>The decision reported with higher confidence will be selected as your joint decision.',
         img_id: 'dotTask-partner'
     };
@@ -461,7 +461,7 @@
         type: 'jspsych-score-reveal',
         performanceType: 'accuracy',
         bonusThreshold: 60,
-        flatBonusAmount: 0.75
+        flatBonusAmount: 1
     };
 
     var thankYou = {
