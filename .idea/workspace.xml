@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806858.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806865.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806872.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806903.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data_PR272584806905.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_PR272584806810.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/data_PR272584806810.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-PIS.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-PIS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message2.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message2.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +117,7 @@
       <workItem from="1584278045884" duration="5162000" />
       <workItem from="1584626613249" duration="5082000" />
       <workItem from="1584693702673" duration="2771000" />
+      <workItem from="1585062075399" duration="648000" />
     </task>
     <servers />
   </component>
