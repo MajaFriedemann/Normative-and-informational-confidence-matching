@@ -71,13 +71,12 @@
 
     var subjectID;
     var studyName = 'Confidence in group decision-making';
-    var exp_release = ' ';
-    var release_date = '2020/02/10';
+    var version = 'strategic version';
+    var release_date = '2020/03/25';
     var testing_timeline = false;
     var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
     var cohort = 'PR';                      /*PR for prolific*/
-    var cohort_explain = '';
     var CUREC_studyName = 'Contextual influences on metacognitive judgements';
     var CUREC_ID = 'R67369/RE001';
     var CUREC_version = '5.0';
@@ -210,9 +209,9 @@
         block_count: [],
         subjectID: subjectID,
         prolificID: ProlificID,
-        experiment_version: exp_release,
+        experiment_version: version,
         experiment_version_date: release_date,
-        experiment_condition: cohort_explain,
+        experiment_condition: undefined,
         trialType_order: trialTypeOrder,
         scoreRule_order: scoreRuleOrder,
         attempts: currentAttempt,
@@ -497,6 +496,9 @@
 
         case 'all':
             if (partnerOrder > 0.5) {
+                var order;
+                order = "underconfident, then overconfident";
+                dataObject["experiment_condition"] = order;
                 var timeline = [
                     loading,
                     PIS,
@@ -523,6 +525,9 @@
                     thankYou
                 ];
             } else {
+                var order;
+                order = "overconfident, then underconfident";
+                dataObject["experiment_condition"] = order;
                 var timeline = [
                     loading,
                     PIS,
