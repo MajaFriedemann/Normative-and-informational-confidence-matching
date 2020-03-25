@@ -81,9 +81,9 @@ jsPsych.plugins['jspsych-partner-message1'] = (function () {
     // //align oval color to partner marker color
     var bordercolor;
     if (partnerOrder > 0.5) {   //this means first underconfident, then overconfident partner (which partnerOrder is randomized but now we are at partner 1)
-      bordercolor = "6px solid " + color1;      //underconfident partner has color1 (which color this is is randomized)
+      bordercolor = "6px solid " + color2;      //underconfident partner has color1 (which color this is is randomized)
     } else {
-      bordercolor = "6px solid " + color2;      //overconfident partner has color2 (which color this is is randomized)
+      bordercolor = "6px solid " + color1;      //overconfident partner has color2 (which color this is is randomized)
     }
     $('#partnerOval').css('border', bordercolor);
 
