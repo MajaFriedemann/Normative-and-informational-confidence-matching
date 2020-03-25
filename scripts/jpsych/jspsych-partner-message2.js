@@ -2,12 +2,12 @@
  * Example plugin template
  */
 
-jsPsych.plugins['jspsych-partner-message1'] = (function () {
+jsPsych.plugins['jspsych-partner-message2'] = (function () {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'jspsych-partner-message1',
+    name: 'jspsych-partner-message2',
     prettyName: 'Message Splash',
     parameters: {
       section2_text: {

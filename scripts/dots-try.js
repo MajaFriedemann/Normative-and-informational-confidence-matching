@@ -128,7 +128,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     //given p(correct), determine partner's confidence according to c + (x - .5) * s + e
-    //c is a constant do differentiate over- and under-confident partners (overconfident set to 0.6, underconfident set to 0.2)
+    //c is a constant do differentiate over- and under-confident partners (overconfident set to 0.6, underconfident set to 0.1)
     //s is the slope which I set to 0.8
     //e is random noise which I will sample from a normal distribution with m=0 and sd=.05
     var partnerConfidence;
@@ -137,7 +137,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var error;
     error = randn_bm(-0.05*3, 0.05*3, 1);
     if (partner == "underconfident") {
-        partnerConfidence = 0.2 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
         partnerConfidence = partnerConfidence*50;                     //change scale frmo 0-1 to 0-50
     } else if (partner == "overconfident") {
         partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
