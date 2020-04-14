@@ -37,10 +37,8 @@ jsPsych.plugins['jspsych-partner-message2'] = (function () {
         .css('background-color', 'black')
         .css('overflow-y', 'auto')
         .css('visibility', 'hidden');
-    //delay display (to give impression of searching for partner)
-    setTimeout(function() {
-      $('body').css('visibility', 'visible');
-    }, 1000);
+
+    $('body').css('visibility', 'visible');
     $.scrollify.enable();
     $.scrollify.destroy();
 

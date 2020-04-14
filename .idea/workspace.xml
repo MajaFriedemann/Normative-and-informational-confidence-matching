@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading-partner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message1.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message2.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +134,9 @@
       <workItem from="1585159498669" duration="38000" />
       <workItem from="1585160532947" duration="302000" />
       <workItem from="1585161079337" duration="42000" />
+      <workItem from="1585238603365" duration="1228000" />
+      <workItem from="1586334522499" duration="396000" />
+      <workItem from="1586770047914" duration="11786000" />
     </task>
     <servers />
   </component>
@@ -162,11 +171,12 @@
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
     <state x="2162" y="-21" width="1247" height="808" maximized="true" key="dock-window-1/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1580733845088" />
-    <state x="371" y="-5" width="774" height="799" key="find.popup" timestamp="1585159322216">
+    <state x="371" y="-5" width="774" height="799" key="find.popup" timestamp="1586853888662">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="371" y="-5" width="774" height="799" key="find.popup/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1586772074304" />
     <state x="371" y="-5" width="774" height="799" key="find.popup/0.0.1536.824/1920.0.1920.1160@0.0.1536.824" timestamp="1584278437523" />
-    <state x="371" y="-5" width="774" height="799" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1585159322216" />
+    <state x="371" y="-5" width="774" height="799" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1586853888662" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582285535138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

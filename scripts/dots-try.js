@@ -38,7 +38,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var dotRTs;
     var choice_timer;
     var confidence_timer;
-    var accuracyThreshold = 55;  //threshold for practice trials (if we are in tutorialmode)
+    var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
 
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -533,6 +533,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         // when participant clicks on slider to indicate their confidence
         click: function () {
 
+            //automatically trigger click on continue button
+            setTimeout(function () {
+                buttonBackend('submit');
+            }, 4000);
+
             //avoid double clicks by disabling click event for slider
             document.getElementById('scale-row').style.pointerEvents = 'none';
 
@@ -637,41 +642,48 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             } else {
                                 $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 2px)');
                             }
-                            //$('#higherConfidenceBox').css('left', participantConfidenceMarker + '%');
+                            $('#higherConfidenceBox').css('border', '6px solid rgb(13, 219, 255)');
                             $('#higherConfidenceBox').css('visibility', 'visible');
                             setTimeout(function (){
                                 if (participantConfidenceCorrect > 50) {
-                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: limegreen">JOINT CORRECT</h1>';
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid limegreen');
                                     jointCorrectResponse = true;
                                 } else {
-                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: red">JOINT INCORRECT</h1>';
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid red');
                                     jointCorrectResponse = false;
                                 }
-                            }, 500);
+                            }, 700);
 
 
                         } else {
                             $('#higherConfidenceBox').css('left', partnerConfidenceMarker + '%');
+                            if (partner === "underconfident") {
+                                $('#higherConfidenceBox').css('border', '6px solid ' + color1);
+                            } else if (partner === "overconfident") {
+                                $('#higherConfidenceBox').css('border', '6px solid ' + color2);
+                            } else {
+                                $('#higherConfidenceBox').css('border', '6px solid darkorange');
+                            }
                             $('#higherConfidenceBox').css('visibility', 'visible');
                             setTimeout(function (){
                                 if (partnerConfidenceCorrect > 50) {
-                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: limegreen">JOINT CORRECT</h1>';
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid limegreen');
                                     jointCorrectResponse = true;
                                 } else {
-                                    document.getElementById('confidence-question').innerHTML = '<h1 style="color: red">JOINT INCORRECT</h1>';
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid red');
                                     jointCorrectResponse = false;
                                 }
-                            }, 500);
+                            }, 700);
                         }
 
                         // shot submit button
-                        setTimeout(function (){
-                            $('.scale-button').removeClass('invisible');
-                        }, 500);
+                        // setTimeout(function (){
+                        //     $('.scale-button').removeClass('invisible');
+                        // }, 500);
 
 
                     }, 200);

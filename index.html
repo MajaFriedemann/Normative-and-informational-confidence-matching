@@ -43,6 +43,7 @@
     <script src="scripts/jpsych/jspsych-dots.js"></script>
     <script src="scripts/jpsych/jspsych-feedback-form.js"></script>
     <script src="scripts/jpsych/jspsych-loading.js"></script>
+    <script src="scripts/jpsych/jspsych-loading-partner.js"></script>
     <script src="scripts/jpsych/jspsych-message-splash.js"></script>
     <script src="scripts/jpsych/jspsych-partner-message1.js"></script>
     <script src="scripts/jpsych/jspsych-partner-message2.js"></script>
@@ -390,7 +391,7 @@
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
         section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
-            '<br><br> Press the "continue" button to continue to some practice trials.',
+            '<br><br> Press the "continue" button to continue to some practice trials. The practice can take as long as 5 minutes.',
         img_id: 'dotTask-gif1'
     };
 
@@ -477,6 +478,11 @@
         subjectID: subjectID
     };
 
+    var loadingPartner = {
+        type: 'jspsych-loading-partner',
+        subjectID: subjectID
+    };
+
     var questionnaireSplash = {
         type: 'jspsych-message-splash',
         name: 'questionnaireIntro',
@@ -500,21 +506,23 @@
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
+                    //loading,
+                    //PIS,
+                    //consent,
+                    //demographics,
+                    // dotTaskInstructions1,
+                    // dotTaskPractice1,
+                    // dotTaskInstructions2,
+                    // dotTaskPractice2,
                     dotTaskStart,
+                    loadingPartner,
                     partner1,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    loadingPartner,
                     partner2,
                     dotTask3,
                     dotTaskRest,
@@ -529,21 +537,23 @@
                 order = "overconfident, then underconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
+                    //loading,
+                    //PIS,
+                    //consent,
+                    //demographics,
+                    // dotTaskInstructions1,
+                    // dotTaskPractice1,
+                    // dotTaskInstructions2,
+                    // dotTaskPractice2,
                     dotTaskStart,
+                    loadingPartner,
                     partner1,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    loadingPartner,
                     partner2,
                     dotTask1,
                     dotTaskRest,
@@ -564,12 +574,14 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
+                    loadingPartner,
                     partner1,
                     dotTask1,
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    loadingPartner,
                     partner2,
                     dotTask3,
                     dotTaskRest,
@@ -586,12 +598,14 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
+                    loadingPartner,
                     partner1,
                     dotTask3,
                     dotTaskRest,
                     dotTask4,
                     dotTaskRest,
                     dotTaskInstructions3,
+                    loadingPartner,
                     partner2,
                     dotTask1,
                     dotTaskRest,

@@ -1657,14 +1657,14 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
 .grid-mask {
   z-index: 100;
   position: absolute;
-  width: 166px;
+  width: 168px;
   height: 166px;
   border: 4px solid white;
   background: black;
 }
 
 .grid-mask.mask-right {
-  margin-left: 271px;
+  margin-left: 268px;
 }
 
 /* -------------------------------------------------------------
