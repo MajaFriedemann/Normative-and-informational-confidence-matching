@@ -1504,6 +1504,23 @@ button.default-white-button.start-tutorial, .button.default-white-button.start-t
   transform: translateX(-50%);
 }
 
+#sliderMask {
+  width: 52%;
+  left: -2%;
+  height: 130%;
+  top: -15%;
+  background: repeating-linear-gradient(
+          45deg,
+          #d0d2df,
+          #c7cadd 12px,
+          #8387a1 8px,
+          #9f9f9f 17px
+  );
+  opacity: 0.5;
+  position: absolute;
+  z-index:1;
+}
+
 #higherConfidenceBox {
   z-index: 100;
   position: absolute;

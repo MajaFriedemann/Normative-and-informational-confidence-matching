@@ -29,6 +29,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var backendConfidence;
     var correctResponse;
     var jointCorrectResponse;
+    var partnerCorrectResponse;
     var sliderActive = true;
     var start_timer;
     var dotPairs;
@@ -161,6 +162,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         partnerConfidenceCorrect = 50 - partnerConfidence
     }
 
+    if (partnerConfidenceCorrect > 50){
+        partnerCorrectResponse = true;
+    } else {
+        partnerCorrectResponse = false;
+    }
+
+
     partnerConfidences = partnerConfidenceCorrect;
 
 
@@ -229,17 +237,38 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             $('.jspsych-content').css('cursor', 'auto');
             $('.grid-mask').css('cursor', 'auto');
 
+            //restrict confidence slider to chosen side
+            var sliderMask = createGeneral(
+                sliderMask,
+                document.getElementById('scale'),
+                'div',
+                '',
+                'sliderMask',
+                ''
+            );
 
-            // highlight the chosen box and record if initial response (via mouse click) was correct or false
+            //disable cursor for masked slider
+            $('#sliderMask').click(function(event){
+                event.preventDefault();
+                return false;
+            });
+
+
+            // highlight the chosen box
             if (event.button == 0) {
                 initialChoice = "left";
                 $('.mask-left').css('border', '5px solid rgb(13, 219, 255');
                 $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
+                $('#sliderMask').css('left', '52%');
             } else if (event.button == 2) {
                 initialChoice = "right";
                 $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
                 $('.mask-right').css('border', '5px solid rgb(13, 219, 255');
+                $('#sliderMask').css('left', '-2%');
             }
+
+
+            //record if initial response (via mouse click) was correct or false
             var response;
             if (initialChoice == majoritySide) {
                 response = "correct"
@@ -298,6 +327,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         trialDataVariable['dots_waitTimes'].push(waitTime);
         trialDataVariable['dots_isCorrect'].push(correctResponse);
         trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
+        trialDataVariable['dots_partnerCorrect'].push(partnerCorrectResponse);
         dots_jointTotalCorrect += trialDataVariable.dots_jointCorrect.filter(Boolean).length;
         trialDataVariable['dots_pairs'].push(JSON.stringify(dotPairs));
         trialDataVariable['dots_confidences'].push(dotConfidences);
@@ -323,6 +353,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 // if there is no partner, accuracy is based on individual responses, otherwise its based on joint decision accuracy
                 if (partner != "none") {
                     accuracy = round(mean(trialDataVariable['dots_jointCorrect']), 2) * 100;
+                    participantAccu = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
+                    partnerAccu = round(mean(trialDataVariable['dots_partnerCorrect']), 2) * 100;
                 } else {
                     accuracy = round(mean(trialDataVariable['dots_isCorrect']), 2) * 100;
                 }
@@ -392,6 +424,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             //permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                             permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                             permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
+                            permanentDataVariable["dots_partnerCorrect"].push(trialDataVariable["dots_partnerCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
                             permanentDataVariable["block_count"].push(dots_blockCount);
@@ -422,6 +455,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             dots_moreAsked: [],
                             dots_isCorrect: [],
                             dots_jointCorrect: [],
+                            dots_partnerCorrect: [],
                             dots_isTutorialMode: [],
                             dots_firstIsCorrect: [],
                             dots_RTs: [],
@@ -448,6 +482,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     //permanentDataVariable["dots_moreAsked"].push(trialDataVariable["dots_moreAsked"]);
                     permanentDataVariable["dots_isCorrect"].push(trialDataVariable["dots_isCorrect"]);
                     permanentDataVariable["dots_jointCorrect"].push(trialDataVariable["dots_jointCorrect"]);
+                    permanentDataVariable["dots_partnerCorrect"].push(trialDataVariable["dots_partnerCorrect"]);
                     permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                     permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
 
@@ -532,12 +567,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         // when participant clicks on slider to indicate their confidence
         click: function () {
-
-            //automatically trigger click on continue button
-            setTimeout(function () {
-                buttonBackend('submit');
-            }, 4000);
-
             //avoid double clicks by disabling click event for slider
             document.getElementById('scale-row').style.pointerEvents = 'none';
 
@@ -625,6 +654,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
             );
 
             if (partner !== "none") {
+
+                //automatically trigger click on continue button
+                setTimeout(function () {
+                    buttonBackend('submit');
+                }, 3500);
+
                 setTimeout(function () {
                     var participantConfidence;
                     var participantConfidenceMarker = backendConfidence;
@@ -721,9 +756,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }, 700);
 
                 // shot submit button more quickly if there is no partner to wait for
-                setTimeout(function (){
-                    $('.scale-button').removeClass('invisible');
-                }, 1000);
+                // setTimeout(function (){
+                //     $('.scale-button').removeClass('invisible');
+                // }, 1000);
+                //automatically trigger click on continue button more quickly when there is no partner to wait for
+                setTimeout(function () {
+                    buttonBackend('submit');
+                }, 1500)
             }
         },
     });

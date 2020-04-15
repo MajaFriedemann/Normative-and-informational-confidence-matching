@@ -73,7 +73,7 @@
     var subjectID;
     var studyName = 'Confidence in group decision-making';
     var version = 'strategic version';
-    var release_date = '2020/03/25';
+    var release_date = '2020/04/16';
     var testing_timeline = false;
     var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
@@ -202,6 +202,9 @@
     var dots_overallAccuracy = 0;
     var dots_jointOverallAccuracy = 0;
     var accuracy = 0;
+    var participantAccu;
+    var partnerAccu;
+    var partner;
 
     var bonusPayment = 0;
 
@@ -245,6 +248,7 @@
         //dots_moreAsked: [],
         dots_isCorrect: [],
         dots_jointCorrect: [],
+        dots_partnerCorrect: [],
         dots_RTs: [],
         dots_waitTimes: [],
 
@@ -300,7 +304,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 60,             //make trial count 60 here
+        trial_count: 4,             //make trial count 60 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -317,7 +321,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 5,                 //make trial count 5 here
+        trial_count: 4,                 //make trial count 5 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'none'
@@ -332,12 +336,13 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'underconfident'
     };
+
 
     var dotTask2 = {
         type: 'jspsych-dots',
@@ -348,50 +353,19 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
-        blockCounterEnabled: true,
-        greenButtonName: 'CONTINUE',
-        seeAgain: 'easier',
-        partner: 'underconfident'
-    };
-
-    var dotTask3 = {
-        type: 'jspsych-dots',
-        dot_minimum: 200,
-        canvasWidth: 445,
-        canvasHeight: 180,
-        leftColor: 'rgb(255,255,255)',
-        rightColor: 'rgb(255,255,255)',
-        waitTimeLimit: 2000,
-        isTutorialMode: false,
-        trial_count: 50,                 //make trial count 50 here (100 trials per partner)
+        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'overconfident'
     };
 
-    var dotTask4 = {
-        type: 'jspsych-dots',
-        dot_minimum: 200,
-        canvasWidth: 445,
-        canvasHeight: 180,
-        leftColor: 'rgb(255,255,255)',
-        rightColor: 'rgb(255,255,255)',
-        waitTimeLimit: 2000,
-        isTutorialMode: false,
-        trial_count: 50,                 //make trial count 50 here (100 trials per partner)f
-        blockCounterEnabled: true,
-        greenButtonName: 'CONTINUE',
-        seeAgain: 'easier',
-        partner: 'overconfident'
-    };
 
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
-        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
-            '<br><br> Press the "continue" button to continue to some practice trials. The practice can take as long as 5 minutes.',
+        section2_text: 'During this game, you will see two boxes containing dots briefly flash for a few ms on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
+            '<br><br> Press the "continue" button to continue to some practice trials. <u>The practice can take as long as 5 minutes.</u>',
         img_id: 'dotTask-gif1'
     };
 
@@ -405,15 +379,15 @@
 
     var dotTaskInstructions3 = {
         type: 'jspsych-notice',
-        section1_text: 'Great! You are half-way through. For the next 2 blocks you will be paired with a different participant',
-        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the <u>other participant\'s response</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br>Press the "continue" button to do 2 more blocks of the dot task.',
+        section1_text: 'Great! You are half-way through. For the second half you will be paired with a different partner',
+        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the your partner\'s response for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br>Press the "continue" button to do 2 more blocks of the dot task.',
         img_id: 'dotTask-gif3'
     };
 
     var dotTaskStart = {
         type: 'jspsych-notice',
         section1_text: 'You have now completed the practice trials for the dot task.',
-        section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the <u>response of another past participant</u> for the same dots-grid. This other participant <u>did about as well as you did</u> in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with higher confidence</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback.<br><br> There will be <u>four blocks of 50 trials</u>, which should take approximately 25 minutes to complete altogether. You will be able to take a short break in between the blocks. <br><br> <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 50 trials',
+        section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the response of another past participant for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight> based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen.<br><br> There will be 10 blocks of 20 trials, which should take approximately 25 minutes to complete altogether. <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br> Press "continue" to continue to the first block of 20 trials',
         img_id: 'dotTask-gif3'
     };
 
@@ -433,13 +407,13 @@
 
     var partner1 = {
         type: 'jspsych-partner-message1',
-        section2_text: 'We have selected your first partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner1c +  '" >' + partner1color + ' </highlight> bar. <br><br>The decision reported with higher confidence will be selected as your joint decision.',
+        section2_text: 'We have selected your first partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner1c +  '" >' + partner1color + ' </highlight> bar. <br><br>The decision reported with<highlight style="color: rgb(13,255,146)"> higher confidence</highlight> will be selected as your joint decision.',
         img_id: 'dotTask-partner'
     };
 
     var partner2 = {
         type: 'jspsych-partner-message2',
-        section2_text: 'We have selected your second partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner2c +  '" >' + partner2color + ' </highlight> bar. <br><br>The decision reported with higher confidence will be selected as your joint decision.',
+        section2_text: 'We have selected your second partner! <br><br>Their decision and confidence rating will be indicated with a <highlight style="color: ' + partner2c +  '" >' + partner2color + ' </highlight> bar. <br><br>The decision reported with<highlight style="color: rgb(13,255,146)"> higher confidence</highlight> will be selected as your joint decision.',
         img_id: 'dotTask-partner'
     };
 
@@ -449,7 +423,6 @@
         subjectID: subjectID,
         message: '',
         variableMessage: 'dotRest flat',
-        submessage: 'You may take a break now if you wish. Please press "continue" when you are ready to start the next block.',
         backgroundColor: 'rgb(0,0,0)',
         buttonEnabled: true,
         buttonText: 'CONTINUE',
@@ -506,27 +479,40 @@
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    //loading,
-                    //PIS,
-                    //consent,
-                    //demographics,
-                    // dotTaskInstructions1,
-                    // dotTaskPractice1,
-                    // dotTaskInstructions2,
-                    // dotTaskPractice2,
+                    loading,
+                    PIS,
+                    consent,
+                    demographics,
+                    dotTaskInstructions1,
+                    dotTaskPractice1,
+                    dotTaskInstructions2,
+                    dotTaskPractice2,
                     dotTaskStart,
                     loadingPartner,
                     partner1,
                     dotTask1,
                     dotTaskRest,
-                    dotTask2,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
                     dotTaskRest,
                     dotTaskInstructions3,
                     loadingPartner,
                     partner2,
-                    dotTask3,
+                    dotTask2,
                     dotTaskRest,
-                    dotTask4,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskRest,
                     dotsScoreReveal,
                     feedbackPoll,
                     debriefing,
@@ -537,27 +523,40 @@
                 order = "overconfident, then underconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    //loading,
-                    //PIS,
-                    //consent,
-                    //demographics,
-                    // dotTaskInstructions1,
-                    // dotTaskPractice1,
-                    // dotTaskInstructions2,
-                    // dotTaskPractice2,
+                    loading,
+                    PIS,
+                    consent,
+                    demographics,
+                    dotTaskInstructions1,
+                    dotTaskPractice1,
+                    dotTaskInstructions2,
+                    dotTaskPractice2,
                     dotTaskStart,
                     loadingPartner,
                     partner1,
-                    dotTask3,
+                    dotTask2,
                     dotTaskRest,
-                    dotTask4,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
+                    dotTaskRest,
+                    dotTask2,
                     dotTaskRest,
                     dotTaskInstructions3,
                     loadingPartner,
                     partner2,
                     dotTask1,
                     dotTaskRest,
-                    dotTask2,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
+                    dotTaskRest,
+                    dotTask1,
+                    dotTaskRest,
                     dotsScoreReveal,
                     feedbackPoll,
                     debriefing,
@@ -574,21 +573,6 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
-                    loadingPartner,
-                    partner1,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotTaskRest,
-                    dotTaskInstructions3,
-                    loadingPartner,
-                    partner2,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotsScoreReveal,
-                    feedbackPoll,
-                    debriefing,
                     thankYou
                 ];
             } else {
@@ -598,21 +582,6 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
-                    loadingPartner,
-                    partner1,
-                    dotTask3,
-                    dotTaskRest,
-                    dotTask4,
-                    dotTaskRest,
-                    dotTaskInstructions3,
-                    loadingPartner,
-                    partner2,
-                    dotTask1,
-                    dotTaskRest,
-                    dotTask2,
-                    dotsScoreReveal,
-                    feedbackPoll,
-                    debriefing,
                     thankYou
                 ];
             }

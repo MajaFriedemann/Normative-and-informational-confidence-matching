@@ -90,9 +90,9 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
     $.scrollify.destroy();
 
     // add some default text
-    var dotRestMessageBrier = 'You have reached the end of block ' + dots_blockCount + ' of 4. Your joint accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%, and you currently have ' + Math.round(dots_cumulativeScore) + ' points.';
+    var dotRestMessageBrier = 'You have reached the end of block ' + dots_blockCount + ' of 10. Your joint accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%, and you currently have ' + Math.round(dots_cumulativeScore) + ' points.';
 
-    var dotRestMessageFlat = 'You have reached the end of block ' + dots_blockCount + ' of 4. Your joint accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%.';
+    var dotRestMessageFlat = 'You have reached the end of block ' + dots_blockCount + ' of 10.';
 
     // create the page elements
     var splashPage = createGeneral(
@@ -133,16 +133,27 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
       );
     }
 
-    if (trial.submessage !== '') {
-      var subMessage = createGeneral(
+    if (partner === 'overconfident'){
+      var highlight = '<highlight style="color: ' + color2 + '">';
+    } else {
+      var highlight = '<highlight style="color: ' + color1 + '">';
+    }
+
+
+    var subMessage = createGeneral(
         subMessage,
         splashPage,
         'div',
         'sub-message',
         trial.name + '-' + 'submessage',
-        trial.submessage
-      );
-    }
+        '<h1>On this last block, <br><br>' +
+        'your <highlight style="color: rgb(13, 219, 255)">own</highlight> accuracy was <highlight style="color: rgb(13, 219, 255)">' + participantAccu + '%</highlight><br><br>' +
+        'your ' + highlight + 'partner\'s</highlight> accuracy was ' + highlight + partnerAccu + '%</highlight><br><br>' +
+        'your <highlight style="color: rgb(13,255,146)">joint</highlight> accuracy was <highlight style="color: rgb(13,255,146)">' + accuracy + '%</highlight><br><br></h1>',
+    );
+
+
+
 
     if (trial.submessageSize !== 'default') {
       subMessage.style.fontSize = trial.submessageSize;
@@ -189,8 +200,13 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
 
     // custom page options
     if (trial.name == "dotRest") {
-      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + dots_blockCount + ' of 4. Your joint accuracy on this last block was ' + dataObject.dots_accuracy[dots_blockCount + 1] + '%.</h1>';
+      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + dots_blockCount + ' of 10.';
     }
+
+    if (trial.name == "thankYou") {
+      subMessage.innerHTML = '<h1></h1>';
+    }
+
 
     // make sure page starts at the top every time
     $(document).ready(function () {

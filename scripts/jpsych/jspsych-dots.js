@@ -150,6 +150,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       dots_moreAsked: [],
       dots_isCorrect: [],
       dots_jointCorrect: [],
+      dots_partnerCorrect: [],
       dots_isTutorialMode: [],
       dots_firstIsCorrect: [],
       dots_RTs: [],
@@ -213,6 +214,8 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       trial.defaultOptionEnabled,
       trial.partner
       ));
+
+    partner = trial.partner;
 
   };
 
