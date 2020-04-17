@@ -93,7 +93,7 @@ jsPsych.plugins['jspsych-loading'] = (function () {
     function passModernizr() {
       $('#loader').css('display', 'block');
       $('#loading-main-message').css('display', 'inline');
-      loadingMessage.innerHTML = 'checking your browser compatibility'
+      loadingMessage.innerHTML = 'checking your browser compatibility';
 
       setTimeout(function() {
         var tests = Modernizr.addTest({});
@@ -113,6 +113,9 @@ jsPsych.plugins['jspsych-loading'] = (function () {
         }
         if (passModernizrTest == undefined) {
           passModernizrTest = true;
+        }
+        if(navigator.userAgent.indexOf("Safari") != -1) {
+          passModernizrTest = false;
         }
 
         if (passModernizrTest) {
