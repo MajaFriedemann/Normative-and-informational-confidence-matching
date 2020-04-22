@@ -114,9 +114,6 @@ jsPsych.plugins['jspsych-loading'] = (function () {
         if (passModernizrTest == undefined) {
           passModernizrTest = true;
         }
-        if(navigator.userAgent.indexOf("Safari") != -1) {
-          passModernizrTest = false;
-        }
 
         if (passModernizrTest) {
           loadingMessage.innerHTML = 'loading game now';
