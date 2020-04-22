@@ -73,7 +73,7 @@
     var subjectID;
     var studyName = 'Confidence in group decision-making';
     var version = 'strategic version';
-    var release_date = '2020/04/16';
+    var release_date = '2020/04/22';
     var testing_timeline = false;
     var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
@@ -304,7 +304,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,             //make trial count 60 here
+        trial_count: 60,             //make trial count 60 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -321,7 +321,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,                 //make trial count 5 here
+        trial_count: 5,                 //make trial count 5 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'none'
@@ -336,7 +336,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
+        trial_count: 20,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -353,7 +353,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
+        trial_count: 20,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -364,7 +364,7 @@
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
-        section2_text: 'During this game, you will see two boxes containing dots briefly flash for a few ms on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
+        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
             '<br><br> Press the "continue" button to continue to some practice trials. <u>The practice can take as long as 5 minutes.</u>',
         img_id: 'dotTask-gif1'
     };
@@ -380,7 +380,7 @@
     var dotTaskInstructions3 = {
         type: 'jspsych-notice',
         section1_text: 'Great! You are half-way through. For the second half you will be paired with a different partner',
-        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the your partner\'s response for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">A cash bonus will be awarded based on the accuracy of your joint decisions.</highlight> <br><br>Press the "continue" button to do 2 more blocks of the dot task.',
+        section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After responding with a left or right click and indicating your confidence on the slider, you will see the your partner\'s response for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight>  based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">Acting strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT decisions.</highlight> <br><br>Press the "continue" button to do 2 more blocks of the dot task.',
         img_id: 'dotTask-gif3'
     };
 
