@@ -63,7 +63,7 @@
 
     var ProlificID = getUrlVars()['PROLIFIC_PID'];
     console.log(ProlificID);
-    // NOTE ADD COMPLETION CODE HERE!!!!!!!!!!!!!!!
+    // NOTE ADD COMPLETION CODE HERE!
     var completionCode = "DEE7049F";
     var completionURL = "https://app.prolific.ac/submissions/complete?cc=" + completionCode;
     var PHQexclusionURL = "https://app.prolific.ac/submissions/complete?cc=EXCLU001";
@@ -94,7 +94,7 @@
     Get the random subject identifier from cookies, or if there isn't one, set one and make a cookie with the random subject identifier to expire within the year */
     if (getCookie('UIDMUL-IST-subjectID')) {
         subjectID = getCookie('UIDMUL-IST-subjectID');
-        //update the number of attempts
+        //up the number of attempts
         existingAttempts = Number(getCookie('UIDMUL-IST-attempts'));
         currentAttempt = 1 + existingAttempts;
         setCookie('UIDMUL-IST-attempts', currentAttempt, 365);
@@ -304,7 +304,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 60,             //make trial count 60 here
+        trial_count: 2,             //make trial count 60 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -321,7 +321,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 5,                 //make trial count 5 here
+        trial_count: 2,                 //make trial count 5 here
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
         partner: 'none'
@@ -336,7 +336,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 20,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
+        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
@@ -353,7 +353,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: false,
-        trial_count: 20,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
+        trial_count: 2,                 //make trial count 20 here (5x20 trials = 100 trials per partner)
         blockCounterEnabled: true,
         greenButtonName: 'CONTINUE',
         seeAgain: 'easier',
