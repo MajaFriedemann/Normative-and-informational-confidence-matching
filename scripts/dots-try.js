@@ -139,7 +139,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     error = randn_bm(-0.05*3, 0.05*3, 1);
     if (partner == "underconfident") {
         partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
-        partnerConfidence = partnerConfidence*50;                     //change scale frmo 0-1 to 0-50
+        partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
     } else if (partner == "overconfident") {
         partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
         partnerConfidence = partnerConfidence*50;
