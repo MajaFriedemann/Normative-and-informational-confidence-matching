@@ -151,7 +151,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // let's say five chunks and then define the confidence distribution over these chunks.
     // I'd then uniformly sample a response within each of the chunks (e.g. uniformly from the range .5-.6)
     // depending on which chunk is used on a particular trial.
-    if (partner == "uncerconfident") {
+    if (partner == "underconfident") {
         if (pCorrect <= 0.80) {  //pCorrect goes from 0.6 to 1  //20
             getRandomInt(0, 10);
         } else if (0.80 < pCorrect <= 0.90) {  //10
