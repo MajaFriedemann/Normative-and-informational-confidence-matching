@@ -153,27 +153,27 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // depending on which chunk is used on a particular trial.
     if (partner == "underconfident") {
         if (pCorrect <= 0.80) {  //pCorrect goes from 0.6 to 1  //20
-            getRandomInt(0, 10);
+            partnerConfidence = getRandomInt(0, 10);
         } else if (0.80 < pCorrect <= 0.90) {  //10
-            getRandomInt(10, 20);
+            partnerConfidence = getRandomInt(10, 20);
         } else if (0.90 < pCorrect <= 0.95) {   //5
-            getRandomInt(20, 30);
+            partnerConfidence = getRandomInt(20, 30);
         } else if (0.95 < pCorrect <= 0.98) {  //3
-            getRandomInt(30, 40);
+            partnerConfidence = getRandomInt(30, 40);
         } else if (0.98 < pCorrect <= 1) {   //2
-            getRandomInt(40, 50);
+            partnerConfidence = getRandomInt(40, 50);
         }
     } else if (partner == "overconfident") {
         if (pCorrect <= 0.62) {          //pCorrect goes from 0.6 to 1  //2
-            getRandomInt(0, 10);
+            partnerConfidence = getRandomInt(0, 10);
         } else if (0.62 < pCorrect <= 0.65) {  //3
-            getRandomInt(10, 20);
+            partnerConfidence = getRandomInt(10, 20);
         } else if (0.65 < pCorrect <= 0.70) {   //5
-            getRandomInt(20, 30);
+            partnerConfidence = getRandomInt(20, 30);
         } else if (0.70 < pCorrect <= 0.80) {  //10
-            getRandomInt(30, 40);
+            partnerConfidence = getRandomInt(30, 40);
         } else if (0.80 < pCorrect <= 1) {   //20
-            getRandomInt(40, 50);
+            partnerConfidence = getRandomInt(40, 50);
         }
     } else {
         partnerConfidence = 0
