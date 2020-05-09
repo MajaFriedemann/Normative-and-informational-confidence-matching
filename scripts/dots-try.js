@@ -135,49 +135,49 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var partnerConfidence;
     var partnerConfidenceMarker;
     var partnerConfidenceCorrect;
-    // var error;
-    // error = randn_bm(-0.05*3, 0.05*3, 1);
-    // if (partner == "underconfident") {
-    //     partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
-    //     partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
-    // } else if (partner == "overconfident") {
-    //     partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
-    //     partnerConfidence = partnerConfidence*50;
-    // } else {
-    //     partnerConfidence = 0   //if partner = none
-    // }
+    var error;
+    error = randn_bm(-0.05*3, 0.05*3, 1);
+    if (partner == "underconfident") {
+        partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
+    } else if (partner == "overconfident") {
+        partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;
+    } else {
+        partnerConfidence = 0   //if partner = none
+    }
 
     // If you were to enforce a particular confidence distribution, then I'd divide each scale (.5-1) up into
     // let's say five chunks and then define the confidence distribution over these chunks.
     // I'd then uniformly sample a response within each of the chunks (e.g. uniformly from the range .5-.6)
     // depending on which chunk is used on a particular trial.
-    if (partner == "underconfident") {
-        if (pCorrect <= 0.80) {  //pCorrect goes from 0.6 to 1  //20
-            partnerConfidence = getRandomInt(0, 10);
-        } else if (0.80 < pCorrect <= 0.90) {  //10
-            partnerConfidence = getRandomInt(10, 20);
-        } else if (0.90 < pCorrect <= 0.95) {   //5
-            partnerConfidence = getRandomInt(20, 30);
-        } else if (0.95 < pCorrect <= 0.98) {  //3
-            partnerConfidence = getRandomInt(30, 40);
-        } else if (0.98 < pCorrect <= 1) {   //2
-            partnerConfidence = getRandomInt(40, 50);
-        }
-    } else if (partner == "overconfident") {
-        if (pCorrect <= 0.62) {          //pCorrect goes from 0.6 to 1  //2
-            partnerConfidence = getRandomInt(0, 10);
-        } else if (0.62 < pCorrect <= 0.65) {  //3
-            partnerConfidence = getRandomInt(10, 20);
-        } else if (0.65 < pCorrect <= 0.70) {   //5
-            partnerConfidence = getRandomInt(20, 30);
-        } else if (0.70 < pCorrect <= 0.80) {  //10
-            partnerConfidence = getRandomInt(30, 40);
-        } else if (0.80 < pCorrect <= 1) {   //20
-            partnerConfidence = getRandomInt(40, 50);
-        }
-    } else {
-        partnerConfidence = 0
-    }
+    // if (partner == "underconfident") {
+    //     if (pCorrect <= 0.80) {  //pCorrect goes from 0.6 to 1  //20
+    //         partnerConfidence = getRandomInt(1, 10);
+    //     } else if (0.80 < pCorrect <= 0.90) {  //10
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.90 < pCorrect <= 0.95) {   //5
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.95 < pCorrect <= 0.98) {  //3
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.98 < pCorrect <= 1) {   //2
+    //         partnerConfidence = getRandomInt(40, 49);
+    //     }
+    // } else if (partner == "overconfident") {
+    //     if (pCorrect <= 0.62) {          //pCorrect goes from 0.6 to 1  //2
+    //         partnerConfidence = getRandomInt(1, 10);
+    //     } else if (0.62 < pCorrect <= 0.65) {  //3
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.65 < pCorrect <= 0.70) {   //5
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.70 < pCorrect <= 0.80) {  //10
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.80 < pCorrect <= 1) {   //20
+    //         partnerConfidence = getRandomInt(40, 49);
+    //     }
+    // } else {
+    //     partnerConfidence = 0
+    // }
 
 
     // partner confidence marker on the slider

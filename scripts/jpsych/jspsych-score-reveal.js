@@ -118,7 +118,7 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
       'div',
       'sub-message',
       'score-reveal-submessage',
-      'This equates to a cash bonus of £' + currentBonus + ' for you :) <br><br> Your total bonus earnings are now £' + newBonusPayment + ''
+      'This equates to a cash bonus of £' + currentBonus + ' for you :)'
     );
 
     var continueButton = createGeneral(
