@@ -135,16 +135,48 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var partnerConfidence;
     var partnerConfidenceMarker;
     var partnerConfidenceCorrect;
-    var error;
-    error = randn_bm(-0.05*3, 0.05*3, 1);
-    if (partner == "underconfident") {
-        partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
-        partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
+    // var error;
+    // error = randn_bm(-0.05*3, 0.05*3, 1);
+    // if (partner == "underconfident") {
+    //     partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
+    //     partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
+    // } else if (partner == "overconfident") {
+    //     partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
+    //     partnerConfidence = partnerConfidence*50;
+    // } else {
+    //     partnerConfidence = 0   //if partner = none
+    // }
+
+    // If you were to enforce a particular confidence distribution, then I'd divide each scale (.5-1) up into
+    // let's say five chunks and then define the confidence distribution over these chunks.
+    // I'd then uniformly sample a response within each of the chunks (e.g. uniformly from the range .5-.6)
+    // depending on which chunk is used on a particular trial.
+    if (partner == "uncerconfident") {
+        if (pCorrect <= 0.80) {  //pCorrect goes from 0.6 to 1  //20
+            getRandomInt(0, 10);
+        } else if (0.80 < pCorrect <= 0.90) {  //10
+            getRandomInt(10, 20);
+        } else if (0.90 < pCorrect <= 0.95) {   //5
+            getRandomInt(20, 30);
+        } else if (0.95 < pCorrect <= 0.98) {  //3
+            getRandomInt(30, 40);
+        } else if (0.98 < pCorrect <= 1) {   //2
+            getRandomInt(40, 50);
+        }
     } else if (partner == "overconfident") {
-        partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
-        partnerConfidence = partnerConfidence*50;
+        if (pCorrect <= 0.62) {          //pCorrect goes from 0.6 to 1  //2
+            getRandomInt(0, 10);
+        } else if (0.62 < pCorrect <= 0.65) {  //3
+            getRandomInt(10, 20);
+        } else if (0.65 < pCorrect <= 0.70) {   //5
+            getRandomInt(20, 30);
+        } else if (0.70 < pCorrect <= 0.80) {  //10
+            getRandomInt(30, 40);
+        } else if (0.80 < pCorrect <= 1) {   //20
+            getRandomInt(40, 50);
+        }
     } else {
-        partnerConfidence = 0   //if partner = none
+        partnerConfidence = 0
     }
 
 
@@ -305,9 +337,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         $('.scale-button').addClass('invisible');
 
 
-        // update the staircase (correctResponse is true or false such that dots stimulus becomes harder or easier)
-        dotsStaircase.next(correctResponse);
-        staircaseSteps++;
+        // update the staircase if we are in practice mode (correctResponse is true or false such that dots stimulus becomes harder or easier)
+        if (partner === "none") {
+            dotsStaircase.next(correctResponse);
+            staircaseSteps++;
+        }
 
 
         // calculate the wait time (this is from stimulus presentation until clicking continue, whereas RT is from stimulus presentation to initial choice via mouse-lick
@@ -672,6 +706,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
                     setTimeout(function () {
                         if (partnerConfidence < participantConfidence) {
+                            participantChosen++;
                             if (participantConfidenceMarker > 50) {
                                 $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% + 2px)');
                             } else {
