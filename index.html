@@ -73,7 +73,7 @@
     var subjectID;
     var studyName = 'Confidence in group decision-making';
     var version = 'strategic version';
-    var release_date = '2020/04/22';
+    var release_date = '2020/05/12';
     var testing_timeline = false;
     var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
     var scoreRuleOrder;
@@ -105,7 +105,10 @@
     }
 
     // seed the randomisations (whenever a random number is generated it is seeded to the subjectID so that it is reproducible)
-    Math.seedrandom(subjectID);
+    // removing all non-digits from string
+    var seed = subjectID.replace(/\D/g,'');
+    seed = parseInt(seed);
+    Math.seedrandom(seed);
 
 
 
@@ -479,7 +482,7 @@
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    //loading,
+                    loading,
                     PIS,
                     consent,
                     demographics,
@@ -523,7 +526,7 @@
                 order = "overconfident, then underconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    //loading,
+                    loading,
                     PIS,
                     consent,
                     demographics,
