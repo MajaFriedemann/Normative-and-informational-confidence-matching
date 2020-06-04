@@ -42,6 +42,8 @@
     <script src="scripts/jpsych/jspsych-demographics.js"></script>
     <script src="scripts/jpsych/jspsych-dots.js"></script>
     <script src="scripts/jpsych/jspsych-feedback-form.js"></script>
+    <script src="scripts/jpsych/jspsych-overconfident-feedback.js"></script>
+    <script src="scripts/jpsych/jspsych-underconfident-feedback.js"></script>
     <script src="scripts/jpsych/jspsych-loading.js"></script>
     <script src="scripts/jpsych/jspsych-loading-partner.js"></script>
     <script src="scripts/jpsych/jspsych-message-splash.js"></script>
@@ -208,6 +210,8 @@
     var participantChosen = 0;
     var partner;
     var trialsPerBlock = 20; //make trial count 20 here (5x20 trials = 100 trials per partner)
+    var dotCountHigherList = [];
+    var finalHigh;
 
     var bonusPayment = 0;
 
@@ -256,11 +260,10 @@
         dots_waitTimes: [],
 
         technical_issues: undefined,
-        feedback_strategy: undefined,
         feedback_technical: undefined,
         feedback_comments: undefined,
         debriefing: undefined,
-        feedback_ratings: {}
+
     };
 
 
@@ -307,7 +310,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 60,             //make trial count 60 here
+        trial_count: 100,             //make trial count 100 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         seeAgain: 'practice1',
@@ -368,7 +371,7 @@
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
         section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
-            '<br><br> Press the "continue" button to continue to some practice trials. <u>The practice can take as long as 5 minutes.</u>',
+            '<br><br> Press the "continue" button to start the game. <u>The first phase of the game can take up to 8 minutes.</u> You should reach a stable performance level to continue to the next phase.',
         img_id: 'dotTask-gif1'
     };
 
@@ -376,7 +379,7 @@
         type: 'jspsych-notice',
         section1_text: 'From now on, you will indicate your confidence in your decisions and get feedback if your choice was correct or incorrect.',
         section2_text: 'After responding with a left or right click, you will now <u>indicate your confidence</u> in the decision <u>on a sliding scale</u>. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, <u>you will get feedback</u> about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
-            ' <br><br>Press the "continue" button to do a few more practice trials with the confidence slider.',
+            ' <br><br>Press the "continue" button to do a few trials with the confidence slider.',
         img_id: 'dotTask-gif2'
     };
 
@@ -389,7 +392,7 @@
 
     var dotTaskStart = {
         type: 'jspsych-notice',
-        section1_text: 'You have now completed the practice trials for the dot task.',
+        section1_text: 'You have now completed the first two phases of the dot game.',
         section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the response of another past participant for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight> based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">Acting strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT decisions.</highlight> <br><br>There will be 10 blocks of 20 trials, which should take approximately 25 minutes to complete altogether. Press "continue" to continue to the first block of 20 trials',
         img_id: 'dotTask-gif3'
     };
@@ -472,12 +475,22 @@
         askStrategy: false
     };
 
+    var feedbackOverconfPartner = {
+        type: 'jspsych-overconfident-feedback',
+        askStrategy: false
+    };
+
+    var feedbackUnderconfPartner = {
+        type: 'jspsych-underconfident-feedback',
+        askStrategy: false
+    };
+
 
     /* TIMELINES FOR RELEASE & TESTING */
     switch(trialTypeOrder) {
 
         case 'all':
-            if (partnerOrder > 0.5) {
+            if (partnerOrder < 0.501) {
                 var order;
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
@@ -503,6 +516,7 @@
                     dotTaskRest,
                     dotTask1,
                     dotTaskRest,
+                    feedbackUnderconfPartner,
                     dotTaskInstructions3,
                     loadingPartner,
                     partner2,
@@ -516,6 +530,7 @@
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
+                    feedbackOverconfPartner,
                     dotsScoreReveal,
                     feedbackPoll,
                     debriefing,
@@ -547,6 +562,7 @@
                     dotTaskRest,
                     dotTask2,
                     dotTaskRest,
+                    feedbackOverconfPartner,
                     dotTaskInstructions3,
                     loadingPartner,
                     partner2,
@@ -560,6 +576,7 @@
                     dotTaskRest,
                     dotTask1,
                     dotTaskRest,
+                    feedbackUnderconfPartner,
                     dotsScoreReveal,
                     feedbackPoll,
                     debriefing,

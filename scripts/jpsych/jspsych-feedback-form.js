@@ -63,25 +63,6 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
       '<h2>Some more questions...</h2>'
     );
 
-    if (trial.askStrategy) {
-      var strategyCaption = createGeneral(
-        strategyCaption,
-        container,
-        'div',
-        'question feedback-text',
-        'feedbackQuestion-strategy',
-        'Please describe what strategy you were using to reach your decision about the majority colour in the TILES game - for instance, if you were counting tiles of a certain colour or estimating the proportion of one colour to another.'
-      );
-
-      var strategyText = createGeneral(
-        strategyText,
-        container,
-        'textarea',
-        'question textarea',
-        'feedbackText-strategy',
-        ''
-      );
-    }
 
     var technicalPoll = createGeneral(
       technicalPoll,
@@ -119,50 +100,7 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
       ''
     );
     $('#feedbackText-technical').css('display', 'none');
-/*     var technicalCaption = createGeneral(
-      technicalCaption,
-      container,
-      'div',
-      'question feedback-text',
-      'feedbackQuestion-technical',
-      'Did you experience any technical issues during the experiment?'
-    ); */
 
-/*     var technicalText = createGeneral(
-      technicalText,
-      container,
-      'textarea',
-      'question textarea',
-      'feedbackText-technical',
-      ''
-    ); */
-
-    var feedbackPoll = createGeneral(
-      feedbackPoll,
-      container,
-      'div',
-      'surveyMatrix centered-poll',
-      'feedbackPoll',
-      ''
-    );
-    createSurveyMatrix(
-      feedbackPoll,
-      '',
-      'feedbackPoll-length',
-      [
-        'How did you find the length of the experiment?'
-      ],
-      ['1<br>too long', '2', '3', '4', '5<br>surprisingly short']
-    );
-    createSurveyMatrix(
-      feedbackPoll,
-      '',
-      'feedbackPoll-experience',
-      [
-        'Overall, how was your experience in this experiment?'
-      ],
-      ['1<br>hated it', '2', '3', '4', '5<br>loved it']
-    );
 
     var feedbackCaption = createGeneral(
       feedbackCaption,
@@ -182,12 +120,6 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
       'feedbackText-comments',
       ''
     );
-
-    $('#jspsych-content').on('click', '#feedbackPoll .surveyMatrix-option', function () {
-      var name = $(this).children('input').attr('name');
-      var value = $(this).children('input').prop('value');
-      dataObject.feedback_ratings[name] = value;
-    });
 
     $('#jspsych-content').on('click', '#technicalPoll .surveyMatrix-option', function () {
       var value = $(this).children('input').prop('value');
@@ -214,12 +146,8 @@ jsPsych.plugins['jspsych-feedback-form'] = (function () {
     );
 
     continueButton.onclick = function () {
-      if (trial.askStrategy) {
-        dataObject["feedback_strategy"] = strategyText.value;
-      }
       dataObject["feedback_technical"] = technicalText.value;
       dataObject["feedback_comments"] = feedbackText.value;
-      console.log(dataObject);
       jsPsych.finishTrial();
       return;
       saveCSV(subjectID, currentAttempt);

@@ -62,7 +62,14 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // determine the parameters for the dot grids
     var dots, majoritySide;
     var low = dotCount;
-    var high = Math.round(dotCount + dotsStaircase.getLast('logSpace'));
+    var high;
+    if (partner === "none") {
+        high = Math.round(dotCount + dotsStaircase.getLast('logSpace'));
+        dotCountHigherList.push(high);
+        finalHigh = Math.round((high + Math.min.apply(Math, dotCountHigherList))/2);
+    } else {
+        high = finalHigh
+    }
     var randomiser = Math.random();
     if (randomiser > 0.5) {
         dots = [low, high];
@@ -108,11 +115,11 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // get p(correct) using randn_bm(min, max, skew) --> see helper.js
     var pCorrect;
     //p correct from normal distribution between 0.6 and 1 (mean 0.8)
-    //pCorrect = randn_bm(0.6, 1, 1);
+    pCorrect = randn_bm(0.6, 1, 1);
 
-    //p correct from unform distirbution between 0.6 and 1 (min is inclusive, max is exclusive)
-    pCorrect = getRandomInt(61, 101);
-    pCorrect = pCorrect / 100;
+    //p correct from uniform distirbution between 0.6 and 1 (min is inclusive, max is exclusive)
+    //pCorrect = getRandomInt(61, 101);
+    //pCorrect = pCorrect / 100;
 
     // pick correct response with p(Correct)
     var partnerChoice;
@@ -136,52 +143,52 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     //c is a constant do differentiate over- and under-confident partners (overconfident set to 0.6, underconfident set to 0.1)
     //s is the slope which I set to 0.8
     //e is random noise which I will sample from a normal distribution with m=0 and sd=.05
-    // var partnerConfidence;
-    // var partnerConfidenceMarker;
-    // var partnerConfidenceCorrect;
-    // var error;
-    // error = randn_bm(-0.05*3, 0.05*3, 1);
-    // if (partner == "underconfident") {
-    //     partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
-    //     partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
-    // } else if (partner == "overconfident") {
-    //     partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
-    //     partnerConfidence = partnerConfidence*50;
-    // } else {
-    //     partnerConfidence = 0   //if partner = none
-    // }
+    var partnerConfidence;
+    var partnerConfidenceMarker;
+    var partnerConfidenceCorrect;
+    var error;
+    error = randn_bm(-0.05*3, 0.05*3, 1);
+    if (partner == "underconfident") {
+        partnerConfidence = 0.1 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;                     //change scale from 0-1 to 0-50
+    } else if (partner == "overconfident") {
+        partnerConfidence = 0.6 + (pCorrect - 0.5) * 0.8 + error;
+        partnerConfidence = partnerConfidence*50;
+    } else {
+        partnerConfidence = 0   //if partner = none
+    }
 
     // If you were to enforce a particular confidence distribution, then I'd divide each scale (.5-1) up into
     // let's say five chunks and then define the confidence distribution over these chunks.
     // I'd then uniformly sample a response within each of the chunks (e.g. uniformly from the range .5-.6)
     // depending on which chunk is used on a particular trial.
-    if (partner === "underconfident") {
-        if (pCorrect <= 0.79) {  //pCorrect goes from 0.61 to 1  //19
-            partnerConfidence = getRandomInt(3, 10);
-        } else if (0.79 < pCorrect && pCorrect <= 0.90) {  //11
-            partnerConfidence = getRandomInt(10, 20);
-        } else if (0.90 < pCorrect && pCorrect <= 0.96) {   //6
-            partnerConfidence = getRandomInt(20, 30);
-        } else if (0.96 < pCorrect && pCorrect <= 0.99) {    //3
-            partnerConfidence = getRandomInt(30, 40);
-        } else if (0.99 < pCorrect && pCorrect <= 1) {      //1
-            partnerConfidence = getRandomInt(30, 40);
-        }
-    } else if (partner === "overconfident") {
-        if (pCorrect <= 0.61) {                             //1
-            partnerConfidence = getRandomInt(3, 10);
-        } else if (0.61 < pCorrect && pCorrect <= 0.64) {    //3
-            partnerConfidence = getRandomInt(10, 20);
-        } else if (0.64 < pCorrect && pCorrect <= 0.70) {   //6
-            partnerConfidence = getRandomInt(20, 30);
-        } else if (0.70 < pCorrect && pCorrect <= 0.81) {  //11
-            partnerConfidence = getRandomInt(30, 40);
-        } else if (0.81 < pCorrect && pCorrect <= 1) {   //19
-            partnerConfidence = getRandomInt(40, 49);
-        }
-    } else {
-        partnerConfidence = 0
-    }
+    // if (partner === "underconfident") {
+    //     if (pCorrect <= 0.79) {  //pCorrect goes from 0.61 to 1  //19
+    //         partnerConfidence = getRandomInt(3, 10);
+    //     } else if (0.79 < pCorrect && pCorrect <= 0.90) {  //11
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.90 < pCorrect && pCorrect <= 0.96) {   //6
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.96 < pCorrect && pCorrect <= 0.99) {    //3
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.99 < pCorrect && pCorrect <= 1) {      //1
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     }
+    // } else if (partner === "overconfident") {
+    //     if (pCorrect <= 0.61) {                             //1
+    //         partnerConfidence = getRandomInt(3, 10);
+    //     } else if (0.61 < pCorrect && pCorrect <= 0.64) {    //3
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.64 < pCorrect && pCorrect <= 0.70) {   //6
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.70 < pCorrect && pCorrect <= 0.81) {  //11
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.81 < pCorrect && pCorrect <= 1) {   //19
+    //         partnerConfidence = getRandomInt(40, 49);
+    //     }
+    // } else {
+    //     partnerConfidence = 0
+    // }
 
 
     // partner confidence marker on the slider
@@ -401,7 +408,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (isTutorialMode) {
                     if (accuracy >= accuracyThreshold) {
                         var section4_button = 'CONTINUE';
-                        var section4_text = 'Congratulations, your accuracy during the last set of practice trials was ' + accuracy + '%.';
+                        var section4_text = 'Congratulations, your accuracy during the last set of trials was ' + accuracy + '%.';
                         if (seeAgain !== "practice1") {
                             dots_blockCount = 0;
                         } else {
@@ -409,7 +416,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         }
                     } else {
                         var section4_button = 'REPEAT';
-                        var section4_text = 'Your accuracy during these practice trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
+                        var section4_text = 'Your accuracy during these trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
                     }
 
                     // set up feedback page

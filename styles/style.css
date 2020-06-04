@@ -379,7 +379,7 @@ section.tutorial-section.section4 .tutorial-text#ISTc-tutorial-text4, .section.t
   width: var(--questionWidth);
   height: var(--questionHeight);
   padding: 1vmin 2vmin 2vmin 1vmin;
-  font-size: 1.8vmin;
+  font-size: 2.5vmin;
   user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -411,7 +411,7 @@ section.tutorial-section.section4 .tutorial-text#ISTc-tutorial-text4, .section.t
 .surveyMatrix .surveyMatrix-row .surveyMatrix-option .surveyMatrix-optionLabel {
   z-index: 5;
   margin: 0.5vh auto 0vh;
-  font-size: var(--optionFontSize);
+  font-size: 1.8vmin;
   user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
