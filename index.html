@@ -490,7 +490,7 @@
     switch(trialTypeOrder) {
 
         case 'all':
-            if (partnerOrder < 0.501) {
+            if (partnerOrder > 0.499) {
                 var order;
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
