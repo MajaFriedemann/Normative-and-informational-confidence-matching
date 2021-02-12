@@ -61,6 +61,10 @@
     (note: these must be declared directly in <script> and not within $(document).ready)
     */
 
+    // set infoSeekingVersion to true to add interspersed trials where participants do not see a partners response but have the chance to seek see the stimulus again
+    const infoSeekingVersion = true;
+
+
     /* PROLIFIC PARAMETERS */
 
     var ProlificID = getUrlVars()['PROLIFIC_PID'];
@@ -208,6 +212,7 @@
     var participantAccu;
     var partnerAccu;
     var participantChosen = 0;
+    var partnerChosen = 0;
     var partner;
     var trialsPerBlock = 20; //make trial count 20 here (5x20 trials = 100 trials per partner)
     var dotCountHigherList = [];
@@ -344,7 +349,10 @@
         isTutorialMode: false,
         trial_count: trialsPerBlock,
         blockCounterEnabled: true,
-        greenButtonName: 'CONTINUE',
+        yellowButtonEnabled: true,
+        yellowButtonName: 'SEE AGAIN',
+        greenButtonEnabled: true,
+        greenButtonName: 'FINAL DECISION',
         seeAgain: 'easier',
         partner: 'underconfident'
     };
@@ -361,7 +369,10 @@
         isTutorialMode: false,
         trial_count: trialsPerBlock,
         blockCounterEnabled: true,
-        greenButtonName: 'CONTINUE',
+        yellowButtonEnabled: true,
+        yellowButtonName: 'SEE AGAIN',
+        greenButtonEnabled: true,
+        greenButtonName: 'FINAL DECISION',
         seeAgain: 'easier',
         partner: 'overconfident'
     };
@@ -495,10 +506,10 @@
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
+                    // loading,
+                    // PIS,
+                    // consent,
+                    // demographics,
                     dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
@@ -541,10 +552,10 @@
                 order = "overconfident, then underconfident";
                 dataObject["experiment_condition"] = order;
                 var timeline = [
-                    loading,
-                    PIS,
-                    consent,
-                    demographics,
+                    // loading,
+                    // PIS,
+                    // consent,
+                    // demographics,
                     dotTaskInstructions1,
                     dotTaskPractice1,
                     dotTaskInstructions2,
@@ -588,20 +599,16 @@
         case 'testing':
             if (partnerOrder > 0.5) {
                 var timeline = [
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
+                    //dotTaskPractice1,
+                    //dotTaskStart,
+                    dotTask2,
                     thankYou
                 ];
             } else {
                 var timeline = [
-                    dotTaskInstructions1,
-                    dotTaskPractice1,
-                    dotTaskInstructions2,
-                    dotTaskPractice2,
-                    dotTaskStart,
+                    //dotTaskPractice1,
+                    //dotTaskStart,
+                    dotTask2,
                     thankYou
                 ];
             }
