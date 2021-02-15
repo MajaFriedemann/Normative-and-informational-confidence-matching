@@ -808,7 +808,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
             // draw partner's confidence marker
             setTimeout(function (){
-                if (partner !== "none" & infoSeekingTrial !== true) {
+                if (partner !== "none" && infoSeekingTrial !== true) {
                     var partnerMarker = createGeneral(
                         partnerMarker,
                         document.getElementById('scale'),
