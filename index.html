@@ -49,6 +49,7 @@
     <script src="scripts/jpsych/jspsych-message-splash.js"></script>
     <script src="scripts/jpsych/jspsych-partner-message1.js"></script>
     <script src="scripts/jpsych/jspsych-partner-message2.js"></script>
+    <script src="scripts/jpsych/jspsych-notice-onepage.js"></script>
     <script src="scripts/jpsych/jspsych-notice.js"></script>
     <script src="scripts/jpsych/jspsych-PIS.js"></script>
     <script src="scripts/jpsych/jspsych-score-reveal.js"></script>
@@ -217,9 +218,10 @@
     var participantChosen = 0;
     var partnerChosen = 0;
     var partner;
-    var trialsPerBlock = 20; //make trial count 20 here (5x20 trials = 100 trials per partner)
+    var trialsPerBlock = 25; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking)
     var dotCountHigherList = [];
     var finalHigh;
+    var secondChoice;
 
     var bonusPayment = 0;
 
@@ -264,6 +266,7 @@
         dots_isCorrect: [],
         dots_jointCorrect: [],
         dots_partnerCorrect: [],
+        dots_participantCorrect: [],
         dots_RTs: [],
         dots_waitTimes: [],
 
@@ -318,10 +321,10 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 10,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        trial_count: 100,             //make trial count 100 here
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
-        seeAgain: 'practice1',
+        staircasingPractice: 'practice1',
         partner: 'none',
     };
 
@@ -337,7 +340,7 @@
         isTutorialMode: true,
         trial_count: 5,                 //make trial count 5 here
         greenButtonName: 'CONTINUE',
-        seeAgain: 'easier',
+        staircasingPractice: 'off',
         partner: 'none'
     };
 
@@ -356,7 +359,7 @@
         yellowButtonName: 'SEE AGAIN',
         greenButtonEnabled: true,
         greenButtonName: 'FINAL DECISION',
-        seeAgain: 'easier',
+        staircasingPractice: 'off',
         partner: 'underconfident'
     };
 
@@ -376,7 +379,7 @@
         yellowButtonName: 'SEE AGAIN',
         greenButtonEnabled: true,
         greenButtonName: 'FINAL DECISION',
-        seeAgain: 'easier',
+        staircasingPractice: 'off',
         partner: 'overconfident'
     };
 
@@ -407,14 +410,26 @@
     var dotTaskStart = {
         type: 'jspsych-notice',
         section1_text: 'You have now completed the first two phases of the dot game.',
-        section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the response of another past participant for the same dots-grid. Your partner did about as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight> based on which you will get feedback. Therefore, if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">Acting strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT decisions.</highlight>',
+        section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the ' +
+            'response of another past participant for the same dots-grid. Your partner did about as well as you did in the practice trials. ' +
+            'The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected ' +
+            'as <highlight style="color: rgb(13,255,146)"> your joint decision</highlight> based on which you will get feedback. Therefore, ' +
+            'if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might ' +
+            'be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">Acting ' +
+            'strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT decisions.</highlight><br><br>There will be 10 blocks of ' + trialsPerBlock + ' trials, which should take approximately 30 minutes to complete ' +
+            'altogether. Press "continue" to continue to the first block of ' + trialsPerBlock + ' trials',
         img_id: 'dotTask-gif3'
     };
 
+
     var dotTaskStartInfoSeeking = {
-        type: 'jspsych-notice',
-        section1_text: 'Sometimes you decide alone.',
-        section2_text: 'Every now and then, there will be trials where you are <highlight style="color: rgb(13,255,146)">on your own</highlight>. In those trials, there won\'t be a response from the other participant such that only your choice counts. However, on those trials you will have the <highlight style="color: rgb(13,255,146)">chance to see the dots-grid again</highlight> before committing to a final decision. <br><br>There will be 10 blocks of 20 trials, which should take approximately 25 minutes to complete altogether. Press "continue" to continue to the first block of 20 trials',
+        type: 'jspsych-notice-onepage',
+        section2_text: 'Every now and then, there will be trials where you will <highlight style="color: rgb(13,255,146)">not find out your partner\'s decision</highlight>. ' +
+            'Instead, after you\'ve seen ' +
+            'the dots-grid and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the dots-grid again</highlight> before ' +
+            'making your final decision. ' +
+            'If you choose to see the stimulus again, you\'ll see an <highlight style="color: rgb(13,255,146)">easier version of the grid with the same correct answer</highlight> (left or right).  ' +
+            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision.',
         img_id: 'dotTask-gif4'
     };
 
@@ -511,7 +526,7 @@
     switch(trialTypeOrder) {
 
         case 'all':
-            if (partnerOrder > 0.499) {
+            if (partnerOrder > 0.5) {
                 var order;
                 order = "underconfident, then overconfident";
                 dataObject["experiment_condition"] = order;
@@ -525,11 +540,11 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
-                    dotTaskStartInfoSeeking,
                     loadingPartner,
                     partner1,
                     dotTask1,
                     dotTaskRest,
+                    dotTaskStartInfoSeeking,
                     dotTask1,
                     dotTaskRest,
                     dotTask1,
@@ -544,6 +559,7 @@
                     partner2,
                     dotTask2,
                     dotTaskRest,
+                    dotTaskStartInfoSeeking,
                     dotTask2,
                     dotTaskRest,
                     dotTask2,
@@ -572,11 +588,11 @@
                     dotTaskInstructions2,
                     dotTaskPractice2,
                     dotTaskStart,
-                    dotTaskStartInfoSeeking,
                     loadingPartner,
                     partner1,
                     dotTask2,
                     dotTaskRest,
+                    dotTaskStartInfoSeeking,
                     dotTask2,
                     dotTaskRest,
                     dotTask2,
@@ -591,6 +607,7 @@
                     partner2,
                     dotTask1,
                     dotTaskRest,
+                    dotTaskStartInfoSeeking,
                     dotTask1,
                     dotTaskRest,
                     dotTask1,
@@ -613,14 +630,20 @@
                 var timeline = [
                     //dotTaskPractice1,
                     //dotTaskStart,
+                    dotTaskPractice1,
+                    dotTaskStartInfoSeeking,
                     dotTask2,
+                    dotTaskRest,
                     thankYou
                 ];
             } else {
                 var timeline = [
                     //dotTaskPractice1,
                     //dotTaskStart,
+                    dotTaskPractice1,
+                    dotTaskStartInfoSeeking,
                     dotTask2,
+                    dotTaskRest,
                     thankYou
                 ];
             }

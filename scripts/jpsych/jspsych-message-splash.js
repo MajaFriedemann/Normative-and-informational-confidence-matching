@@ -148,11 +148,11 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
         'div',
         'sub-message',
         trial.name + '-' + 'submessage',
-        '<h1>On this last block, <br><br>' +
+        '<h1>For joint decisions on this last block, <br><br>' +
         'your <highlight style="color: rgb(13, 219, 255)">own</highlight> accuracy was <highlight style="color: rgb(13, 219, 255)">' + participantAccu + '%</highlight><br><br>' +
         'your ' + highlight + 'partner\'s</highlight> accuracy was ' + highlight + partnerAccu + '%</highlight><br><br>' +
         'your <highlight style="color: rgb(13,255,146)">joint</highlight> accuracy was <highlight style="color: rgb(13,255,146)">' + accuracy + '%</highlight><br><br>' +
-        '<br><br>For joint decisions, your response was chosen on ' + participantChosen + ' trials <br><br>your partner\'s response was chosen on ' + partnerChosen +  ' trials </h1>',
+        '<br><br>Yur response was chosen on ' + participantChosen + ' trials. <br><br>Your partner\'s response was chosen on ' + partnerChosen +  ' trials. </h1>',
     );
 
     //reset variable that counts how many times participant's answer was chosen

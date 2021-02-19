@@ -56,17 +56,17 @@ jsPsych.plugins['jspsych-dots'] = (function () {
         default: false,
         description: 'Show percentage for confidence slider?'
       },
-      seeAgain: {
+      staircasingPractice: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: '"See Again" options',
-        default: 'easier',
-        description: 'Describes what the "See Again" option presents: the exact same matrix ("same"), a same-count but differently distributed matrix ("similar"), or a different matrix ("easier").'
+        default: 'off',
+        description: 'Describes what the "See Again" option presents: the exact same matrix ("same"), a same-count but differently distributed matrix ("similar"), or a different matrix ("off").'
       },
       waitTimeLimit: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Wait time limit',
         default: Infinity,
-        description: 'Optional parameter to set a wait time limit for the next trial on a SeeAgain trial.'
+        description: 'Optional parameter to set a wait time limit for the next trial on a staircasingPractice trial.'
       },
       trial_count: {
         type: jsPsych.plugins.parameterType.INT,
@@ -151,6 +151,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       dots_isCorrect: [],
       dots_jointCorrect: [],
       dots_partnerCorrect: [],
+      dots_participantCorrect: [],
       dots_isTutorialMode: [],
       dots_firstIsCorrect: [],
       dots_RTs: [],
@@ -159,14 +160,20 @@ jsPsych.plugins['jspsych-dots'] = (function () {
 
     // set confidence slider options
     var dots_tooltipLabels = [
-      'probably<br>LEFT',
-      'maybe<br>LEFT',
-      'maybe<br>RIGHT',
-      'probably<br>RIGHT'
+      '80% sure<br>LEFT',
+      '60% sure<br>LEFT',
+      '60% sure<br>RIGHT',
+      '80% sure<br>RIGHT'
+      // 'probably<br>LEFT',
+      // 'maybe<br>LEFT',
+      // 'maybe<br>RIGHT',
+      // 'probably<br>RIGHT'
     ];
     var dots_endLabels = [
-      '<div>certainly<br>LEFT</div>',
-      '<div>certainly<br>RIGHT</div>'
+      '<div>100% sure<br>LEFT</div>',
+      '<div>100% sure<br>RIGHT</div>'
+      // '<div>certainly<br>LEFT</div>',
+      // '<div>certainly<br>RIGHT</div>'
     ];
     var upperColor = trial.leftColor;
     var lowerColor = trial.rightColor;
@@ -194,7 +201,7 @@ jsPsych.plugins['jspsych-dots'] = (function () {
       dots_tooltipLabels,
       dots_endLabels,
       trial.showPercentage,
-      trial.seeAgain,
+      trial.staircasingPractice,
       trial.waitTimeLimit,
       fixationPeriod,
       dotPeriod,
