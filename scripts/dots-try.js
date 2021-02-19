@@ -44,16 +44,15 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
-    //when blockCount=0 it means we are at the start of block 1 which is the first block with partner 1 and we don't want info seeking trials
-    //when blockCount=5 it means we are at the start of block 6 which is the first block with partner 2 and we don't want info seeking trials (5 blocks per partner)
+    //when blockCount=1 it means we are in the first block with partner 1 and we don't want info seeking trials
+    //when blockCount=5 it means we are in the first block with partner 2 and we don't want info seeking trials (4 blocks per partner)
     var infoSeekingTrial;
-    //if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 5) {
-    if (infoSeekingVersion === false) {
+    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 5) {
         infoSeekingTrial = false
     } else {
         var randomiser = Math.random();
         //set randomiser to the percentage of trials that you want to be info seeking trials
-        if (randomiser <= 1) {
+        if (randomiser <= 0.3) {
             //if we are in an info seeking trial, then there is no partner
             infoSeekingTrial = true;
         } else {
@@ -488,6 +487,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 //show feedback
                 setTimeout(function () {
+                    $('.submit-button').css('visibility', 'hidden');
                     if (seeMore === true) {
                         //second choice counts
                         if (secondChoice === majoritySide) {
