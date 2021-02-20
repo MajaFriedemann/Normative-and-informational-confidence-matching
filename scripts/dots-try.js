@@ -44,10 +44,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
-    //when blockCount=1 it means we are in the first block with partner 1 and we don't want info seeking trials
-    //when blockCount=5 it means we are in the first block with partner 2 and we don't want info seeking trials (4 blocks per partner)
+    //when blockCount=0 it means we are in the first block with partner 1 (ie block 1) and we don't want info seeking trials
+    //when blockCount=4 it means we are in the first block with partner 2 (ie block 5) and we don't want info seeking trials (4 blocks per partner)
     var infoSeekingTrial;
-    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 5) {
+    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 4) {
         infoSeekingTrial = false
     } else {
         var randomiser = Math.random();
