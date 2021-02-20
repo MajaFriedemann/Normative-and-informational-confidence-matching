@@ -45,19 +45,14 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
     //when blockCount=0 it means we are in the first block with partner 1 (ie block 1) and we don't want info seeking trials
-    //when blockCount=4 it means we are in the first block with partner 2 (ie block 5) and we don't want info seeking trials (4 blocks per partner)
+    //when blockCount=5 it means we are in the first block with partner 2 (ie block 6) and we don't want info seeking trials
     var infoSeekingTrial;
-    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 4) {
+    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 5) {
         infoSeekingTrial = false
     } else {
         var randomiser = Math.random();
         //set randomiser to the percentage of trials that you want to be info seeking trials
-        if (randomiser <= 0.3) {
-            //if we are in an info seeking trial, then there is no partner
-            infoSeekingTrial = true;
-        } else {
-            infoSeekingTrial = false;
-        }
+        infoSeekingTrial = randomiser <= 0.3;
     }
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
