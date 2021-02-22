@@ -44,10 +44,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
-    //when blockCount=0 it means we are in the first block with partner 1 (ie block 1) and we don't want info seeking trials
-    //when blockCount=5 it means we are in the first block with partner 2 (ie block 6) and we don't want info seeking trials
+    //when blockCount=1 it means we are in the first block with partner 1 and we don't want info seeking trials
+    //when blockCount=6 it means we are in the first block with partner 2 and we don't want info seeking trials
     var infoSeekingTrial;
-    if (infoSeekingVersion === false || dots_blockCount === 0 || dots_blockCount === 5) {
+    if (infoSeekingVersion === false || dots_blockCount === 1 || dots_blockCount === 6) {
         infoSeekingTrial = false
     } else {
         var randomiser = Math.random();
@@ -205,14 +205,14 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
     // partner confidence marker on the slider
-    if (partnerChoice == "left") {
+    if (partnerChoice === "left") {
         partnerConfidenceMarker = 50 - partnerConfidence
     } else {
         partnerConfidenceMarker = 50 + partnerConfidence
     }
 
     // partner confidence in the correct choice on scale from 0-100
-    if (partnerChoice == majoritySide) {
+    if (partnerChoice === majoritySide) {
         partnerConfidenceCorrect = 50 + partnerConfidence
     } else {
         partnerConfidenceCorrect = 50 - partnerConfidence
@@ -441,12 +441,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     $(document).off('mousedown');
 
                     // highlight the chosen box
-                    if (event.button == 0) {
+                    if (event.button === 0) {
                         secondChoice = "left";
                         $('.mask-left').css('border', '5px solid rgb(13, 219, 255');
                         $('.mask-right').css('border', '5px solid rgba(0,0,0,0)');
                         $('#sliderMask').css('left', '52%');
-                    } else if (event.button == 2) {
+                    } else if (event.button === 2) {
                         secondChoice = "right";
                         $('.mask-left').css('border', '5px solid rgba(0,0,0,0)');
                         $('.mask-right').css('border', '5px solid rgb(13, 219, 255');
@@ -456,11 +456,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                     //record if second response was correct or false
                     var changeOfMind;
-                    if (secondChoice === initialChoice) {
-                        changeOfMind = false;
-                    } else {
-                        changeOfMind = true;
-                    }
+                    changeOfMind = secondChoice !== initialChoice;
 
                     //show FINAL DECISION button
                     $('.submit-button').css('margin-left', 0);
@@ -581,19 +577,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         if (isTutorialMode) {
                             if (accuracy >= accuracyThreshold) {
                                 var section4_button = 'CONTINUE';
-                                var section4_text = 'Congratulations, your accuracy during the last set of trials was ' + accuracy + '%.';
-                                if (staircasingPractice !== "practice1") {
-                                    dots_blockCount = 0;
-                                    trialCounterVariable = trialCounterVariable - dotTaskPractice2.trial_count;
-                                    dots_totalTrials = dots_totalTrials - dotTaskPractice2.trial_count;
-                                } else {
-                                    dots_blockCount = -1;
-                                    trialCounterVariable = trialCounterVariable - dotTaskPractice1.trial_count;
-                                    dots_totalTrials = dots_totalTrials - dotTaskPractice1.trial_count;
-                                }
+                                //var section4_text = 'Congratulations, your accuracy during the last set of trials was ' + accuracy + '%.';
+                                var section4_text = 'Congratulations, you are now ready to continue';
                             } else {
                                 var section4_button = 'REPEAT';
-                                var section4_text = 'Your accuracy during these trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
+                                //var section4_text = 'Your accuracy during these trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
+                                var section4_text = 'Your accuracy during these trials was below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
                             }
 
                             // set up feedback page
@@ -652,9 +641,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                     permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
                                     permanentDataVariable["block_count"].push(dots_blockCount);
 
+                                    // increase the block count
+                                    dots_blockCount++;
+
                                     saveCSV(subjectID, currentAttempt);
 
-                                    // enable cursor for whole screen
+                                    // enable the cursor for the whole screen
                                     $('body').css('cursor', 'auto');
 
                                     // finish the trial
@@ -710,6 +702,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["dots_participantCorrect"].push(trialDataVariable["dots_participantCorrect"]);
                             permanentDataVariable["dots_RTs"].push(trialDataVariable["dots_RTs"]);
                             permanentDataVariable["dots_waitTimes"].push(trialDataVariable["dots_waitTimes"]);
+                            permanentDataVariable["block_count"].push(dots_blockCount);
 
                             saveCSV(subjectID, currentAttempt);
 
@@ -717,7 +710,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             // increase the block count
                             dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
                             dots_blockCount++;
-                            permanentDataVariable["block_count"].push(dots_blockCount);
 
                             // enable the cursor for the whole screen
                             $('body').css('cursor', 'auto');
@@ -1016,7 +1008,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         $('.submit-button').on('click', function () {
             buttonBackend('finalDecision');
         });
-    };
+    }
 
     // when see Again button is clicked, the above specified function is called
     $('.more-button').on('click', function () {
