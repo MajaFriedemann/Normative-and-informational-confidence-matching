@@ -82,10 +82,10 @@
     var subjectID;
     var studyName = 'Confidence in group decision-making';
     var version = 'strategic version';
-    var release_date = '2020/05/12';
+    var release_date = '2021/02/23';
     var testing_timeline = false;
     var trialTypeOrder = 'all';          /* "testing" or "all"  |  for "testing" the right click context menu is enabled and the data will be downloaded as a csv file*/
-    var scoreRuleOrder;
+    var scoreRuleOrder = 'cumulative reward';
     var cohort = 'PR';                      /*PR for prolific*/
     var CUREC_studyName = 'Contextual influences on metacognitive judgements';
     var CUREC_ID = 'R67369/RE001';
@@ -209,8 +209,8 @@
     var dots_blockCount = -1;
     var dotsBlockCounter = -1;
     var staircaseSteps = 0;
-    var dots_cumulativeScore = 0;
-    var dots_overallAccuracy = 0;
+    //var dots_cumulativeScore = 0;
+    //var dots_overallAccuracy = 0;
     var dots_jointOverallAccuracy = 0;
     var accuracy = 0;
     var participantAccu;
@@ -222,8 +222,13 @@
     var dotCountHigherList = [];
     var finalHigh;
     var secondChoice;
-
+    var overallScore = 0;
     var bonusPayment = 0;
+    var infoSeekingTrialProportion = 0.3; //30% info seeking trials
+    var trialOrderInit = [false, false, true]; // first 3 trials are determined to be two non-info seeking and one info seeking
+    var infoSeekingTrialRandomisation = booleanList(trialsPerBlock-trialOrderInit.length, round((trialsPerBlock-trialOrderInit.length)*infoSeekingTrialProportion, 0));
+    var trialOrder = trialOrderInit.concat(infoSeekingTrialRandomisation);
+
 
     var dataObject = {
         trial_count: [],
@@ -250,7 +255,7 @@
         age: undefined,
         gender: undefined,
         handedness: undefined,
-        demographicsRTs: [],
+        //demographicsRTs: [],
         demographics_duration: 0,
 
         dots_accuracy: [],
@@ -321,7 +326,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 100,             //make trial count 100 here
+        trial_count: 10,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         staircasingPractice: 'practice1',
@@ -387,15 +392,20 @@
     var dotTaskInstructions1 = {
         type: 'jspsych-notice',
         section1_text: 'In this experiment, you will be playing a game with dots.',
-        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. If you think the left box contained more dots, you respond with a <u>left mouse-click</u>. If you think the right box contained more dots, you respond with a <u>right mouse-click</u>. The task will start off quite easy <u>but will become harder</u> as you progress. ' +
-            '<br><br> Press the "continue" button to start the game. <u>The first phase of the game can take up to 8 minutes.</u> You should reach a stable performance level to continue to the next phase.',
+        section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. ' +
+            'If you think the left box contained more dots, you respond with a <highlight style="color: rgb(13,255,146)">left mouse-click</highlight>. If you think the right box contained more dots, you respond ' +
+            'with a <highlight style="color: rgb(13,255,146)">right mouse-click</highlight>. The task will start off quite easy <highlight style="color: rgb(13,255,146)">but will become harder</highlight> as you progress. ' +
+            '<br><br> Press the "continue" button to start the game. <highlight style="color: rgb(13,255,146)">The first phase of the game can take up to 8 minutes.</highlight> You should reach a stable performance level to continue to the next phase.',
         img_id: 'dotTask-gif1'
     };
 
     var dotTaskInstructions2 = {
         type: 'jspsych-notice',
         section1_text: 'From now on, you will indicate your confidence in your decisions and get feedback if your choice was correct or incorrect.',
-        section2_text: 'After responding with a left or right click, you will now <u>indicate your confidence</u> in the decision <u>on a sliding scale</u>. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, <u>you will get feedback</u> about whether the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
+        section2_text: 'After responding with a left or right click, you will now <highlight style="color: rgb(13,255,146)">indicate your confidence</highlight> in the decision <highlight style="color: rgb(13,255,146)">on a ' +
+            'sliding scale</highlight>. Hover over the slider bar to change the slider position - towards the middle if you aren\'t sure of your answer, and towards the left/right side if you\'re ' +
+            'confident that the respective side is the correct answer - then click on the slider bar to register your confidence rating. After you respond, <highlight style="color: rgb(13,255,146)">you will get feedback</highlight> about whether ' +
+            'the side you picked was <highlight style="color: rgb(13,255,146)">CORRECT</highlight> or <highlight style="color: rgb(255,0,51)">INCORRECT</highlight>.' +
             ' <br><br>Press the "continue" button to do a few trials with the confidence slider.',
         img_id: 'dotTask-gif2'
     };
@@ -406,10 +416,10 @@
         section2_text: 'Based on your responses, we will select another participant who did about as well as you did on the dot task. Different partner, same rules: After ' +
             'responding with a left or right click and indicating your confidence on the slider, you will see the your partner\'s response for the same dots-grid. Your partner did about ' +
             'as well as you did in the practice trials. The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected ' +
-            'as <highlight style="color: rgb(13,255,146)"> your joint decision.</highlight> Critically, your feedback and bonus will be based on the joint decision. Therefore, if you are sure you got it right, report ' +
+            'as <highlight style="color: rgb(13,255,146)"> your joint decision.</highlight> Critically, your <highlight style="color: rgb(13,255,146)">feedback and cash bonus will be based on the joint decision</highlight>. ' +
+            'Therefore, if you are sure you got it right, report ' +
             'high confidence such that your decision counts. However, if you are not very sure, it might be best to report low confidence and thus let your partner\'s decision be ' +
-            'chosen. <highlight style="color: rgb(13,255,146)">Acting strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT ' +
-            'decisions.</highlight> <br><br>Press the "continue" button to do 5 more blocks of the dot task.',
+            'chosen. <br><br>Press the "continue" button to do 5 more blocks of the dot task.',
         img_id: 'dotTask-gif3'
     };
 
@@ -419,10 +429,10 @@
         section2_text: 'For the rest of the experiment, you\'ll be doing the task you just practiced. However, from now on you will see the ' +
             'response of another past participant for the same dots-grid. Your partner did about as well as you did in the practice trials. ' +
             'The <highlight style="color: rgb(13,255,146)">decision that is reported with HIGHER CONFIDENCE</highlight> will be selected ' +
-            'as <highlight style="color: rgb(13,255,146)"> your joint decision.</highlight> Critically, your feedback and bonus will be based on the joint decision. Therefore, ' +
+            'as <highlight style="color: rgb(13,255,146)">your joint decision.</highlight> Critically, your <highlight style="color: rgb(13,255,146)">feedback and cash bonus will be based on the joint decision</highlight>. Every ' +
+            'correct joint decision will earn you 2p. Therefore, ' +
             'if you are sure you got it right, report high confidence such that your decision counts. However, if you are not very sure, it might ' +
-            'be best to report low confidence and thus let your partner\'s decision be chosen. <highlight style="color: rgb(13,255,146)">Acting ' +
-            'strategic like this is crucial as you will be awarded a cash bonus based on the accuracy of your JOINT decisions.</highlight><br><br>There will be 10 blocks of ' + trialsPerBlock + ' trials, which should take approximately 30 minutes to complete ' +
+            'be best to report low confidence and thus let your partner\'s decision be chosen. <br><br>There will be 10 blocks of ' + trialsPerBlock + ' trials, which should take approximately 30 minutes to complete ' +
             'altogether. Press "continue" to continue to the first block of ' + trialsPerBlock + ' trials.',
         img_id: 'dotTask-gif3'
     };
@@ -436,7 +446,7 @@
             'the dots-grid and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the dots-grid again</highlight> before ' +
             'making your final decision. ' +
             'If you choose to see the stimulus again, you\'ll see an <highlight style="color: rgb(13,255,146)">easier version of the grid with the same correct answer</highlight> (left or right).  ' +
-            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision.',
+            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision. On these trials, your feedback and cash bonus will be based on the accuracy of your final decision.',
         img_id: 'dotTask-gif4'
     };
 
@@ -570,7 +580,6 @@
                     partner2,
                     dotTask2,
                     dotTaskRest,
-                    dotTaskStartInfoSeeking,
                     dotTask2,
                     dotTaskRest,
                     dotTask2,
@@ -618,7 +627,6 @@
                     partner2,
                     dotTask1,
                     dotTaskRest,
-                    dotTaskStartInfoSeeking,
                     dotTask1,
                     dotTaskRest,
                     dotTask1,
@@ -678,7 +686,8 @@
             var clientPromise = stitch.StitchClientFactory.create('uidmul-ist-sbgze');
             // add all experimental details to dataObject
             dataObject["dots_staircase"] = dotsStaircase.get('logSpace');
-            dataObject["dots_overallAccuracy"] = dots_overallAccuracy;
+            //dataObject["dots_overallAccuracy"] = dots_overallAccuracy;
+            dataObject["overall_score"] = overallScore;
             dataObject["bonus_earned"] = bonusPayment;
             dataObject["date_completed"] = longformDate();
             dataObject["duration"] = testTime;

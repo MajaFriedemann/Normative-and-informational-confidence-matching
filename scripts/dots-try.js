@@ -50,9 +50,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     if (infoSeekingVersion === false || dots_blockCount === 1 || dots_blockCount === 6) {
         infoSeekingTrial = false
     } else {
-        var randomiser = Math.random();
-        //set randomiser to the percentage of trials that you want to be info seeking trials
-        infoSeekingTrial = randomiser <= 0.3;
+        infoSeekingTrial = trialOrder[trialCounterVariable];
     }
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -484,6 +482,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         if (secondChoice === majoritySide) {
                             //correct
                             correctResponse = true;
+                            overallScore++;
                             document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                         } else {
                             //incorrect
@@ -494,6 +493,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         //initial choice counts
                         if (initialChoice === majoritySide) {
                             //correct
+                            overallScore++;
                             document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                         } else {
                             //incorrect
@@ -578,7 +578,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             if (accuracy >= accuracyThreshold) {
                                 var section4_button = 'CONTINUE';
                                 //var section4_text = 'Congratulations, your accuracy during the last set of trials was ' + accuracy + '%.';
-                                var section4_text = 'Congratulations, you are now ready to continue';
+                                var section4_text = 'Great, you are now ready to continue.';
                             } else {
                                 var section4_button = 'REPEAT';
                                 //var section4_text = 'Your accuracy during these trials was ' + accuracy + '%, which is below the required accuracy threshold. Please click "repeat" below to repeat the practice round.';
@@ -711,6 +711,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             dots_totalCorrect += trialDataVariable.dots_isCorrect.filter(Boolean).length;
                             dots_blockCount++;
 
+                            //shuffle array that determines where the info seeking trials are
+                            //for the first info seeking block with each partner (blocks 2 & 7) we keep the pre-determined list with false, false, true in the beginning
+                            if (dots_blockCount === 2 || dots_blockCount === 7 ) {
+                                infoSeekingTrialRandomisation = shuffle(infoSeekingTrialRandomisation);
+                                trialOrder = trialOrderInit.concat(infoSeekingTrialRandomisation);
+                            } else {
+                                trialOrder= shuffle(trialOrder);
+                            }
+
+
                             // enable the cursor for the whole screen
                             $('body').css('cursor', 'auto');
 
@@ -815,9 +825,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             participantCorrectResponse = false; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
                         }
 
-                        if (!isTutorialMode && type == 'submit') {
-                            dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
-                        }
+                        // if (!isTutorialMode && type == 'submit') {
+                        //     dots_cumulativeScore += reverseBrierScore(invertedConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
+                        // }
                     } else {
                         participantConfidenceCorrect = backendConfidence;
                         dotConfidences = backendConfidence;
@@ -830,9 +840,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             participantCorrectResponse = false; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
                         }
 
-                        if (!isTutorialMode && type == 'submit') {
-                            dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
-                        }
+                        // if (!isTutorialMode && type == 'submit') {
+                        //     dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
+                        // }
                     }
                 }
             }
@@ -909,6 +919,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                     document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid limegreen');
                                     jointCorrectResponse = true;
+                                    overallScore++;
                                 } else {
                                     document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid red');
@@ -933,6 +944,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                     document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid limegreen');
                                     jointCorrectResponse = true;
+                                    overallScore++;
                                 } else {
                                     document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
                                     $('#higherConfidenceBox').css('border', '6px solid red');

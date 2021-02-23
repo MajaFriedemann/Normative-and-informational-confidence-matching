@@ -36,54 +36,71 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
     var currentBonus;
     var newBonusPayment;
 
-    // calculate overall accuracy
-    dots_overallAccuracy = round(dots_totalCorrect / dots_totalTrials, 2) * 100;
-
-    //dots_jointOverallAccuracy = round(dots_jointTotalCorrect / dots_totalTrials, 2) * 100;
-
-    var accurate = 0;
-    for (var block=3; block <=5; block++) {
-      accurate += dataObject["dots_accuracy"][block];
-    }
-    accurate += accuracy;   //for the last block as this has not yet been pushed to the dataObject
-    dots_jointOverallAccuracy = accurate / 4;
+    // // calculate overall accuracy
+    // dots_overallAccuracy = round(dots_totalCorrect / dots_totalTrials, 2) * 100;
+    //
+    // //dots_jointOverallAccuracy = round(dots_jointTotalCorrect / dots_totalTrials, 2) * 100;
+    //
+    // var accurate = 0;
+    // for (var block=3; block <=5; block++) {
+    //   accurate += dataObject["dots_accuracy"][block];
+    // }
+    // accurate += accuracy;   //for the last block as this has not yet been pushed to the dataObject
+    // dots_jointOverallAccuracy = accurate / 4;
 
     switch(trial.performanceType) {
       case 'accuracy':
-        // calculate current bonus
-        if (dots_jointOverallAccuracy >= trial.bonusThreshold) {
-          currentBonus = trial.flatBonusAmount;
-        } else {
-          currentBonus = 0;
-        }
-        // calculate total bonus
-        newBonusPayment = bonusPayment + currentBonus; // bonusPayment defined globally
-        // update messages
-        paymentMessage = 'Congratulations, you have achieved an overall accuracy of ' + dots_jointOverallAccuracy + '% in this experiment!';
+        var paymentPerCorrectDecision = 2;
+        var bonusPayment  = round(overallScore * paymentPerCorrectDecision / 100, 2);
+
+        // // calculate current bonus
+        // if (dots_jointOverallAccuracy >= trial.bonusThreshold) {
+        //   currentBonus = trial.flatBonusAmount;
+        // } else {
+        //   currentBonus = 0;
+        // }
+        // // calculate total bonus
+        // newBonusPayment = bonusPayment + currentBonus; // bonusPayment defined globally
+        // // update messages
+
+        paymentMessage = 'Congratulations, you have made ' + overallScore + ' correct decisions in this experiment!';
         break;
 
-      case 'score':
-        // calculate current bonus
-        currentBonus = round(IST_cumulativeScore * trial.conversionFactor, 2);
-        if (currentBonus < 0) {
-          currentBonus = 0;
-        }
-        // calculate total bonus
-        newBonusPayment = bonusPayment + currentBonus;
-        // update messages
-        paymentMessage = 'Congratulations, you have scored a total of ' + IST_cumulativeScore + ' points in the previous ' + IST_totalTrials + ' game rounds!';
-        break;
-
-      case 'Brier':
-        // round score
-        var roundedScore = Math.round(dots_cumulativeScore);
-        // calculate final Brier score
-        currentBonus = round((dots_cumulativeScore / dots_totalTrials) * trial.conversionFactor, 2);
-        // calculate total bonus
-        newBonusPayment = bonusPayment + currentBonus;
-        // update messages
-        paymentMessage = 'Congratulations, you have scored a total of ' + roundedScore + ' points in the previous ' + dots_totalTrials + ' game rounds!';
-        break;
+      // case 'accuracy':
+      //   // calculate current bonus
+      //   if (dots_jointOverallAccuracy >= trial.bonusThreshold) {
+      //     currentBonus = trial.flatBonusAmount;
+      //   } else {
+      //     currentBonus = 0;
+      //   }
+      //   // calculate total bonus
+      //   newBonusPayment = bonusPayment + currentBonus; // bonusPayment defined globally
+      //   // update messages
+      //   paymentMessage = 'Congratulations, you have achieved an overall accuracy of ' + dots_jointOverallAccuracy + '% in this experiment!';
+      //   break;
+      //
+      // case 'score':
+      //   // calculate current bonus
+      //   currentBonus = round(IST_cumulativeScore * trial.conversionFactor, 2);
+      //   if (currentBonus < 0) {
+      //     currentBonus = 0;
+      //   }
+      //   // calculate total bonus
+      //   newBonusPayment = bonusPayment + currentBonus;
+      //   // update messages
+      //   paymentMessage = 'Congratulations, you have scored a total of ' + IST_cumulativeScore + ' points in the previous ' + IST_totalTrials + ' game rounds!';
+      //   break;
+      //
+      // case 'Brier':
+      //   // round score
+      //   var roundedScore = Math.round(dots_cumulativeScore);
+      //   // calculate final Brier score
+      //   currentBonus = round((dots_cumulativeScore / dots_totalTrials) * trial.conversionFactor, 2);
+      //   // calculate total bonus
+      //   newBonusPayment = bonusPayment + currentBonus;
+      //   // update messages
+      //   paymentMessage = 'Congratulations, you have scored a total of ' + roundedScore + ' points in the previous ' + dots_totalTrials + ' game rounds!';
+      //   break;
     }
 
     // clear display element and apply page default styles
@@ -118,7 +135,7 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
       'div',
       'sub-message',
       'score-reveal-submessage',
-      'This equates to a cash bonus of £' + currentBonus + ' for you :)'
+      'This equates to a cash bonus of £' + bonusPayment + ' for you :)'
     );
 
     var continueButton = createGeneral(
@@ -131,7 +148,7 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
     );
 
     continueButton.onclick = function() {
-      bonusPayment = newBonusPayment;
+      //bonusPayment = newBonusPayment;
       jsPsych.finishTrial();
       return;
     };
