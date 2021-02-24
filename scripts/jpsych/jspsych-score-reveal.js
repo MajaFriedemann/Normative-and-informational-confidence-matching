@@ -53,6 +53,9 @@ jsPsych.plugins['jspsych-score-reveal'] = (function () {
         var paymentPerCorrectDecision = 2;
         var bonusPayment  = round(overallScore * paymentPerCorrectDecision / 100, 2);
 
+        dataObject["score"] = overallScore;
+        dataObject["bonus_payment"] = bonusPayment;
+
         // // calculate current bonus
         // if (dots_jointOverallAccuracy >= trial.bonusThreshold) {
         //   currentBonus = trial.flatBonusAmount;
