@@ -32,10 +32,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
   var secondTimeAround = false;
   var start_timer;
   var dotPairs = [];
+  var dotPairsSecond = [];
   var dotConfidences = [];
   var dotRTs = [];
-  var choice_timer;
-  var confidence_timer;
+  var dotsSecondRTs = [];
+  var infoChoiceRTs = [];
+  var end_timer;
+  var end_timer;
 
   // determine which buttons to show
   if (defaultOptionEnabled) {
@@ -172,7 +175,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     /* $('.mask-left').on('click', function() {
       console.log('left grid clicked!');
       // record the RT
-      choice_timer = Date.now();
+      end_timer = Date.now();
       // turn off these event handlers
       $('.mask-left').off('click');
       $('.mask-right').off('click');
@@ -188,7 +191,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     $('.mask-right').on('click', function() {
       console.log('right grid clicked!');
       // record the RT
-      choice_timer = Date.now();
+      end_timer = Date.now();
       // turn off these event handlers
       $('.mask-left').off('click');
       $('.mask-right').off('click');
@@ -241,8 +244,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
       $('.scale-button').addClass('invisible');
 
       // record RT and reset the timer
-      confidence_timer = Date.now();
-      var RT = calculateRT(start_timer, confidence_timer);
+      end_timer = Date.now();
+      var RT = calculateRT(start_timer, end_timer);
       dotRTs.push(RT);
 
 
@@ -367,6 +370,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
             // update the dot difference
             high = dotCount + Math.E ** (Math.log(dotsStaircase.getLast('logSpace')) + 0.5);
+            high = round(high, 0)
             console.log(high);
             if (randomiser > 0.5) {
               dots = [low, high];
@@ -453,7 +457,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
           trialDataVariable['dots_pairs'].push(dotPairs);
           trialDataVariable['dots_confidences'].push(dotConfidences);
           trialDataVariable['dots_RTs'].push(dotRTs);
-          trialDataVariable['dots_isTutorialMode'].push(isTutorialMode);
+          trialDataVariable['dots_second_RTs'].push(dotsSecondRTs);
+          trialDataVariable['info_choice_RTs'].push(infoChoiceRTs);
+          trialDataVariable['isTutorialMode'].push(isTutorialMode);
           trialCounterVariable++;
 
           // give feedback
@@ -535,7 +541,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (accuracy >= accuracyThreshold) {
                   $('#dots-tutorial-continue').on('click', function () {
                     console.log(trialDataVariable);
-                    permanentDataVariable["dots_accuracy"].push(accuracy);
+                    permanentDataVariable["block_accuracy"].push(accuracy);
                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                     permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                     permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
@@ -556,8 +562,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }
               } else {
                 // if not in tutorial mode
-                permanentDataVariable["dots_accuracy"].push(accuracy);
-                permanentDataVariable["dots_isTutorialMode"].push(trialDataVariable["dots_isTutorialMode"]);
+                permanentDataVariable["block_accuracy"].push(accuracy);
+                permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
                 permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                 permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                 permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
@@ -645,8 +651,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
         if (defaultOptionEnabled) {
           // record data
-          confidence_timer = Date.now();
-          var RT = calculateRT(start_timer, confidence_timer);
+          end_timer = Date.now();
+          var RT = calculateRT(start_timer, end_timer);
           dotRTs.push(RT);
           recordRating(backendConfidence, majoritySide, 'initial');
 
