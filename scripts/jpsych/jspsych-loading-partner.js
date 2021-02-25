@@ -21,15 +21,15 @@ jsPsych.plugins['jspsych-loading-partner'] = (function () {
                 default: undefined
             },
             checkParticipated: {
-                type: jsPsych.plugins.parameterType.BOOL,
+                type: jsPsych.plugins.parameterType.BOOLEAN,
                 default: true
             },
             accessCodeRequired: {
-                type: jsPsych.plugins.parameterType.BOOL,
+                type: jsPsych.plugins.parameterType.BOOLEAN,
                 default: true
             },
             overrideEnabled: {
-                type: jsPsych.plugins.parameterType.BOOL,
+                type: jsPsych.plugins.parameterType.BOOLEAN,
                 default: true
             }
         }
@@ -67,7 +67,7 @@ jsPsych.plugins['jspsych-loading-partner'] = (function () {
             'selecting your partner'
         );
 
-        // checks if participant has a cookie indicating previous experiment completion. returns BOOL: true or false.
+        // checks if participant has a cookie indicating previous experiment completion. returns BOOLEAN: true or false.
         function participatedBefore() {
             var startedBefore = getCookie('UIDMUL-IST-started');
             var finishedBefore = false;

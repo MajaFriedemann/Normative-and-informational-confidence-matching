@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading-partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading-partner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-underconfident-feedback.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-underconfident-feedback.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,6 +172,7 @@
       <workItem from="1614158799239" duration="17399000" />
       <workItem from="1614193534440" duration="1641000" />
       <workItem from="1614244261620" duration="4503000" />
+      <workItem from="1614250740120" duration="52000" />
     </task>
     <servers />
   </component>
