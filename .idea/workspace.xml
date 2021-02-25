@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading-partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-loading-partner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,6 +175,8 @@
       <workItem from="1614193534440" duration="1641000" />
       <workItem from="1614244261620" duration="4503000" />
       <workItem from="1614250740120" duration="52000" />
+      <workItem from="1614259253339" duration="2160000" />
+      <workItem from="1614264315613" duration="315000" />
     </task>
     <servers />
   </component>
@@ -187,11 +191,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="470" y="98" width="1279" height="779" key="dock-window-1/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613746561763" />
-    <state x="-1352" y="207" width="923" height="854" key="find.popup" timestamp="1614248370008">
-      <screen x="-1920" y="0" width="1920" height="1160" />
+    <state x="463" y="0" width="923" height="824" key="find.popup" timestamp="1614264629876">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="-1352" y="207" width="923" height="854" key="find.popup/0.0.1536.824/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1614248370008" />
-    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1614180631396" />
+    <state x="-1352" y="207" width="923" height="854" key="find.popup/0.0.1536.824/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1614261465031" />
+    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1614264629876" />
     <state width="600" height="424" key="javadoc.popup" timestamp="1613748936474">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

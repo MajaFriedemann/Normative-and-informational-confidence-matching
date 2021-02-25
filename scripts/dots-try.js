@@ -561,7 +561,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 //record trial data
                 trialDataVariable['dots_waitTimes'].push(waitTime);
-                trialDataVariable["dots_staircase"].push(dotsStaircase.get('logSpace'));
+                trialDataVariable["dots_staircase"].push(dotsStaircase.getLast('logSpace'));
                 trialDataVariable['dots_isCorrect'].push(correctResponse);
                 trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
                 trialDataVariable['dots_partnerCorrect'].push(partnerCorrectResponse);
@@ -575,6 +575,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 trialDataVariable['dots_second_RTs'].push(dotsSecondRTs);
                 trialDataVariable['info_choice_RTs'].push(infoChoiceRTs);
                 trialDataVariable['isTutorialMode'].push(isTutorialMode);
+                trialDataVariable['partner'].push(partner);
                 trialCounterVariable++;
                 dots_totalTrials++;
                 trialDataVariable['trial_count'].push(dots_totalTrials);
@@ -661,6 +662,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                 $('#dots-tutorial-continue').on('click', function () {
                                     //permanentDataVariable["block_accuracy"].push(accuracy);
                                     permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
+                                    permanentDataVariable["partner"].push(trialDataVariable["partner"]);
                                     permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
                                     permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
                                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
@@ -708,6 +710,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                 trialDataVariable = {
                                     trial_count: [],
                                     isTutorialMode: [],
+                                    partner: [],
                                     dots_staircase: [],
                                     majoritySide: [],
                                     initial_choices: [],
@@ -745,6 +748,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
                             permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
                             permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
+                            permanentDataVariable["partner"].push(trialDataVariable["partner"]);
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                             permanentDataVariable["majoritySide"].push(trialDataVariable["majoritySide"]);
                             permanentDataVariable["participant_confidence"].push(trialDataVariable["participant_confidence"]);
