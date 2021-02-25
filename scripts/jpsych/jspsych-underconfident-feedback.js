@@ -10,7 +10,7 @@ jsPsych.plugins['jspsych-underconfident-feedback'] = (function () {
         name: 'jspsych-underconfident-feedback',
         parameters: {
             askStrategy: {
-                type: jsPsych.plugins.parameterType.BOOL,
+                type: jsPsych.plugins.parameterType.BOOLEAN,
                 default: true
             }
         }

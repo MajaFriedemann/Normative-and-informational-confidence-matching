@@ -32,7 +32,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var partnerCorrectResponse;
     var participantCorrectResponse;
     var sliderActive = true;
-    var seeMore = false;  // set to true when more info is sought and the stimuli are shown a second time
+    var seeMore;  // set to true when more info is sought and the stimuli are shown a second time
     var dotPairs;
     var dotPairsSecond;
     var dotConfidences;
@@ -45,6 +45,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var dotsSecondRTs; //reaction time for second dot decision in info seeking trials
     var infoChoiceRTs; //reaction time until choice between see more or final decision is made
     var accuracyThreshold = 60;  //threshold for practice trials (if we are in tutorialmode)
+    var participant_chosen; //this is true/false whereas the other one counts
+    var secondChoice;
+    var changeOfMind;
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
     //when blockCount=1 it means we are in the first block with partner 1 and we don't want info seeking trials
@@ -54,6 +57,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         infoSeekingTrial = false
     } else {
         infoSeekingTrial = trialOrder[trialCounterVariable];
+    }
+
+    if (infoSeekingTrial===true){
+        seeMore = false;
     }
 
     // prevent context menu from opening on right click (context menu on right click enabled in case of "testing")
@@ -226,7 +233,13 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     }
 
 
-    partnerConfidences = partnerConfidenceCorrect;
+    if (partner === "none" || infoSeekingTrial === true) {
+        partnerConfidences = undefined;
+        partnerCorrectResponse = undefined;
+    } else {
+        partnerConfidences = partnerConfidenceCorrect;
+    }
+
 
 
     // button name
@@ -548,6 +561,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                 //record trial data
                 trialDataVariable['dots_waitTimes'].push(waitTime);
+                trialDataVariable["dots_staircase"].push(dotsStaircase.get('logSpace'));
                 trialDataVariable['dots_isCorrect'].push(correctResponse);
                 trialDataVariable['dots_jointCorrect'].push(jointCorrectResponse);// this is for calculating the bonus
                 trialDataVariable['dots_partnerCorrect'].push(partnerCorrectResponse);
@@ -594,8 +608,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                         //if we are in tutorial mode, practice trials need to be repeated in case accuracy is below accuracy threshold
                         if (isTutorialMode) {
-                            partnerConfidence = undefined;
-                            partnerCorrectResponse = undefined;
 
                             if (accuracy >= accuracyThreshold) {
                                 var section4_button = 'CONTINUE';
@@ -647,7 +659,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                 // we save the data
 
                                 $('#dots-tutorial-continue').on('click', function () {
-                                    permanentDataVariable["block_accuracy"].push(accuracy);
+                                    //permanentDataVariable["block_accuracy"].push(accuracy);
+                                    permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
+                                    permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
                                     permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
                                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                                     permanentDataVariable["majoritySide"].push(trialDataVariable["majoritySide"]);
@@ -727,8 +741,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                         } else {
                             // we save the data
 
-                            permanentDataVariable["block_accuracy"].push(accuracy);
+                            //permanentDataVariable["block_accuracy"].push(accuracy);
                             permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
+                            permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
+                            permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                             permanentDataVariable["majoritySide"].push(trialDataVariable["majoritySide"]);
                             permanentDataVariable["participant_confidence"].push(trialDataVariable["participant_confidence"]);

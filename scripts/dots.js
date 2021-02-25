@@ -541,7 +541,8 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (accuracy >= accuracyThreshold) {
                   $('#dots-tutorial-continue').on('click', function () {
                     console.log(trialDataVariable);
-                    permanentDataVariable["block_accuracy"].push(accuracy);
+                    //permanentDataVariable["block_accuracy"].push(accuracy);
+                    permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                     permanentDataVariable["dots_majoritySide"].push(trialDataVariable["dots_majoritySide"]);
                     permanentDataVariable["dots_confidences"].push(trialDataVariable["dots_confidences"]);
