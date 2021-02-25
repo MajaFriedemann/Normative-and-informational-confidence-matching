@@ -325,7 +325,10 @@ function mean(array) {
 }
  /* calculate average for an array ignoring NaN */
  function meanNaN(array) {
-   array = array.filter(function (value) {
+   array = array.filter(function(value) { //remove undefined
+     return value !== undefined;
+   });
+   array = array.filter(function (value) { //remove NaN
      return !Number.isNaN(value);
    });
    var total = 0;

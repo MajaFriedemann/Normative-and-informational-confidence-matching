@@ -28,9 +28,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     // default variables
     var backendConfidence;
     var correctResponse;
-    var jointCorrectResponse;
-    var partnerCorrectResponse;
-    var participantCorrectResponse;
+    var jointCorrectResponse = NaN; //otherwise end of block feedback does not work :(
+    var partnerCorrectResponse = NaN;
+    var participantCorrectResponse = NaN;
     var sliderActive = true;
     var seeMore;  // set to true when more info is sought and the stimuli are shown a second time
     var dotPairs;
