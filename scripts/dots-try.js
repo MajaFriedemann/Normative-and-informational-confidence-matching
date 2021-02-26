@@ -526,9 +526,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 }, 700);
 
                 //partners response not included in their accuracy percentage
-                participantCorrectResponse = undefined; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
-                partnerCorrectResponse = undefined;
-                jointCorrectResponse = undefined;
+                participantCorrectResponse = NaN; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
+                partnerCorrectResponse = NaN;
+                jointCorrectResponse = NaN;
 
 
                 //trigger submit button
