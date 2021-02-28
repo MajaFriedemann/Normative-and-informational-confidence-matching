@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="">
+    <list default="true" id="01027c40-0a66-4180-8a2c-8ee281125435" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +85,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3df47766-bd0d-44d8-9d5e-755754b7705f" name="Default Changelist" comment="" />
+      <changelist id="01027c40-0a66-4180-8a2c-8ee281125435" name="Default Changelist" comment="" />
       <created>1580312382010</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -180,11 +181,25 @@
       <workItem from="1614282686230" duration="459000" />
       <workItem from="1614289182119" duration="55000" />
       <workItem from="1614332165860" duration="44000" />
+      <workItem from="1614535557776" duration="118000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -194,11 +209,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="470" y="98" width="1279" height="779" key="dock-window-1/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613746561763" />
-    <state x="463" y="0" width="923" height="824" key="find.popup" timestamp="1614281915051">
+    <state x="463" y="0" width="923" height="824" key="find.popup" timestamp="1614535672278">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-1352" y="207" width="923" height="854" key="find.popup/0.0.1536.824/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1614261465031" />
-    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1614264629876" />
+    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1614535672278" />
     <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1614281915051" />
     <state width="600" height="424" key="javadoc.popup" timestamp="1613748936474">
       <screen x="0" y="0" width="1536" height="824" />

@@ -663,7 +663,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                                     //permanentDataVariable["block_accuracy"].push(accuracy);
                                     permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
                                     permanentDataVariable["dots_partner"].push(trialDataVariable["dots_partner"]);
-                                    permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
+                                    permanentDataVariable["dots_staircase"].push(trialDataVariable["dots_staircase"]);
                                     permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
                                     permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
                                     permanentDataVariable["majoritySide"].push(trialDataVariable["majoritySide"]);
@@ -746,7 +746,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                             //permanentDataVariable["block_accuracy"].push(accuracy);
                             permanentDataVariable["trial_count"].push(trialDataVariable["trial_count"]);
-                            permanentDataVariable["dots_staircase"] = trialDataVariable["dots_staircase"];
+                            permanentDataVariable["dots_staircase"].push(trialDataVariable["dots_staircase"]);
                             permanentDataVariable["isTutorialMode"].push(trialDataVariable["isTutorialMode"]);
                             permanentDataVariable["dots_partner"].push(trialDataVariable["dots_partner"]);
                             permanentDataVariable["dots_pairs"].push(trialDataVariable["dots_pairs"]);
