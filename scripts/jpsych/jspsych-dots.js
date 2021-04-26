@@ -143,29 +143,29 @@ jsPsych.plugins['jspsych-dots'] = (function () {
     var tempStorage = {
       trial_count: [],
       isTutorialMode: [],
-      dots_partner: [],
+      partner: [],
       dots_staircase: [],
-      majoritySide: [],
+      correctSide: [],
       initial_choices: [],
       participant_confidence: [],
       partner_confidences: [],
       participant_chosen: [],
-      dots_pairs: [],
-      dots_isCorrect: [],
-      dots_jointCorrect: [],
-      dots_partnerCorrect: [],
-      dots_participantCorrect: [],
+      stimulus_pairs: [],
+      isCorrect: [],
+      jointCorrect: [],
+      partnerCorrect: [],
+      participantCorrect: [],
       info_trial: [],
       asked_more: [],
-      dots_pairs_second: [],
+      stimulus_pairs_second: [],
       second_choices: [],
       change_of_mind: [],
 
-      dots_RTs: [],
+      stimulus_RTs: [],
       confidence_RTs: [],
-      dots_second_RTs: [],
+      stimulus_second_RTs: [],
       info_choice_RTs: [],
-      dots_waitTimes: [],
+      stimulus_waitTimes: [],
     };
 
     // set confidence slider options
@@ -192,12 +192,15 @@ jsPsych.plugins['jspsych-dots'] = (function () {
 
     var fixationPeriod = 1000;
     var dotPeriod = 300;
+    if (squirclesVersion === true) {
+      dotPeriod = 500
+    }
     var transitionPeriod = 500;
     var trialCounter = 0;
 
     if (trial.blockCounterEnabled) {
-      dotsBlockCounter++;
-      //permanentDataVariable["block_count"].push(dotsBlockCounter);
+      blockCounter++;
+      //permanentDataVariable["block_count"].push(blockCounter);
     }
 
     $(document).ready(drawFixation(

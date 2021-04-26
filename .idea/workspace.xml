@@ -2,7 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01027c40-0a66-4180-8a2c-8ee281125435" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.4.0NS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.5.0 practiceNS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.6.0NS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dotTask_InfoNS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_info.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_infoNS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_practice1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_practice1NS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_practice2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_practice2NS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_start.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/squircles_startNS.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/dots-try_dotsOnly.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/majaf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/majaf.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,16 +67,17 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/jpsych" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts" />
     <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\DotTask\scripts" />
       <recent name="C:\xampp\htdocs\DotTask\scripts\jpsych" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.jspsych-partner-message1.js">
-    <configuration name="dots-try.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/scripts/dots-try.js" working-dir="$PROJECT_DIR$/scripts">
+    <configuration name="dots-try_dotsOnly.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/scripts/dots-try_dotsOnly.js" working-dir="$PROJECT_DIR$/scripts">
       <method v="2" />
     </configuration>
     <configuration name="jspsych-partner-message1.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/scripts/jpsych/jspsych-partner-message1.js" working-dir="$PROJECT_DIR$/scripts/jpsych">
@@ -63,7 +86,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Node.js.jspsych-partner-message1.js" />
-        <item itemvalue="Node.js.dots-try.js" />
+        <item itemvalue="Node.js.dots-try_dotsOnly.js" />
       </list>
     </recent_temporary>
   </component>
@@ -78,6 +101,7 @@
         </serviceView>
       </list>
     </option>
+    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -185,6 +209,10 @@
       <workItem from="1614680298889" duration="1595000" />
       <workItem from="1615327553965" duration="864000" />
       <workItem from="1615385543245" duration="56000" />
+      <workItem from="1618996940659" duration="653000" />
+      <workItem from="1619015964624" duration="96000" />
+      <workItem from="1619036848943" duration="19952000" />
+      <workItem from="1619187382918" duration="14889000" />
     </task>
     <servers />
   </component>
@@ -212,15 +240,20 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="470" y="98" width="1279" height="779" key="dock-window-1/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613746561763" />
-    <state x="-1352" y="207" width="923" height="854" key="find.popup" timestamp="1614541860706">
-      <screen x="-1920" y="0" width="1920" height="1160" />
+    <state x="375" y="0" width="923" height="824" key="find.popup" timestamp="1619452426090">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-1352" y="207" width="923" height="854" key="find.popup/0.0.1536.824/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1614541860706" />
-    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1614535672278" />
-    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1614281915051" />
+    <state x="375" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1619452426090" />
+    <state x="454" y="147" width="739" height="607" key="find.popup/0.0.1536.824/-1920.4.1920.1160@0.0.1536.824" timestamp="1619036995654" />
+    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1619182280059" />
     <state width="600" height="424" key="javadoc.popup" timestamp="1613748936474">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="600" height="424" key="javadoc.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613748936474" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1619083309224">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1619083309224" />
   </component>
 </project>

@@ -90,9 +90,9 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
     $.scrollify.destroy();
 
     // add some default text
-    //var dotRestMessageBrier = 'You have reached the end of block ' + dots_blockCount-1 + ' of 10. Your joint accuracy on this last block was ' + dataObject.block_accuracy[dots_blockCount + 1] + '%, and you currently have ' + Math.round(dots_cumulativeScore) + ' points.';
+    //var dotRestMessageBrier = 'You have reached the end of block ' + blockCount-1 + ' of 10. Your joint accuracy on this last block was ' + dataObject.block_accuracy[blockCount + 1] + '%, and you currently have ' + Math.round(dots_cumulativeScore) + ' points.';
 
-    var dotRestMessageFlat = 'You have reached the end of block ' + (dots_blockCount-1) + ' of 10.';
+    var dotRestMessageFlat = 'You have reached the end of block ' + (blockCount-1) + ' of 10.';
 
     // create the page elements
     var splashPage = createGeneral(
@@ -139,25 +139,33 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
       var highlight = '<highlight style="color: ' + color1 + '">';
     };
 
+    if (strategicVersion === false) {
+      var subMessage = createGeneral(
+          subMessage,
+          splashPage,
+          'div',
+          'sub-message',
+          trial.name + '-' + 'submessage',
+          '<h1>You may take a short break if you like.</h1>',
+      );
+    } else {
+      var subMessage = createGeneral(
+          subMessage,
+          splashPage,
+          'div',
+          'sub-message',
+          trial.name + '-' + 'submessage',
+          '<h1>For joint decisions on this last block, <br><br>' +
+          'your <highlight style="color: rgb(13, 219, 255)">own</highlight> accuracy was <highlight style="color: rgb(13, 219, 255)">' + round(participantAccu,2) + '%</highlight><br><br>' +
+          'your ' + highlight + 'partner\'s</highlight> accuracy was ' + highlight + round(partnerAccu, 2) + '%</highlight><br><br>' +
+          'your <highlight style="color: rgb(13,255,146)">joint</highlight> accuracy was <highlight style="color: rgb(13,255,146)">' + round(accuracy,2) + '%</highlight><br><br>' +
+          '<br><br>Your response was chosen on ' + participantChosen + ' trials. <br><br>Your partner\'s response was chosen on ' + partnerChosen +  ' trials. </h1>',
+      );
 
-    var subMessage = createGeneral(
-        subMessage,
-        splashPage,
-        'div',
-        'sub-message',
-        trial.name + '-' + 'submessage',
-        '<h1>For joint decisions on this last block, <br><br>' +
-        'your <highlight style="color: rgb(13, 219, 255)">own</highlight> accuracy was <highlight style="color: rgb(13, 219, 255)">' + round(participantAccu,2) + '%</highlight><br><br>' +
-        'your ' + highlight + 'partner\'s</highlight> accuracy was ' + highlight + round(partnerAccu, 2) + '%</highlight><br><br>' +
-        'your <highlight style="color: rgb(13,255,146)">joint</highlight> accuracy was <highlight style="color: rgb(13,255,146)">' + round(accuracy,2) + '%</highlight><br><br>' +
-        '<br><br>Your response was chosen on ' + participantChosen + ' trials. <br><br>Your partner\'s response was chosen on ' + partnerChosen +  ' trials. </h1>',
-    );
-
-    //reset variable that counts how many times participant's answer was chosen
-    participantChosen = 0;
-    partnerChosen = 0;
-
-
+      //reset variable that counts how many times participant's answer was chosen
+      participantChosen = 0;
+      partnerChosen = 0;
+    }
 
 
     if (trial.submessageSize !== 'default') {
@@ -205,7 +213,7 @@ jsPsych.plugins['jspsych-message-splash'] = (function () {
 
     // custom page options
     if (trial.name == "dotRest") {
-      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + dots_blockCount-1 + ' of 10.';
+      fullscreenMessage.innerHTML = '<h1>You have reached the end of block ' + blockCount-1 + ' of 10.';
     }
 
     if (trial.name == "thankYou") {

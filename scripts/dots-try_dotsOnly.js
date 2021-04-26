@@ -48,7 +48,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var participant_chosen; //this is true/false whereas the other one counts
     var secondChoice;
     var changeOfMind;
-    var brierConfidence;
 
     //if we are in the infoSeekingVersion, then determine if this trial will be an infoSeekingTrial
     //when blockCount=1 it means we are in the first block with partner 1 and we don't want info seeking trials
@@ -101,98 +100,16 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         correctSide = 'left';
     }
     trialDataVariable['correctSide'].push(correctSide) ;
+    stimulusPairs = dots;
 
 
-    if (squirclesVersion === false) {
-        stimulusPairs = dots;
-
-        // draw the grid
-        let grid = new DoubleDotGrid(dots[0], dots[1], {
-                spacing: 100,
-                paddingX: 6
-            }
-        );
-        grid.draw(canvasID);
-    } else {
-        // determine the parameters for the squircles
-        var total_circles = 8;
-        var radius = 60;
-        var color_sd = .1;
-        // difference value will be staircased during practice mode
-        var color_means = [.5-4.5*difference, .5-3.5*difference, .5-2.5*difference, .5-1.5*difference, .5-0.5*difference,
-            .5+0.5*difference, .5+1.5*difference, .5+2.5*difference, .5+3.5*difference, .5+4.5*difference];
-        var color_mean_level = randInt(0, 9); //anything from 1 to 10
-        var color_mean_two_level;
-
-        console.log(difference);
-
-        if (color_mean_level >= 5) {
-            color_mean_two_level = color_mean_level - randInt(1, 5);
-        } else if (color_mean_level <= 4) {
-            color_mean_two_level = color_mean_level + randInt(1, 5);
+    // draw the grid
+    let grid = new DoubleDotGrid(dots[0], dots[1], {
+            spacing: 100,
+            paddingX: 6
         }
-
-        var color_mean = color_means[color_mean_level];
-        var color_mean_two = color_means[color_mean_two_level];
-
-        var moreRedSide = correctSide;
-        var colours;
-        if (moreRedSide === 'right') {
-            colours = [Math.min(color_mean, color_mean_two), Math.max(color_mean, color_mean_two)];
-        } else {
-            colours = [Math.max(color_mean, color_mean_two), Math.min(color_mean, color_mean_two)];
-        }
-        stimulusPairs = colours;
-
-        //draw the squircle stimuli
-        drawSquircleStimuli(parent, canvasID, canvasWidth, canvasHeight, total_circles, radius,
-            color_mean, color_sd, color_mean_two, moreRedSide);
-
-        //cover half the stimulus
-        var coverCanvas = document.createElement('canvas');
-        div = document.getElementById("jspsych-canvas-sliders-response-stimulus");
-        coverCanvas.id     = "coverCanvas";
-        coverCanvas.width  = canvasWidth;
-        coverCanvas.height = canvasHeight;
-        coverCanvas.style.position = "absolute";
-        div.appendChild(coverCanvas);
-
-        var ctx = coverCanvas.getContext("2d");
-        ctx.fillStyle = "black";
-        var cy = coverCanvas.height/2;
-        var cxl = coverCanvas.width / 2 - coverCanvas.width / 3;
-        var cxr = coverCanvas.width / 2 + coverCanvas.width / 3;
-
-        /*draw the left cover*/
-        var sequence = myEvenLengthSequence(total_circles);
-        for (i = 0; i < total_circles; i++) {
-            if (sequence[i] === 1) {
-                var angle = i * 2 * Math.PI / total_circles;
-                var xl = cxl + Math.cos(angle) * radius;
-                var y = cy + Math.sin(angle) * radius;
-                ctx.beginPath();
-                ctx.arc(xl, y, 21 - 0.5 * total_circles, 0, Math.PI * 2, true);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
-
-        /*draw the right cover*/
-        var sequence = myEvenLengthSequence(total_circles);
-        for (i = 0; i < total_circles; i++) {
-            if (sequence[i] === 1) {
-                var angle = i * 2 * Math.PI / total_circles;
-                var xr = cxr + Math.cos(angle) * radius;
-                var y = cy + Math.sin(angle) * radius;
-                ctx.beginPath();
-                ctx.arc(xr, y, 21 - 0.5 * total_circles, 0, Math.PI * 2, true);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
-
-    }
-
+    );
+    grid.draw(canvasID);
 
 
     // draw the stimulus masks
@@ -220,6 +137,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     var pCorrect;
     //p correct from normal distribution between 0.6 and 1 (mean 0.8)
     pCorrect = randn_bm(0.6, 1, 1);
+
+    //p correct from uniform distribution between 0.6 and 1 (min is inclusive, max is exclusive)
+    //pCorrect = getRandomInt(61, 101);
+    //pCorrect = pCorrect / 100;
 
     // pick correct response with p(Correct)
     var partnerChoice;
@@ -257,6 +178,38 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     } else {
         partnerConfidence = 0   //if partner = none
     }
+
+    // If you were to enforce a particular confidence distribution, then I'd divide each scale (.5-1) up into
+    // let's say five chunks and then define the confidence distribution over these chunks.
+    // I'd then uniformly sample a response within each of the chunks (e.g. uniformly from the range .5-.6)
+    // depending on which chunk is used on a particular trial.
+    // if (partner === "underconfident") {
+    //     if (pCorrect <= 0.79) {  //pCorrect goes from 0.61 to 1  //19
+    //         partnerConfidence = getRandomInt(3, 10);
+    //     } else if (0.79 < pCorrect && pCorrect <= 0.90) {  //11
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.90 < pCorrect && pCorrect <= 0.96) {   //6
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.96 < pCorrect && pCorrect <= 0.99) {    //3
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.99 < pCorrect && pCorrect <= 1) {      //1
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     }
+    // } else if (partner === "overconfident") {
+    //     if (pCorrect <= 0.61) {                             //1
+    //         partnerConfidence = getRandomInt(3, 10);
+    //     } else if (0.61 < pCorrect && pCorrect <= 0.64) {    //3
+    //         partnerConfidence = getRandomInt(10, 20);
+    //     } else if (0.64 < pCorrect && pCorrect <= 0.70) {   //6
+    //         partnerConfidence = getRandomInt(20, 30);
+    //     } else if (0.70 < pCorrect && pCorrect <= 0.81) {  //11
+    //         partnerConfidence = getRandomInt(30, 40);
+    //     } else if (0.81 < pCorrect && pCorrect <= 1) {   //19
+    //         partnerConfidence = getRandomInt(40, 49);
+    //     }
+    // } else {
+    //     partnerConfidence = 0
+    // }
 
 
     // partner confidence marker on the slider
@@ -316,11 +269,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         'confidence-question',
         '<h1>Which box contained more dots?</h1> (left click for left box, right click for right box)'
     );
-
-    if (squirclesVersion === true) {
-        document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left box, right click for right box)';
-    }
-
 
 
     // reset the event loggers
@@ -428,32 +376,25 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 end_timer = Date.now();
                 infoChoiceRTs = calculateRT(start_timer, end_timer);
 
-                if (squirclesVersion === false) {
-                    // easier dot grid
-                    // clear the grids
-                    var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
-                    var context = dotCanvas.getContext('2d');
-                    context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-                    context.beginPath();
+                // easier dot grid
+                // clear the grids
+                var dotCanvas = document.getElementById('jspsych-canvas-sliders-response-canvas');
+                //console.log('width: ' + dotCanvas.width + ' height: ' + dotCanvas.height);
+                var context = dotCanvas.getContext('2d');
+                context.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
+                context.beginPath();
 
-
-                    // update the dot difference
-                    high = dotCount + Math.E ** (Math.log(dotsStaircase.getLast('logSpace')) + 0.5);
-                    high = round(high, 0);
-                    console.log(high);
-                    //keep the same correct response
-                    if (correctSide === "right") {
-                        dots = [low, high];
-                    } else {
-                        dots = [high, low];
-                    }
-                    stimulusPairsSecond = dots;
+                // update the dot difference
+                high = dotCount + Math.E ** (Math.log(dotsStaircase.getLast('logSpace')) + 0.5);
+                high = round(high, 0);
+                console.log(high);
+                //keep the same correct response
+                if (correctSide === "right") {
+                    dots = [low, high];
                 } else {
-                    //hide the squircle covers (so they are not there the second time around)
-                    var coverCanvas = document.getElementById("coverCanvas");
-                    var ctx = coverCanvas.getContext("2d");
-                    ctx.clearRect(0, 0, coverCanvas.width, coverCanvas.height);
+                    dots = [high, low];
                 }
+                stimulusPairsSecond = dots;
 
 
                 // hide masks and response areas
@@ -477,16 +418,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 setTimeout(function () {
                     document.getElementById('fixation-cross').remove();
                     $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
-
-                    if (squirclesVersion === false) {
-                        // redraw the canvas with new dot values
-                        var gridNew = new DoubleDotGrid(dots[0], dots[1], {
-                            spacing: 100,
-                            paddingX: 6
-                        });
-                        gridNew.draw(canvasID);
-                    }
-
+                    // redraw the canvas with new dot values
+                    var gridNew = new DoubleDotGrid(dots[0], dots[1], {
+                        spacing: 100,
+                        paddingX: 6
+                    });
+                    gridNew.draw(canvasID);
 
                     // start the timer
                     start_timer = Date.now();
@@ -500,16 +437,12 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             $('.confidence-question').css('visibility', 'visible');
                             document.getElementById("confidence-question").innerHTML = "<h1>Which box contained more " +
                                 "dots?</h1> (left click for left box, right click for right box)</h1>";
-                            if (squirclesVersion === true) {
-                                document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left box, right click for right box)';
-                            }
                             $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
                             document.getElementById('more-button').remove();
                             $('.submit-button').css('margin-left', '0');
                         }, transitionPeriod);
                     }, dotPeriod);
                 }, fixationPeriod);
-
 
 
                 // left or right mouse-click for decision
@@ -564,37 +497,33 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     buttonBackend('submit');
                 });
 
-
-                if (strategicVersion === true) {
-                    //show feedback
-                    setTimeout(function () {
-                        $('.submit-button').css('visibility', 'hidden');
-                        if (seeMore === true) {
-                            //second choice counts
-                            if (secondChoice === correctSide) {
-                                //correct
-                                correctResponse = true;
-                                overallScore++;
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                            } else {
-                                //incorrect
-                                correctResponse = false;
-                                document.getElementById('confidence-question').innerHTML = '<h1><highlight style="color: red">INCORRECT</highlight></h1>';
-                            }
+                //show feedback
+                setTimeout(function () {
+                    $('.submit-button').css('visibility', 'hidden');
+                    if (seeMore === true) {
+                        //second choice counts
+                        if (secondChoice === correctSide) {
+                            //correct
+                            correctResponse = true;
+                            overallScore++;
+                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
                         } else {
-                            //initial choice counts
-                            if (initialChoice === correctSide) {
-                                //correct
-                                overallScore++;
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                            } else {
-                                //incorrect
-                                document.getElementById('confidence-question').innerHTML = '<h1><highlight style="color: red">INCORRECT</highlight></h1>';
-                            }
+                            //incorrect
+                            correctResponse = false;
+                            document.getElementById('confidence-question').innerHTML = '<h1><highlight style="color: red">INCORRECT</highlight></h1>';
                         }
-                    }, 700);
-                }
-
+                    } else {
+                        //initial choice counts
+                        if (initialChoice === correctSide) {
+                            //correct
+                            overallScore++;
+                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                        } else {
+                            //incorrect
+                            document.getElementById('confidence-question').innerHTML = '<h1><highlight style="color: red">INCORRECT</highlight></h1>';
+                        }
+                    }
+                }, 700);
 
                 //partners response not included in their accuracy percentage
                 participantCorrectResponse = NaN; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
@@ -603,16 +532,9 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
 
                 //trigger submit button
-                if (strategicVersion === true) {
-                    //leave some time for feedback
-                    setTimeout(function () {
-                        buttonBackend('submit');
-                    }, 2000);
-
-                } else {
-                    //trigger button directly when clicked
+                setTimeout(function () {
                     buttonBackend('submit');
-                }
+                }, 2000);
 
                 break;
 
@@ -621,9 +543,6 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                 if (partner === "none") {
                     dotsStaircase.next(correctResponse);
                     staircaseSteps++;
-                    if (squirclesVersion === true) {
-                        difference = 0.001*dotsStaircase.getLast('logSpace');
-                    }
                 }
 
 
@@ -679,20 +598,14 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     // evaluate accuracy
                     setTimeout(function () {
 
-                        if (strategicVersion === true) {
-                            // if there is no partner, accuracy is based on individual responses, otherwise its based on joint decision accuracy
-                            if (partner != "none") {
-                                accuracy = round(meanNaN(trialDataVariable['jointCorrect']), 2) * 100;
-                                participantAccu = round(meanNaN(trialDataVariable['participantCorrect']), 2) * 100;
-                                partnerAccu = round(meanNaN(trialDataVariable['partnerCorrect']), 2) * 100;
-                            } else {
-                                accuracy = round(mean(trialDataVariable['isCorrect']), 2) * 100;
-                            }
+                        // if there is no partner, accuracy is based on individual responses, otherwise its based on joint decision accuracy
+                        if (partner != "none") {
+                            accuracy = round(meanNaN(trialDataVariable['jointCorrect']), 2) * 100;
+                            participantAccu = round(meanNaN(trialDataVariable['participantCorrect']), 2) * 100;
+                            partnerAccu = round(meanNaN(trialDataVariable['partnerCorrect']), 2) * 100;
                         } else {
                             accuracy = round(mean(trialDataVariable['isCorrect']), 2) * 100;
                         }
-
-
 
                         //if we are in tutorial mode, practice trials need to be repeated in case accuracy is below accuracy threshold
                         if (isTutorialMode) {
@@ -998,18 +911,10 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             correctResponse = false;
                             participantCorrectResponse = false; //participantCorrectResponse only counts group decision responses. correctResponse counts all responses.
                         }
-                    }
 
-                    if (strategicVersion === false) {
-                        if (initialChoice === "left") {
-                            brierConfidence = 100 - backendConfidence;
-                        } else {
-                            brierConfidence = backendConfidence;
-                        }
-
-                        if (!isTutorialMode && !infoSeekingTrial) {
-                            overallScore += reverseBrierScore(brierConfidence, correctResponse); //this is false for the joint decision making but I don't use Brier Score anyways
-                        }
+                        // if (!isTutorialMode && type == 'submit') {
+                        //     dots_cumulativeScore += reverseBrierScore(backendConfidence, correctResponse);
+                        // }
                     }
                 }
             }
@@ -1056,131 +961,111 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
             if (partner !== "none" && infoSeekingTrial !== true) {
 
-                if (strategicVersion === true) {
-                    //automatically trigger click on continue button
+                //automatically trigger click on continue button
+                setTimeout(function () {
+                    buttonBackend('submit');
+                }, 3500);
+
+                setTimeout(function () {
+                    var participantConfidence;
+                    var participantConfidenceMarker = backendConfidence;
+                    if (participantConfidenceMarker > 50) {
+                        participantConfidence = participantConfidenceMarker - 50
+                    } else {
+                        participantConfidence = 50 - participantConfidenceMarker
+                    }
+
+                    //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
                     setTimeout(function () {
-                        buttonBackend('submit');
-                    }, 3500);
-
-                    setTimeout(function () {
-                        var participantConfidence;
-                        var participantConfidenceMarker = backendConfidence;
-                        if (participantConfidenceMarker > 50) {
-                            participantConfidence = participantConfidenceMarker - 50
-                        } else {
-                            participantConfidence = 50 - participantConfidenceMarker
-                        }
-
-                        //draw box around higher confidence response and provide feedback depending on higher confidence response being correct/incorrect
-                        setTimeout(function () {
-                            if (partnerConfidence < participantConfidence) {
-                                participantChosen++;
-                                participant_chosen = true;
-                                if (participantConfidenceMarker > 50) {
-                                    $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% + 2px)');
-                                } else {
-                                    $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 2px)');
-                                }
-                                $('#higherConfidenceBox').css('border', '6px solid rgb(13, 219, 255)');
-                                $('#higherConfidenceBox').css('visibility', 'visible');
-                                setTimeout(function (){
-                                    if (participantConfidenceCorrect > 50) {
-                                        document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
-                                        $('#higherConfidenceBox').css('border', '6px solid limegreen');
-                                        jointCorrectResponse = true;
-                                        overallScore++;
-                                    } else {
-                                        document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
-                                        $('#higherConfidenceBox').css('border', '6px solid red');
-                                        jointCorrectResponse = false;
-                                    }
-                                }, 700);
-
-
+                        if (partnerConfidence < participantConfidence) {
+                            participantChosen++;
+                            participant_chosen = true;
+                            if (participantConfidenceMarker > 50) {
+                                $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% + 2px)');
                             } else {
-                                partnerChosen++;
-                                participant_chosen = false;
-                                $('#higherConfidenceBox').css('left', partnerConfidenceMarker + '%');
-                                if (partner === "underconfident") {
-                                    $('#higherConfidenceBox').css('border', '6px solid ' + color1);
-                                } else if (partner === "overconfident") {
-                                    $('#higherConfidenceBox').css('border', '6px solid ' + color2);
-                                } else {
-                                    $('#higherConfidenceBox').css('border', '6px solid darkorange');
-                                }
-                                $('#higherConfidenceBox').css('visibility', 'visible');
-                                setTimeout(function (){
-                                    if (partnerConfidenceCorrect > 50) {
-                                        document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
-                                        $('#higherConfidenceBox').css('border', '6px solid limegreen');
-                                        jointCorrectResponse = true;
-                                        overallScore++;
-                                    } else {
-                                        document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
-                                        $('#higherConfidenceBox').css('border', '6px solid red');
-                                        jointCorrectResponse = false;
-                                    }
-                                }, 700);
+                                $('#higherConfidenceBox').css('left', 'calc(' + participantConfidenceMarker + '% - 2px)');
                             }
+                            $('#higherConfidenceBox').css('border', '6px solid rgb(13, 219, 255)');
+                            $('#higherConfidenceBox').css('visibility', 'visible');
+                            setTimeout(function (){
+                                if (participantConfidenceCorrect > 50) {
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid limegreen');
+                                    jointCorrectResponse = true;
+                                    overallScore++;
+                                } else {
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid red');
+                                    jointCorrectResponse = false;
+                                }
+                            }, 700);
 
-                            // shot submit button
-                            // setTimeout(function (){
-                            //     $('.scale-button').removeClass('invisible');
-                            // }, 500);
 
-
-                        }, 200);
-
-
-                        console.log("participantConfidenceMarker " + participantConfidenceMarker);
-                        console.log("participantConfidence " + participantConfidence);
-                        console.log("participantConfidenceCorrect " + participantConfidenceCorrect);
-
-                        console.log("partnerConfidenceMarker " + partnerConfidenceMarker);
-                        console.log("partnerConfidence " + partnerConfidence);
-                        console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
-                    }, 1000);
-                } else {
-                    //automatically trigger click on continue button
-                    setTimeout(function () {
-                        buttonBackend('submit');
-                    }, 1500);
-
-                    setTimeout(function () {
-                        var participantConfidence;
-                        var participantConfidenceMarker = backendConfidence;
-                        if (participantConfidenceMarker > 50) {
-                            participantConfidence = participantConfidenceMarker - 50
                         } else {
-                            participantConfidence = 50 - participantConfidenceMarker
+                            partnerChosen++;
+                            participant_chosen = false;
+                            $('#higherConfidenceBox').css('left', partnerConfidenceMarker + '%');
+                            if (partner === "underconfident") {
+                                $('#higherConfidenceBox').css('border', '6px solid ' + color1);
+                            } else if (partner === "overconfident") {
+                                $('#higherConfidenceBox').css('border', '6px solid ' + color2);
+                            } else {
+                                $('#higherConfidenceBox').css('border', '6px solid darkorange');
+                            }
+                            $('#higherConfidenceBox').css('visibility', 'visible');
+                            setTimeout(function (){
+                                if (partnerConfidenceCorrect > 50) {
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: limegreen">CORRECT</highlight></h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid limegreen');
+                                    jointCorrectResponse = true;
+                                    overallScore++;
+                                } else {
+                                    document.getElementById('confidence-question').innerHTML = '<h1>JOINT DECISION: <highlight style="color: red">INCORRECT</highlight></h1>';
+                                    $('#higherConfidenceBox').css('border', '6px solid red');
+                                    jointCorrectResponse = false;
+                                }
+                            }, 700);
                         }
 
-                    }, 1000);
-                }
+                        // shot submit button
+                        // setTimeout(function (){
+                        //     $('.scale-button').removeClass('invisible');
+                        // }, 500);
+
+
+                    }, 200);
+
+
+                    console.log("participantConfidenceMarker " + participantConfidenceMarker);
+                    console.log("participantConfidence " + participantConfidence);
+                    console.log("participantConfidenceCorrect " + participantConfidenceCorrect);
+
+                    console.log("partnerConfidenceMarker " + partnerConfidenceMarker);
+                    console.log("partnerConfidence " + partnerConfidence);
+                    console.log("partnerConfidenceCorrect " + partnerConfidenceCorrect);
+                }, 1000);
+
 
 
             // if there is no partner or we are in an info seeking trial
             } else {
                 if (partner === "none") {
-
-                    if (strategicVersion === true) {
-                        // give feedback based on individual choice
-                        setTimeout(function (){
-                            if (backendConfidence > 50) {
-                                $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% + 2px)');
-                            } else {
-                                $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% - 2px)');
-                            }
-                            if (correctResponse == true) {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
-                                $('#higherConfidenceBox').css('border', '6px solid limegreen');
-                            } else {
-                                document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
-                                $('#higherConfidenceBox').css('border', '6px solid red');
-                            }
-                            $('#higherConfidenceBox').css('visibility', 'visible');
-                        }, 700);
-                    }
+                    // give feedback based on individual choice
+                    setTimeout(function (){
+                        if (backendConfidence > 50) {
+                            $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% + 2px)');
+                        } else {
+                            $('#higherConfidenceBox').css('left', 'calc(' + backendConfidence + '% - 2px)');
+                        }
+                        if (correctResponse == true) {
+                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(13,255,146)">CORRECT</h1>';
+                            $('#higherConfidenceBox').css('border', '6px solid limegreen');
+                        } else {
+                            document.getElementById('confidence-question').innerHTML = '<h1 style="color: rgb(255,0,51)">INCORRECT</h1>';
+                            $('#higherConfidenceBox').css('border', '6px solid red');
+                        }
+                        $('#higherConfidenceBox').css('visibility', 'visible');
+                    }, 700);
 
                     // shot submit button more quickly if there is no partner to wait for
                     // setTimeout(function (){
@@ -1189,7 +1074,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                     //automatically trigger click on continue button more quickly when there is no partner to wait for
                     setTimeout(function () {
                         buttonBackend('submit');
-                    }, 1000)
+                    }, 1500)
                 //if we are in an info seeking trial
                 } else {
                     console.log(stimulusPairs);
