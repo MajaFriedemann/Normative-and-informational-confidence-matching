@@ -67,11 +67,15 @@
     //set the percentage of info seeking trials in "dots-try"
     const infoSeekingVersion = true;
 
+
+
+    //CHANGE ALL THE THREE VARIABLES FOR SESSION NO2
+
     // set this to true for the squircles task version and to false for the dot task version
     const squirclesVersion = true;
 
     //set this to true for the strategic version with feedback and to false for the non-strategic version
-    const strategicVersion = true;
+    const strategicVersion = false;
 
     //set this to 1 or 2 depending on whether it is the first or second session of the participant (just for saving this variable)
     const session = 1;
@@ -108,7 +112,7 @@
     var PIS_date = '2020/01/01';
     var startExperiment = Date.now();
     var currentAttempt = 1;
-    var difference = 0.1;  /* initial mean difference for the squircles task
+    var difference = 0.25;  /* initial mean difference for the squircles task
 
 
     /* SEEDED RANDOMISATION
@@ -246,7 +250,7 @@
     var partnerAccu;
     var participantChosen = 0;
     var partnerChosen = 0;
-    var trialsPerBlock = 3; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking)
+    var trialsPerBlock = 3; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     var dotCountHigherList = [];
     var finalHigh;
     var overallScore = 0;
@@ -367,7 +371,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 4,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        trial_count: 10,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         staircasingPractice: 'practice1',
@@ -770,9 +774,9 @@
                         //non-strategic dot version underconfident, then overconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             dotTaskInstructions1,
                             dotTaskPractice1,
                             dotTaskInstructions2NS,
@@ -815,9 +819,9 @@
                         //strategic dot version underconfident, then overconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             dotTaskInstructions1,
                             dotTaskPractice1,
                             dotTaskInstructions2,
@@ -864,9 +868,9 @@
                         //non-strategic squircles version underconfident, then overconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             squirclesTaskInstructions1,
                             dotTaskPractice1,
                             squirclesTaskInstructions2NS,
@@ -886,7 +890,7 @@
                             dotTask1,
                             dotTaskRest,
                             feedbackUnderconfPartner,
-                            dotTaskInstructions3NS,
+                            squirclesTaskInstructions3NS,
                             loadingPartner,
                             partner2NS,
                             dotTask2,
@@ -909,9 +913,9 @@
                         //strategic squircles version underconfident, then overconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             squirclesTaskInstructions1,
                             dotTaskPractice1,
                             squirclesTaskInstructions2,
@@ -931,7 +935,7 @@
                             dotTask1,
                             dotTaskRest,
                             feedbackUnderconfPartner,
-                            dotTaskInstructions3,
+                            squirclesTaskInstructions3,
                             loadingPartner,
                             partner2,
                             dotTask2,
@@ -964,9 +968,9 @@
                         // non-strategic dots version overconfident, then underconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             dotTaskInstructions1,
                             dotTaskPractice1,
                             dotTaskInstructions2NS,
@@ -1009,9 +1013,9 @@
                         // strategic dots version overconfident, then underconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             dotTaskInstructions1,
                             dotTaskPractice1,
                             dotTaskInstructions2,
@@ -1058,9 +1062,9 @@
                         // non-strategic squircles version overconfident, then underconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             squirclesTaskInstructions1,
                             dotTaskPractice1,
                             squirclesTaskInstructions2NS,
@@ -1080,7 +1084,7 @@
                             dotTask2,
                             dotTaskRest,
                             feedbackOverconfPartner,
-                            dotTaskInstructions3NS,
+                            squirclesTaskInstructions3NS,
                             loadingPartner,
                             partner2NS,
                             dotTask1,
@@ -1103,9 +1107,9 @@
                         // strategic squircles version overconfident, then underconfident
                         var timeline = [
                             //loading,
-                            // PIS,
-                            // consent,
-                            // demographics,
+                            PIS,
+                            consent,
+                            demographics,
                             squirclesTaskInstructions1,
                             dotTaskPractice1,
                             squirclesTaskInstructions2,
@@ -1125,7 +1129,7 @@
                             dotTask2,
                             dotTaskRest,
                             feedbackOverconfPartner,
-                            dotTaskInstructions3,
+                            squirclesTaskInstructions3,
                             loadingPartner,
                             partner2,
                             dotTask1,

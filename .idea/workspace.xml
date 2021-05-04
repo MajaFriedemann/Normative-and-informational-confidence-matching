@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01027c40-0a66-4180-8a2c-8ee281125435" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.4.0NS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.5.0 practiceNS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/dotTask_2.6.0NS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/dotTask_InfoNS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_info.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_infoNS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_practice1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_practice1NS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_practice2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_practice2NS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_start.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/squircles_startNS.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/dots-try_dotsOnly.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/majaf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/majaf.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/dots-try.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/dots-try.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/dots.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-dots.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-message-splash.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/jpsych/jspsych-score-reveal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +192,8 @@
       <workItem from="1618996940659" duration="653000" />
       <workItem from="1619015964624" duration="96000" />
       <workItem from="1619036848943" duration="19952000" />
-      <workItem from="1619187382918" duration="14889000" />
+      <workItem from="1619187382918" duration="15322000" />
+      <workItem from="1620122368748" duration="4704000" />
     </task>
     <servers />
   </component>

@@ -119,21 +119,28 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
         var radius = 60;
         var color_sd = .1;
         // difference value will be staircased during practice mode
-        var color_means = [.5-4.5*difference, .5-3.5*difference, .5-2.5*difference, .5-1.5*difference, .5-0.5*difference,
-            .5+0.5*difference, .5+1.5*difference, .5+2.5*difference, .5+3.5*difference, .5+4.5*difference];
-        var color_mean_level = randInt(0, 9); //anything from 1 to 10
-        var color_mean_two_level;
+        // var color_means = [.5-4.5*difference, .5-3.5*difference, .5-2.5*difference, .5-1.5*difference, .5-0.5*difference,
+        //     .5+0.5*difference, .5+1.5*difference, .5+2.5*difference, .5+3.5*difference, .5+4.5*difference];
+        // var color_mean_level = randInt(0, 9); //anything from 1 to 10
+        // var color_mean_two_level;
+        //
+        // console.log(difference);
+        //
+        // if (color_mean_level >= 5) {
+        //     color_mean_two_level = color_mean_level - randInt(1, 5);
+        // } else if (color_mean_level <= 4) {
+        //     color_mean_two_level = color_mean_level + randInt(1, 5);
+        // }
+        //
+        // var color_mean = color_means[color_mean_level];
+        // var color_mean_two = color_means[color_mean_two_level];
 
+        var color_mean = getRandomInt(1, 9-10*difference)/10;  //1 to 9 instead of 0 to 10 because of the variance around the mean
+        var color_mean_two = color_mean + difference;
+
+        console.log(color_mean);
+        console.log(color_mean_two);
         console.log(difference);
-
-        if (color_mean_level >= 5) {
-            color_mean_two_level = color_mean_level - randInt(1, 5);
-        } else if (color_mean_level <= 4) {
-            color_mean_two_level = color_mean_level + randInt(1, 5);
-        }
-
-        var color_mean = color_means[color_mean_level];
-        var color_mean_two = color_means[color_mean_two_level];
 
         var moreRedSide = correctSide;
         var colours;
@@ -318,7 +325,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
     );
 
     if (squirclesVersion === true) {
-        document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left box, right click for right box)';
+        document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left circle, right click for right circle)';
     }
 
 
@@ -501,7 +508,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
                             document.getElementById("confidence-question").innerHTML = "<h1>Which box contained more " +
                                 "dots?</h1> (left click for left box, right click for right box)</h1>";
                             if (squirclesVersion === true) {
-                                document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left box, right click for right box)';
+                                document.getElementById('confidence-question').innerHTML = '<h1>Which circle was more red?</h1> (left click for left circle, right click for right circle)';
                             }
                             $('#jspsych-canvas-sliders-response-canvas').css('visibility', 'visible');
                             document.getElementById('more-button').remove();
@@ -791,7 +798,7 @@ function drawDots(parent, canvasID, canvasWidth, canvasHeight, dotCount, dotsSta
 
                                 // if the practice block was not successful, we do not save the data and start a new block of trials
                             } else {
-                                totalTrials = 0;
+                                totalTrials = 100;
                                 trialCounterVariable = 0;
                                 // reset trial data variable
                                 trialDataVariable = {
