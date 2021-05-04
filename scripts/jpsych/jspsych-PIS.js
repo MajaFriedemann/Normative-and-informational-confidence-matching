@@ -38,7 +38,7 @@ jsPsych.plugins['jspsych-PIS'] = (function () {
       + '<br><h4>2. Why have I been invited to take part?</h4>'
 
       + '<p>You have been invited to take part in this research because you have indicated that you might be interested in participating, and you are currently</p>'
-      + '<p>(i) aged 18-50 years, <br>(ii) fluent English speaking, <br>(iii) have normal or corrected-to-normal vision, <br>(iv) neurologically healthy, <br>(v) not on any medication with psychoactive effects (e.g., antidepressants or medicatoin for anxiety), and <br>(vi) have not taken part in closely related previous studies.</p>'
+      + '<p>(i) aged 18-50 years, <br>(ii) fluent English speaking, <br>(iii) have normal or corrected-to-normal vision, <br>(iv) neurologically healthy, <br>(v) not on any medication with psychoactive effects (e.g., antidepressants or medication for anxiety), and <br>(vi) have not taken part in closely related previous studies.</p>'
 
       + '<br><h4>3. Do I have to take part?</h4>'
 
@@ -58,7 +58,7 @@ jsPsych.plugins['jspsych-PIS'] = (function () {
 
       + '<br><h4>7. Expenses and payments</h4>'
 
-      +'<p>You will receive £10 per hour for your participation in this task. . You may have the opportunity during parts of the study to earn up to an additional £5 dependent on your performance.</p>'
+      +'<p>You will receive £10 per hour for your participation in this task. You may have the opportunity during parts of the study to earn up to an additional £5 dependent on your performance.</p>'
 
       + '<br><h4>8. What happens to the data provided?</h4>'
 

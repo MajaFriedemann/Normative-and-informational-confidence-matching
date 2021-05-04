@@ -75,7 +75,7 @@
     const squirclesVersion = true;
 
     //set this to true for the strategic version with feedback and to false for the non-strategic version
-    const strategicVersion = false;
+    const strategicVersion = true;
 
     //set this to 1 or 2 depending on whether it is the first or second session of the participant (just for saving this variable)
     const session = 1;
@@ -250,7 +250,7 @@
     var partnerAccu;
     var participantChosen = 0;
     var partnerChosen = 0;
-    var trialsPerBlock = 3; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    var trialsPerBlock = 25; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     var dotCountHigherList = [];
     var finalHigh;
     var overallScore = 0;
@@ -371,7 +371,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 10,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        trial_count: 100,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         staircasingPractice: 'practice1',
@@ -439,8 +439,8 @@
         section1_text: 'In this experiment, you will be playing a game with dots.',
         section2_text: 'During this game, you will see two boxes containing dots briefly flash on either side of the centre of the screen (marked with a "+" sign). Your task is to decide whether the left or right box contains more dots. ' +
             'If you think the left box contained more dots, you respond with a <highlight style="color: rgb(13,255,146)">left mouse-click</highlight>. If you think the right box contained more dots, you respond ' +
-            'with a <highlight style="color: rgb(13,255,146)">right mouse-click</highlight>. The task will start off quite easy <highlight style="color: rgb(13,255,146)">but will become harder</highlight> as you progress. ' +
-            '<br><br> Press the "continue" button to start the game. <highlight style="color: rgb(13,255,146)">The first phase of the game can take up to 8 minutes.</highlight> You should reach a stable performance level to continue to the next phase.',
+            'with a <highlight style="color: rgb(13,255,146)">right mouse-click</highlight>. The task will start off quite easy but will become harder as you progress. ' +
+            '<br><br> Press the "continue" button to start the game. The first phase of the game can take up to 8 minutes. You should reach a stable performance level to continue to the next phase.',
         img_id: 'dotTask-gif1'
     };
 
@@ -449,11 +449,11 @@
         section1_text: 'In this experiment, you will be playing a game of comparing colours.',
         section2_text: 'During this game, you will see 2 circles of coloured patches that will briefly flash on either side of the centre of the ' +
             'screen (marked with a "+" sign). Initially, you will <highlight style="color: rgb(13,255,146)">only see 4 of the 8 coloured patches</highlight>  making up the circle. The patches will have colours ranging from <highlight style="color: rgb(255, 0, 0)">red</highlight> ' +
-            'to <highlight style="color: rgb(0, 100, 255)">blue</highlight>. Your task is to <highlight style="color: rgb(13,255,146)">decide which of the two circles ' +
-            'of coloured patches is more <highlight style="color: rgb(255, 0, 0)">red</highlight> on average</highlight>, compared to the other one. ' +
+            'to <highlight style="color: rgb(0, 100, 255)">blue</highlight>. Your task is to decide which of the two circles ' +
+            'of coloured patches is more <highlight style="color: rgb(255, 0, 0)">red</highlight> on average, compared to the other one. ' +
             'If you think the left circle was more <highlight style="color: rgb(255, 0, 0)">red</highlight> , you respond with a <highlight style="color: rgb(13,255,146)">left mouse-click</highlight>. If you ' +
             'think the right circle was more <highlight style="color: rgb(255, 0, 0)">red</highlight> , you respond ' +
-            'with a <highlight style="color: rgb(13,255,146)">right mouse-click</highlight>. <br><br>The task will <highlight style="color: rgb(13,255,146)">start off quite easy but will become harder</highlight> as you progress' +
+            'with a <highlight style="color: rgb(13,255,146)">right mouse-click</highlight>. <br><br>The task will start off quite easy but will become harder as you progress' +
             '<br><br> Press the "continue" button to start the game. You ' +
             'should reach a stable performance level to continue to the next phase. This might take up to 8 minutes.',
         img_id: 'squircleTask-gif2'
@@ -620,7 +620,7 @@
             'the dots-grid and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the dots-grid again</highlight> before ' +
             'making your final decision. ' +
             'If you choose to see the stimulus again, you\'ll see an <highlight style="color: rgb(13,255,146)">easier version of the grid with the same correct answer</highlight> (left or right).  ' +
-            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision. ' +
+            'However, if you prefer, you can skip straight on to the next trial after your first decision. ' +
             'On these trials, your cash bonus will be based on the accuracy of your final decision.',
         img_id: 'dotTask-gif4'
     };
@@ -633,7 +633,7 @@
             'the dots-grid and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the dots-grid again</highlight> before ' +
             'making your final decision. ' +
             'If you choose to see the stimulus again, you\'ll see an <highlight style="color: rgb(13,255,146)">easier version of the grid with the same correct answer</highlight> (left or right).  ' +
-            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision. ' +
+            'However, if you prefer, you can skip straight on to the next trial after your first decision. ' +
             'On these trials, your cash bonus will be based on the accuracy of your final decision.',
         img_id: 'dotTask-gif4NS'
     };
@@ -646,7 +646,7 @@
             'the colour circles and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the circles again</highlight> before ' +
             'making your final decision. ' +
             'If you choose to see the stimulus again, you\'ll see <highlight style="color: rgb(13,255,146)">all 8 colour patches of each circle</highlight>.  ' +
-            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision. On these trials, your feedback and cash bonus will be based on the accuracy of your final decision.',
+            'However, if you prefer, you can skip straight on to the next trial after your first decision. On these trials, your feedback and cash bonus will be based on the accuracy of your final decision.',
         img_id: 'squircleTask-gif4'
     };
 
@@ -658,7 +658,7 @@
             'the colour circles and made your first decision, you\'ll have the <highlight style="color: rgb(13,255,146)">opportunity to see the circles again</highlight> before ' +
             'making your final decision. ' +
             'If you choose to see the stimulus again, you\'ll see <highlight style="color: rgb(13,255,146)">all 8 colour patches of each circle</highlight>.  ' +
-            'You don\'t have to see the stimulus again.  If you prefer, you can skip straight on to the next trial after your first decision. ' +
+            'However, if you prefer, you can skip straight on to the next trial after your first decision. ' +
             'On these trials, your cash bonus will be based on the accuracy of your final decision.',
         img_id: 'squircleTask-gif4NS'
     };
