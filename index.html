@@ -65,7 +65,7 @@
     // set infoSeekingVersion to true to add interspersed trials where participants do not see a partners response but have the chance to seek see the stimulus again
     //also manually remove the "dotTaskStartInfoSeeking" instructions page if you set this to false!
     //set the percentage of info seeking trials in "dots-try"
-    const infoSeekingVersion = true;
+    const infoSeekingVersion = false;
 
 
 
@@ -250,7 +250,7 @@
     var partnerAccu;
     var participantChosen = 0;
     var partnerChosen = 0;
-    var trialsPerBlock = 25; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    var trialsPerBlock = 3; //make trial count 25 here (4x25 trials = 100 trials per partner with info seeking) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     var dotCountHigherList = [];
     var finalHigh;
     var overallScore = 0;
@@ -371,7 +371,7 @@
         rightColor: 'rgb(255,255,255)',
         waitTimeLimit: 2000,
         isTutorialMode: true,
-        trial_count: 100,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        trial_count: 5,             //make trial count 100 here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yellowButtonEnabled: false,
         greenButtonName: 'CONTINUE',
         staircasingPractice: 'practice1',
