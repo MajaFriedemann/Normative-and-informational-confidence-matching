@@ -261,6 +261,7 @@ class DoubleDotGrid {
      var singleColorValue = colorValuesArrayRight[i];
      var colorValues = generateRGBvalues(singleColorValue);
      ctx.fillStyle = "rgb(" + colorValues[0] + "," + colorValues[1] + "," + colorValues[2] + ")";
+     console.log(colorValues);
      var angle = i * 2 * Math.PI / total_circles;
      var xr = cxr + Math.cos(angle) * radius;
      var y = cy + Math.sin(angle) * radius;
