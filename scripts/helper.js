@@ -234,11 +234,9 @@ class DoubleDotGrid {
    if (moreRedSide === "left") {
      colorValuesArrayLeft = generateColorSamples(moreRedMean, array_sd, total_circles); //one number for each circle with defined mean and sd for the numbers
      colorValuesArrayRight = generateColorSamples(moreBlueMean,array_sd, total_circles);
-     console.log(colorValuesArrayRight);
    } else {
      colorValuesArrayLeft = generateColorSamples(moreBlueMean, array_sd, total_circles); //one number for each circle with defined mean and sd for the numbers
      colorValuesArrayRight = generateColorSamples(moreRedMean, array_sd, total_circles);
-     console.log(colorValuesArrayRight);
    }
 
 
@@ -261,7 +259,6 @@ class DoubleDotGrid {
      var singleColorValue = colorValuesArrayRight[i];
      var colorValues = generateRGBvalues(singleColorValue);
      ctx.fillStyle = "rgb(" + colorValues[0] + "," + colorValues[1] + "," + colorValues[2] + ")";
-     console.log(colorValues);
      var angle = i * 2 * Math.PI / total_circles;
      var xr = cxr + Math.cos(angle) * radius;
      var y = cy + Math.sin(angle) * radius;
