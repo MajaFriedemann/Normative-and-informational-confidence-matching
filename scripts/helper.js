@@ -179,7 +179,7 @@ class DoubleDotGrid {
      return newList;
    }
 
-   // transform the list to have an exact mean of 5 and sd of 2
+   // transform the list to have an exact mean and sd
    var newList = forceDescriptives(list, color_mean, array_sd);
 
    // display the transformed list and descriptive statistics (mean and sd)

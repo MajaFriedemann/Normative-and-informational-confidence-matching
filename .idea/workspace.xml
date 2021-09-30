@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01027c40-0a66-4180-8a2c-8ee281125435" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/helper.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,6 +195,8 @@
       <workItem from="1620122368748" duration="8018000" />
       <workItem from="1620137348246" duration="59000" />
       <workItem from="1620215568201" duration="82000" />
+      <workItem from="1632905582810" duration="548000" />
+      <workItem from="1632936521874" duration="11695000" />
     </task>
     <servers />
   </component>
@@ -217,24 +220,9 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="470" y="98" width="1279" height="779" key="dock-window-1" timestamp="1613746561763">
+    <state x="463" y="144" width="609" height="536" key="find.popup" timestamp="1632946948545">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="470" y="98" width="1279" height="779" key="dock-window-1/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613746561763" />
-    <state x="-1352" y="207" width="923" height="854" key="find.popup" timestamp="1620136139344">
-      <screen x="-1920" y="0" width="1920" height="1160" />
-    </state>
-    <state x="-1352" y="207" width="923" height="854" key="find.popup/0.0.1536.824/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1620136139344" />
-    <state x="375" y="0" width="923" height="824" key="find.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1619452426090" />
-    <state x="454" y="147" width="739" height="607" key="find.popup/0.0.1536.824/-1920.4.1920.1160@0.0.1536.824" timestamp="1619036995654" />
-    <state x="463" y="0" width="923" height="824" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1619182280059" />
-    <state width="600" height="424" key="javadoc.popup" timestamp="1613748936474">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="600" height="424" key="javadoc.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1613748936474" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1619083309224">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1160@0.0.1536.824" timestamp="1619083309224" />
+    <state x="463" y="144" width="609" height="536" key="find.popup/0.0.1536.824/-1920.4.1920.1160@0.0.1536.824" timestamp="1632946948545" />
   </component>
 </project>
